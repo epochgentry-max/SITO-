@@ -1,3 +1,5 @@
+<style>
+
 /* ============================================================
    BLOQUE 1: CONFIGURACIÓN DEL LIENZO PRINCIPAL (BODY)
    Logica: Define el comportamiento del fondo y el centrado 
@@ -259,32 +261,61 @@ input:focus, select:focus, textarea:focus {
     overflow: hidden; /* Bloquea el scroll del navegador para usar el motor de deslizamiento interno */
 }
 
-/* El plano deslizable: Permite navegar por el mapa de datos que excede el tamaño físico de la pantalla */
+/* Bloque de Reemplazo Quirúrgico: .sito-plano-deslizable */
 .sito-plano-deslizable {
-    width: 100%; /* El contenedor ocupa todo el ancho disponible */
-    height: 100vh; /* El contenedor ocupa toda la altura disponible */
-    overflow: auto !important; /* Habilita el desplazamiento horizontal y vertical forzosamente */
-    -webkit-overflow-scrolling: touch; /* Activa la inercia fluida al deslizar con el dedo en iPhone/iPad */
+    /* COORDENADA DE EXPANSIÓN TOTAL */
+    width: 100vw; /* Asegura que el visor siempre use el ancho total de la pantalla */
+    height: 100vh; /* Asegura que el visor siempre use el alto total de la pantalla */
+    
+    overflow: auto !important; /* Preserva el scroll para navegar el modelo */
+    -webkit-overflow-scrolling: touch; /* Fluidez inmutable en dispositivos móviles */
+    
+    background-color: #020a12; /* Fondo negro industrial de marca */
+    
+    /* MATRIZ DE CIRCUITOS MEJORADA */
+    background-image: 
+        linear-gradient(rgba(135, 206, 235, 0.05) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(135, 206, 235, 0.05) 1px, transparent 1px), 
+        radial-gradient(circle, rgba(135, 206, 235, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px, 40px 40px, 20px 20px; /* Densidad de hardware auditada */
+
+    /* AJUSTE DE ESCALA DINÁMICA */
+    transform: scale(0.6); /* Mantiene el nivel de zoom solicitado */
+    transform-origin: top left; /* Punto de anclaje inamovible */
+    
+    /* EL INJERTO MAESTRO: 
+       Al estar al 60% (0.6), necesitamos que el lienzo interno sea más grande 
+       para que al "encogerse" siga tapando toda la pantalla original. */
+    min-width: 167%; /* Compensación matemática para que el ancho sea total al 0.6 */
+    min-height: 167%; /* Compensación matemática para que el alto sea total al 0.6 */
 }
 
+
+
 /* El motor de la Rejilla Maestra: Organiza las 5 secciones en un plano coordinado */
+/* Bloque de Reemplazo: #master-grid-container */
 #master-grid-container {
-    display: grid; /* Activa el modelo de rejilla de CSS para posicionar elementos en 2D */
-    grid-template-columns: 1fr 440px; /* Crea 2 columnas: una flexible para el centro y una fija de 120px para la lateral */
-    grid-template-rows: 660px 320px 1fr 70px; /* Define la altura de las 4 filas principales (S2, S3, S4, S5) */
+    display: grid; /* Preserva el motor de rejilla 2D */
+    grid-template-columns: 1fr 440px 440px; /* RECALIBRACIÓN: Añade la segunda columna de 440px */
+    grid-template-rows: 660px 320px 1fr 70px; /* Mantiene las alturas inmutables de S2, S3, S4 y S5 */
     grid-template-areas: 
-        "superior lateral" /* Fila 1: Sección Superior y Barra Lateral Derecha */
-        "inter-sup lateral" /* Fila 2: Sección Intermedia Superior y Barra Lateral Derecha */
-        "nucleo    lateral" /* Fila 3: Sección del Núcleo y Barra Lateral Derecha */
-        "pre-foot  lateral"; /* Fila 4: Sección Pre-Footer y Barra Lateral Derecha */
+        "superior  lateral  lateral2" /* Fila 1: Centro | Lateral 1 | Lateral Nueva */
+        "inter-sup lateral  lateral2" /* Fila 2: Centro | Lateral 1 | Lateral Nueva */
+        "nucleo    lateral  lateral2" /* Fila 3: Centro | Lateral 1 | Lateral Nueva */
+        "pre-foot  lateral  lateral2"; /* Fila 4: Centro | Lateral 1 | Lateral Nueva */
     
-    width: 250vw; /* Expande el ancho del contenedor al 150% de la pantalla para permitir scroll horizontal */
-    height: 135vh; /* Expande la altura del contenedor al 150% de la pantalla para permitir scroll vertical */
-    gap: 15px; /* Crea un espacio de 15px entre bloques donde brillará la luz neón */
-    padding: 20px; /* Añade un margen interno general de 20px */
-    padding-top: 110px; /* Deja un espacio de 110px arriba para no tapar el ID y Alias del usuario */
-    background: #020a12; /* Fondo de seguridad en negro industrial */
-    box-sizing: border-box; /* Asegura que los bordes y padding no agranden el contenedor más de lo definido */
+    width: 300vw; /* Expansión del terreno para que los circuitos fluyan a la derecha */
+    height: 180vh; /* Expansión del terreno para que los circuitos fluyan hacia abajo */
+    gap: 15px; /* Mantiene el espacio de brillo entre bloques */
+    padding: 20px; /* Mantiene el margen de seguridad */
+    padding-top: 110px; /* Mantiene el espacio para el ID de Aliado */
+    background: transparent; /* Se vuelve transparente para revelar los circuitos del fondo */
+    box-sizing: border-box; /* Mantiene la integridad del cálculo de bordes */
+
+
+/* Coordenada de profundidad: Separa visualmente el modelo de los circuitos de fondo */
+box-shadow: 0 0 50px rgba(0, 0, 0, 0.9); 
+
 }
 
 /* ============================================================
@@ -306,6 +337,30 @@ input:focus, select:focus, textarea:focus {
     transition: all 0.3s ease; /* Hace que cualquier cambio de luz sea suave y no brusco */
     animation: pulsoUnion 3s infinite alternate; /* Vincula la animación de parpadeo vital */
 }
+
+/* Nuevo Bloque de Ingerto: BARRA LATERAL 2 (DUAL HARDWARE) */
+#barra-lateral-2 {
+    grid-area: lateral2; /* Ancla el bloque a la nueva coordenada de la rejilla */
+    display: flex; /* Activa el motor de distribución interna */
+    flex-direction: column; /* Divide la columna en secciones horizontales (una sobre otra) */
+    gap: 15px; /* Espaciado entre los dos nuevos módulos */
+}
+
+.modulo-dual {
+    flex: 1; /* Obliga a los dos módulos a medir exactamente el 50% de la altura cada uno */
+    background: rgba(0, 0, 0, 0.4); /* Fondo translúcido para integración estética */
+    border: 1px solid rgba(135, 206, 235, 0.8) !important; /* Borde neón azul cielo reglamentario */
+    box-shadow: 0 0 15px rgba(135, 206, 235, 0.2); /* Resplandor de hardware activado */
+    animation: pulsoUnion 3s infinite alternate; /* Sincroniza el parpadeo con el resto del sistema */
+    border-radius: 5px; /* Mantiene la curvatura oficial */
+
+/* Coordenada de contención: Evita que la información se salga del hardware lateral */
+overflow: hidden;
+padding: 10px; /* Espacio interno para que los datos no toquen el neón azul */
+
+}
+
+
 
 /* ============================================================
    TÍTULO: ASIGNACIÓN DE ÁREAS Y COMPORTAMIENTO
@@ -393,4 +448,37 @@ input:focus, select:focus, textarea:focus {
     grid-template-rows: repeat(3, 1fr); /* Crea exactamente 3 filas de igual tamaño (4x3 = 12 espacios) */
     height: 100%; /* Ocupa el total del alto de la sección núcleo */
     gap: 8px; /* Espaciado entre las 12 celdas del núcleo */
-    padding: 
+    padding: 10px; /* Margen interno para que las celdas no toquen los bordes */
+}
+
+.sub-grid-12 div {
+    border-radius: 5px; /* Curvatura para las 12 pequeñas pantallas del núcleo */
+    display: flex; /* Centrado de contenido */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    color: rgba(255, 255, 255, 0.3); /* Color de texto blanco con transparencia */
+    font-size: 12px; /* Tamaño de los números o etiquetas del núcleo */
+}
+
+/* Activación del sistema: Muestra el dashboard cuando JavaScript añade la clase .active */
+#dashboard-aliado.active {
+    display: block !important; /* Fuerza la visibilidad del sistema completo */
+}
+
+/* ============================================================
+   TÍTULO: ANIMACIÓN DE PULSO VITAL
+   LOGICA: Simulación de flujo de datos y energía azul cielo.
+   ============================================================ */
+@keyframes pulsoUnion {
+    0% { 
+        box-shadow: 0 0 8px rgba(135, 206, 235, 0.3); /* Estado inicial del neón */
+        border-color: rgba(135, 206, 235, 0.5); /* Borde a media intensidad */
+    }
+    100% { 
+        box-shadow: 0 0 18px rgba(135, 206, 235, 0.7); /* Estado máximo del neón (brillo total) */
+        border-color: rgba(135, 206, 235, 1); /* Borde a máxima intensidad azul cielo */
+    }
+}
+
+</style>
+
