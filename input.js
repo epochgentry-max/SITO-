@@ -44,6 +44,7 @@
     // 1. CONTROL DE VIDEO (YOUTUBE API - PROTOCOLO SEGURO)
   if (!window.YT) {
     var tag = document.createElement('script');
+    // ACTUALIZACIÓN QUIRÚRGICA: Protocolo HTTPS para compatibilidad con Vercel
     tag.src = "https://www.youtube.com/iframe_api"; 
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -87,7 +88,6 @@
       console.log("SITO: Solicitando acceso al Núcleo...");
 
       try {
-        // Consultamos exclusivamente la tabla de acceso que tú controlas
         const { data, error } = await window.supabaseClient
           .from('acceso_aliados')
           .select('id_interno, estado_acceso')
@@ -105,12 +105,8 @@
           return;
         }
 
-        // ÉXITO: Guardamos el ID oculto para la sesión del CRM
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        
         alert('✅ Acceso Concedido. Bienvenido, Aliado ' + data.id_interno);
-        
-        // Aquí el sistema ya sabe quién es y se puede redirigir
         console.log("Sesión activa para ID:", data.id_interno);
         
       } catch (err) {
@@ -126,7 +122,6 @@
     document.querySelectorAll('.btn-back').forEach(btn => {
     btn.onclick = () => {
       const target = btn.dataset.target;
-      // Si el destino es 'video', aseguramos que vaya a screens.video
       let finalTarget = target === 'video' ? 'video' : target;
       
       if (screens[finalTarget]) {
@@ -145,7 +140,6 @@
       const cont = document.getElementById('contenedor-hijos');
       cont.innerHTML = "";
       const cant = parseInt(inputHijos.value);
-      /* REEMPLAZO QUIRÚRGICO: GENERADOR DE HIJOS ÉLITE */
 
       for(let i=1; i<=cant; i++) {
         const inp = document.createElement('input');
@@ -153,13 +147,9 @@
         inp.placeholder = `Nombre completo hijo ${i} *`;
         inp.className = "hijo-item";
         inp.required = true;
-        
-        // ESTÉTICA SITO: Fondo oscuro y borde dorado (Igual al resto del sistema)
         inp.style.cssText = "margin-bottom:10px; width:100%; padding:12px; background:rgba(2,10,18,0.8); border:1px solid rgba(212,175,55,0.4); border-radius:8px; color:white; outline:none;";
-        
         cont.appendChild(inp);
       }
-      
     };
   }
 
@@ -192,7 +182,6 @@
   // --- OBJETO DE RECOLECCIÓN DE DATOS (SITO CORE) ---
   let formData = {};
 
-  // 4. PROCESAMIENTO DE FORMULARIOS (Flujo de 4 pasos)
   const setupForm = (id, next) => {
     const f = document.getElementById(id);
     if(f) f.onsubmit = e => { 
@@ -205,7 +194,6 @@
         document.querySelectorAll('.hijo-item').forEach(h => hijos.push(h.value));
         formData['nombres_hijos'] = hijos;
       }
-      
       showScreen(next); 
     };
   };
@@ -217,10 +205,8 @@
   const fFinal = document.getElementById('datos-finales');
   if(fFinal) fFinal.onsubmit = async (e) => {
     e.preventDefault();
-    
     const dataFinal = new FormData(fFinal);
     dataFinal.forEach((value, key) => { formData[key] = value; });
-    
     formData['acepto_sarlaft'] = document.getElementById('acepto_sarlaft')?.checked || false;
 
     showScreen(screens.carousel);
@@ -295,7 +281,4 @@
   }
 
 })();
-
-
-
-    
+      
