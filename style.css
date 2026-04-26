@@ -6,22 +6,54 @@
    absoluto de la interfaz sobre el personaje base.
    ============================================================ */
 
+/* ============================================================
+   BLOQUE 1: CONFIGURACIÓN DEL LIENZO PRINCIPAL (RECALIBRADO V5)
+   Logica: Mantiene la integridad total del centrado y diseño
+   original, protegiendo la visualización en Vercel.
+   ============================================================ */
+
 body {
   margin: 0; /* Elimina el espacio exterior predeterminado del navegador */
   padding: 0; /* Elimina el espacio interior predeterminado del navegador */
   width: 100vw; /* Fuerza al cuerpo a medir el 100% del ancho de la pantalla */
-  height: 100vh; /* Fuerza al cuerpo a medir el 100% del alto de la pantalla */
+  min-height: 100vh; /* Asegura cobertura total de la altura */
+  
+  /* FONDO MAESTRO CONSERVADO */
   background: 
     linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), /* Capa de tinte oscuro para legibilidad */
     url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg'); /* Imagen del personaje/fondo principal */
   background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla sin deformarse */
   background-position: center; /* Centra la imagen de fondo en cualquier resolución */
   background-attachment: fixed; /* Mantiene el fondo quieto mientras el contenido fluye (efecto OS) */
+  
+  /* LÓGICA DE CENTRADO INMUTABLE */
   display: flex; /* Activa el modelo de caja flexible para alinear elementos */
   justify-content: center; /* Centra el contenido horizontalmente */
   align-items: center; /* Centra el contenido verticalmente */
+  
   font-family: 'Segoe UI', sans-serif; /* Define la fuente moderna oficial del sistema */
   overflow-x: hidden; /* Evita el desplazamiento lateral accidental en móviles */
+}
+
+/* PROTECCIÓN PARA DISPOSITIVOS MÓVILES Y LANDING */
+@media screen and (max-width: 768px) {
+    body {
+        /* En móviles, permitimos que el contenido fluya si es más largo que la pantalla */
+        height: auto; 
+        align-items: flex-start; /* Evita que el contenido se amontone en el centro en pantallas pequeñas */
+        padding-top: 20px;
+    }
+}
+
+/* AJUSTE QUIRÚRGICO DE ESCALA PARA EL DASHBOARD */
+.sito-plano-deslizable {
+    width: 100%;
+    height: 100vh;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    /* RECALIBRACIÓN: Scale 1 garantiza que se vea a tamaño real en Vercel */
+    transform: scale(1); 
+    transform-origin: top center;
 }
 
 /* ============================================================
