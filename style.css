@@ -1,7 +1,8 @@
 <style>
 
-/* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
-
+/* ============================================================
+   BLOQUE 1: CONFIGURACIÓN NEUTRAL (BODY)
+   ============================================================ */
 body {
   margin: 0;
   padding: 0;
@@ -9,7 +10,7 @@ body {
   height: 100vh;
   /* Fondo con la nueva imagen y el degradado de legibilidad actualizado */
   background: 
-    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
+    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)),
     url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
   background-size: cover;
   background-position: center;
@@ -17,547 +18,242 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Segoe UI', sans-serif;
 }
 
+/* ============================================================
+   BLOQUE 10: ACTUALIZACIÓN DE ESCALA VERCEL
+   ============================================================ */
+.sito-plano-deslizable {
+    width: 100%;
+    height: 100vh;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    transform: scale(1); /* ESCALA 1:1 para evitar huecos blancos en Vercel */
+    transform-origin: top center;
+}
+
+
+/* ============================================================
+   BLOQUE 2: PANTALLA DE INICIO (BIENVENIDA)
+   Logica: Controla la apariencia de la primera imagen que ve 
+   el usuario al cargar el sistema.
+   ============================================================ */
 
 #inicio-sito {
-    /* Cargamos la imagen que me enviaste */
-    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
-    
-    /* Capa de filtro azul (RGBA: Rojo, Verde, Azul, Opacidad) */
-    /* El 0.7 es la intensidad del azul, puedes bajarlo a 0.5 si quieres ver más la foto */
-    background-color: rgba(13, 71, 161, 0.8); 
-    
-    /* Mezcla la imagen con el color */
-    background-blend-mode: multiply;
-    
-    /* Ajustes para que la imagen cubra toda la pantalla y no se repita */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Aseguramos que el contenido sea legible */
-    color: white; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg'); /* Imagen específica de la intro */
+    background-color: rgba(13, 71, 161, 0.8); /* Filtro azul profundo de marca */
+    background-blend-mode: multiply; /* Mezcla el azul con la imagen para oscurecerla */
+    background-size: cover; /* Asegura que la imagen de intro llene su contenedor */
+    background-position: center; /* Centra la vista en el personaje de la intro */
+    background-repeat: no-repeat; /* Evita que la imagen se duplique si el contenedor es grande */
+    color: white; /* Color base del texto sobre la intro */
+    display: flex; /* Permite organizar el texto internamente */
+    flex-direction: column; /* Alinea los elementos uno debajo del otro */
+    align-items: center; /* Centra el texto horizontalmente */
+    justify-content: center; /* Centra el texto verticalmente */
 }
 
-/* Ajuste opcional para que los textos resalten más sobre la foto */
+/* Sombras para textos de inicio */
 #inicio-sito h1, #inicio-sito p {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Crea contraste contra el fondo complejo */
 }
 
-
+/* ============================================================
+   BLOQUE 3: CONTENEDORES TIPO CRISTAL (SCREENS)
+   Logica: Crea el efecto "Glassmorphism" (vidrio esmerilado) 
+   para las ventanas de interacción.
+   ============================================================ */
 
 .screen {
-  width: 90%;
-  max-width: 400px;
-  padding: 30px;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  
-  /* AHUMADO MÁS LIGERO PARA VER AL PERSONAJE */
-  background: rgba(0, 0, 0, 0.1); 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  border-radius: 25px;
-  border: 1px solid rgba(212, 175, 55, 0.4); /* Dorado más presente */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  width: 90%; /* Ancho responsivo para dispositivos móviles */
+  max-width: 400px; /* Limita el ancho en pantallas grandes (PC) */
+  padding: 30px; /* Espacio interno entre el borde y el contenido */
+  display: none; /* Oculto por defecto para controlarlo por JavaScript */
+  flex-direction: column; /* Organiza inputs y botones verticalmente */
+  align-items: center; /* Centra el contenido dentro de la caja */
+  text-align: center; /* Alinea el texto al centro */
+  background: rgba(0, 0, 0, 0.1); /* Fondo negro ultra-translúcido */
+  backdrop-filter: blur(10px); /* Desenfoque del fondo (Efecto cristal) */
+  -webkit-backdrop-filter: blur(10px); /* Compatibilidad del desenfoque para Safari */
+  border-radius: 25px; /* Curvatura suave de las esquinas */
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Borde fino en Dorado Élite */
+  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), /* Resplandor azul exterior suave */
+              inset 0 0 15px rgba(33, 150, 243, 0.1), /* Brillo azul interno ambiental */
+              0 20px 40px rgba(0, 0, 0, 0.6); /* Sombra pesada para dar profundidad */
 }
 
-/* Ajuste para que los títulos no se pierdan */
-h1, h2 {
-  color: #d4af37 !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-}
+/* ============================================================
+   BLOQUE 4: TIPOGRAFÍA ÉLITE
+   Logica: Define los colores y estilos de los títulos y textos.
+   ============================================================ */
 
-
-
-/* RECTIFICACIÓN: DORADO SÓLIDO ÉLITE */
 h1, h2 { 
-  color: #d4af37 !important; 
-  font-size: 26px; 
-  margin: 20px 0;
-  /* Eliminamos el azul del texto: Solo sombra negra para profundidad */
-  text-shadow: 2px 2px 4px rgba(0,0,0,1);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  color: #d4af37 !important; /* Dorado Sólido Élite obligatorio */
+  font-size: 26px; /* Tamaño de títulos principales */
+  margin: 20px 0; /* Espaciado superior e inferior */
+  text-shadow: 2px 2px 4px rgba(0,0,0,1); /* Máximo contraste para el dorado */
+  text-transform: uppercase; /* Fuerza letras mayúsculas para estilo industrial */
+  letter-spacing: 1px; /* Espaciado entre letras para mayor elegancia */
 }
 
 p { 
-  color: #FFFFFF !important; 
-  font-size: 15px;
-  line-height: 1.5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  color: #FFFFFF !important; /* Blanco puro para legibilidad total */
+  font-size: 15px; /* Tamaño de lectura estándar */
+  line-height: 1.5; /* Separación entre líneas para no cansar la vista */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* Sombra ligera para leer sobre fondos claros */
 }
 
-/* LA LUZ AZUL AHORA ES AMBIENTAL, NO TEXTUAL */
-.screen {
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  /* El resplandor azul ahora emana del contenedor, bañando la pantalla */
-  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
-}
+/* ============================================================
+   BLOQUE 5: BOTONES DE ACCIÓN ÉLITE
+   Logica: Diseño de botones con degradados metálicos y luz azul.
+   ============================================================ */
 
-/* REEMPLAZO QUIRÚRGICO: BOTONES ÉLITE */
 .btn-primario {
-  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
-  color: #020a12 !important;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 8px;
-  /* Sombra de luz azul para el botón dorado */
-  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important; /* Degradado de oro a bronce */
+  color: #020a12 !important; /* Texto oscuro para contrastar con el oro */
+  padding: 15px; /* Tamaño del área táctil */
+  font-size: 18px; /* Texto grande y claro */
+  font-weight: bold; /* Resalta la importancia de la acción */
+  text-transform: uppercase; /* Estilo de comando militar */
+  border-radius: 8px; /* Esquinas ligeramente redondeadas */
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4); /* Sombra que emite luz azul */
+  border: none; /* Elimina el borde estándar feo */
+  cursor: pointer; /* Cambia el icono del mouse a mano */
+  transition: transform 0.2s, box-shadow 0.2s; /* Animación suave al presionar */
+  width: 100%; /* El botón ocupa todo el ancho disponible */
 }
 
 .btn-primario:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
+  transform: translateY(-2px); /* Eleva el botón al pasar el dedo/mouse */
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7); /* Intensifica el brillo azul */
 }
-
 
 .btn-secundario {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #f7e08a !important;
-  border: 2px solid #d4af37 !important;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  backdrop-filter: blur(5px);
-  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05) !important; /* Fondo casi invisible */
+  color: #f7e08a !important; /* Texto en amarillo pálido elegante */
+  border: 2px solid #d4af37 !important; /* Borde dorado sólido */
+  padding: 15px; /* Mismo tamaño que el primario para simetría */
+  font-size: 16px; /* Ligeramente más pequeño que el primario */
+  font-weight: bold; /* Mantiene la firmeza visual */
+  backdrop-filter: blur(5px); /* Desenfoque interno */
+  cursor: pointer; /* Indicador de acción */
+  width: 100%; /* Ocupa todo el ancho */
+  border-radius: 8px; /* Consistencia en bordes */
+  margin-top: 10px; /* Separación del botón superior */
 }
 
+.active { display: flex; } /* Clase maestra para mostrar elementos ocultos */
+.logo { width: 250px; max-width: 80%; margin-bottom: 40px; } /* Control de tamaño del logo */
 
+/* ============================================================
+   BLOQUE 6: CAMPOS DE ENTRADA (INPUTS OSCUROS)
+   Logica: Evita parpadeos blancos y mantiene la estética nocturna.
+   ============================================================ */
 
-
-
-
-.active {
-  display: flex;
-}
-
-.logo { width: 250px; max-width: 80%; margin-bottom: 40px; }
-
-
-
-/* RECTIFICACIÓN FINAL: INTERFAZ SITO 100% OSCURA Y ÉLITE */
-
-/* 1. ESTADO BASE Y PERMANENTE */
 input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  
-  /* FONDO OSCURO SIEMPRE: Adiós al parpadeo blanco */
-  background-color: rgba(2, 10, 18, 0.9) !important; 
-  color: #FFFFFF !important; 
-  border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Dorado sutil en reposo */
-  
-  outline: none;
-  transition: all 0.3s ease;
+  width: 100%; /* Ajuste total al contenedor */
+  padding: 12px; /* Comodidad al escribir */
+  margin-bottom: 15px; /* Separación entre campos */
+  font-size: 16px; /* Evita que el iPhone haga zoom automático */
+  border-radius: 8px; /* Estilo redondeado moderno */
+  background-color: rgba(2, 10, 18, 0.9) !important; /* Fondo oscuro constante */
+  color: #FFFFFF !important; /* Texto que se escribe en blanco */
+  border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Borde dorado sutil */
+  box-sizing: border-box; /* Incluye el borde dentro del ancho total */
+  outline: none; /* Elimina el borde azul feo de los navegadores */
+  transition: all 0.3s ease; /* Transición suave de colores */
 }
 
-/* 2. ESTADO DE INTERACCIÓN (FOCO) */
 input:focus, select:focus, textarea:focus {
-  background-color: #020a12 !important; /* Azul profundo SITO */
-  border-color: #2196F3 !important; /* Cambio a Luz Azul */
-  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Aura azul ambiental */
+  background-color: #020a12 !important; /* Fondo negro puro al escribir */
+  border-color: #2196F3 !important; /* El borde cambia a azul neón */
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Resplandor azul de enfoque */
 }
 
-/* 3. TEXTO DE GUÍA (PLACEHOLDER) */
 ::placeholder {
-  color: rgba(255, 255, 255, 0.4); /* Blanco tenue para legibilidad */
+  color: rgba(255, 255, 255, 0.4); /* Texto guía en gris claro para no distraer */
 }
 
+/* ============================================================
+   BLOQUE 7: NAVEGACIÓN SUPERIOR
+   Logica: Controla los botones de retroceso y barra de estado.
+   ============================================================ */
 
-
-button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: none;
-}
-
-
-
-/* CIRUGÍA: VISIBILIDAD BARRA SUPERIOR */
 .barra-superior {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
-  color: #FFFFFF; /* Letras blancas para los pasos */
-  font-weight: bold;
+  display: flex; /* Alineación horizontal de iconos y texto */
+  align-items: center; /* Centrado vertical de la barra */
+  width: 100%; /* Ocupa todo el ancho de la ventana */
+  margin-bottom: 20px; /* Espacio antes del contenido */
+  color: #FFFFFF; /* Texto blanco */
+  font-weight: bold; /* Resalta el nombre de la sección */
 }
 
 .barra-superior button {
-  font-size: 20px;
-  margin-right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FFFFFF; /* La flecha también blanca */
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Espacio entre flecha y texto */
+  font-size: 20px; /* Tamaño del icono/flecha */
+  margin-right: 10px; /* Separación del texto */
+  background: none; /* Sin fondo */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Indicador táctil */
+  color: #FFFFFF; /* Icono blanco */
+  display: flex; /* Permite alinear el icono con texto interno si lo hay */
+  align-items: center; /* Centrado interno */
+  gap: 5px; /* Espacio entre icono y palabra */
 }
 
-
-form { width: 100%; }
-a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
-
-/* Carrusel */
-#carousel-container {
-  display: none;
-  max-width: 800px;
-  margin: 40px auto;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-#carousel {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-#carousel img {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-#carousel-container button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #1976D2;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  font-size: 28px;
-  line-height: 46px;
-  text-align: center;
-}
-
-#prev { left: 10px; }
-#next { right: 10px; }
-
-/* Ajuste específico para el reproductor de YouTube */
-#player {
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-
-/* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  /* Fondo con la nueva imagen y el degradado de legibilidad actualizado */
-  background: 
-    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
-    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
-#inicio-sito {
-    /* Cargamos la imagen que me enviaste */
-    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
-    
-    /* Capa de filtro azul (RGBA: Rojo, Verde, Azul, Opacidad) */
-    /* El 0.7 es la intensidad del azul, puedes bajarlo a 0.5 si quieres ver más la foto */
-    background-color: rgba(13, 71, 161, 0.8); 
-    
-    /* Mezcla la imagen con el color */
-    background-blend-mode: multiply;
-    
-    /* Ajustes para que la imagen cubra toda la pantalla y no se repita */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Aseguramos que el contenido sea legible */
-    color: white; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Ajuste opcional para que los textos resalten más sobre la foto */
-#inicio-sito h1, #inicio-sito p {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-
-
-.screen {
-  width: 90%;
-  max-width: 400px;
-  padding: 30px;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  
-  /* AHUMADO MÁS LIGERO PARA VER AL PERSONAJE */
-  background: rgba(0, 0, 0, 0.1); 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  border-radius: 25px;
-  border: 1px solid rgba(212, 175, 55, 0.4); /* Dorado más presente */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* Ajuste para que los títulos no se pierdan */
-h1, h2 {
-  color: #d4af37 !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-}
-
-
-
-/* RECTIFICACIÓN: DORADO SÓLIDO ÉLITE */
-h1, h2 { 
-  color: #d4af37 !important; 
-  font-size: 26px; 
-  margin: 20px 0;
-  /* Eliminamos el azul del texto: Solo sombra negra para profundidad */
-  text-shadow: 2px 2px 4px rgba(0,0,0,1);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-p { 
-  color: #FFFFFF !important; 
-  font-size: 15px;
-  line-height: 1.5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
-
-/* LA LUZ AZUL AHORA ES AMBIENTAL, NO TEXTUAL */
-.screen {
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  /* El resplandor azul ahora emana del contenedor, bañando la pantalla */
-  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
-}
-
-/* REEMPLAZO QUIRÚRGICO: BOTONES ÉLITE */
-.btn-primario {
-  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
-  color: #020a12 !important;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 8px;
-  /* Sombra de luz azul para el botón dorado */
-  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-primario:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
-}
-
-
-.btn-secundario {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #f7e08a !important;
-  border: 2px solid #d4af37 !important;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  backdrop-filter: blur(5px);
-  cursor: pointer;
-}
-
-
-
-
-
-
-.active {
-  display: flex;
-}
-
-.logo { width: 250px; max-width: 80%; margin-bottom: 40px; }
-
-
-
-/* RECTIFICACIÓN FINAL: INTERFAZ SITO 100% OSCURA Y ÉLITE */
-
-/* 1. ESTADO BASE Y PERMANENTE */
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  
-  /* FONDO OSCURO SIEMPRE: Adiós al parpadeo blanco */
-  background-color: rgba(2, 10, 18, 0.9) !important; 
-  color: #FFFFFF !important; 
-  border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Dorado sutil en reposo */
-  
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-/* 2. ESTADO DE INTERACCIÓN (FOCO) */
-input:focus, select:focus, textarea:focus {
-  background-color: #020a12 !important; /* Azul profundo SITO */
-  border-color: #2196F3 !important; /* Cambio a Luz Azul */
-  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Aura azul ambiental */
-}
-
-/* 3. TEXTO DE GUÍA (PLACEHOLDER) */
-::placeholder {
-  color: rgba(255, 255, 255, 0.4); /* Blanco tenue para legibilidad */
-}
-
-
-
-button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: none;
-}
-
-
-
-/* CIRUGÍA: VISIBILIDAD BARRA SUPERIOR */
-.barra-superior {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
-  color: #FFFFFF; /* Letras blancas para los pasos */
-  font-weight: bold;
-}
-
-.barra-superior button {
-  font-size: 20px;
-  margin-right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FFFFFF; /* La flecha también blanca */
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Espacio entre flecha y texto */
-}
-
-
-form { width: 100%; }
-a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
-
-/* Carrusel */
-#carousel-container {
-  display: none;
-  max-width: 800px;
-  margin: 40px auto;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-#carousel {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-#carousel img {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-#carousel-container button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #1976D2;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  font-size: 28px;
-  line-height: 46px;
-  text-align: center;
-}
-
-#prev { left: 10px; }
-#next { right: 10px; }
-
-/* Ajuste específico para el reproductor de YouTube */
-/* REEMPLAZO QUIRÚRGICO: ESTIRAMIENTO VERTICAL SITO */
-/* REPARACIÓN FINAL: CONTENEDOR EXPANDIDO PARA VIDEO LARGO */
+/* ============================================================
+   BLOQUE 8: MULTIMEDIA Y VIDEO
+   Logica: Optimización para videos de larga duración y alta resolución.
+   ============================================================ */
 
 #video-induccion {
-  /* Dejamos el ancho que te gusta pero liberamos el alto */
-  max-width: 600px !important; 
-  width: 90%;
-  height: auto !important; /* La ventana ahora crece según el contenido */
-  min-height: 900px; /* Asegura espacio suficiente para el video largo */
-  padding-bottom: 40px;
-  display: none; /* Se activa con la clase .active */
-}
-
-#video-induccion.active {
-  display: flex;
+  max-width: 600px !important; /* Ancho máximo para no pixelar el video */
+  width: 90%; /* Ajuste responsivo */
+  height: auto !important; /* Mantiene la proporción original */
+  min-height: 900px; /* Espacio reservado para el scroll del video */
+  padding-bottom: 40px; /* Margen final */
 }
 
 #player {
-  width: 100%;
-  /* Mantenemos tu largo de 550px hacia abajo */
-  height: 550px !important; 
-  border-radius: 15px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  /* Evita que el video se salga de los bordes redondeados */
-  overflow: hidden; 
+  width: 100%; /* El reproductor ocupa todo su contenedor */
+  height: 550px !important; /* Altura fija para visualización cómoda */
+  border-radius: 15px; /* Esquinas de pantalla moderna */
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Borde dorado de "pantalla élite" */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* Sombra que despega el video del fondo */
+  overflow: hidden; /* Corta las esquinas del video para que coincidan con el borde redondeado */
 }
 
-/* Ajuste del botón para que no se salga de la ventana */
-#btn-continuar-postulacion {
-  margin-top: 25px;
-  width: 100%;
+/* ============================================================
+   BLOQUE 9: ESTILO NEÓN (SISTEMA OPERATIVO)
+   Logica: Efectos de respiración azul para sub-módulos.
+   ============================================================ */
+
+.sub-bloque-neon {
+    border: 1px solid rgba(33, 150, 243, 0.4); /* Borde azul neón inicial */
+    background: rgba(0, 20, 40, 0.4); /* Fondo azul noche */
+    box-shadow: inset 0 0 15px rgba(33, 150, 243, 0.1); /* Brillo interno tenue */
+    display: flex; /* Organización interna flex */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    color: #2196F3; /* Color de texto azul operativo */
+    font-size: 10px; /* Tamaño de etiqueta técnica */
+    font-family: 'Courier New', monospace; /* Fuente de código binario */
+    animation: pulsadoNeon 2s infinite alternate; /* Inicia el ciclo de parpadeo neón */
+    border-radius: 8px; /* Bordes suaves */
+    position: relative; /* Base para títulos internos */
 }
+
+@keyframes pulsadoNeon {
+    from {
+        border-color: rgba(33, 150, 243, 0.2); /* Estado apagado del neón */
+        box-shadow: inset 0 0 5px rgba(33, 150, 243, 0.05); /* Brillo mínimo */
+    }
+    to {
+        border-color: rgba(33, 150, 243, 0.7); /* Estado encendido del neón */
+        box-shadow: inset 0 0 20px rgba(33, 150, 243, 0.2), 0 0 10px rgba(33, 150, 243, 0.2); /* Brillo máximo */
+    }
+}
+
 
 </style>
 
-
-
-
-
-   
+  
