@@ -1,17 +1,14 @@
 <style>
-
 /* ============================================================
-   SISTEMA OPERATIVO SITO V5 - CÓDIGO UNIFICADO Y AUDITADO
+   BLOQUE 1: CONFIGURACIÓN BASE (FONDO Y CUERPO)
    ============================================================ */
-
-/* BLOQUE 1: CONFIGURACIÓN NEUTRAL (BODY) */
 body {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
   background: 
-    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)),
+    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
     url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
   background-size: cover;
   background-position: center;
@@ -19,28 +16,26 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden; /* Evita scroll doble molesto */
 }
 
-/* BLOQUE 2: PANTALLA DE INICIO (BIENVENIDA) */
+/* ============================================================
+   BLOQUE 2: PANTALLAS DE INTERACCIÓN (LOGIN/VIDEO)
+   ============================================================ */
 #inicio-sito {
     background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
-    background-color: rgba(13, 71, 161, 0.8);
+    background-color: rgba(13, 71, 161, 0.8); 
     background-blend-mode: multiply;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    color: white;
+    color: white; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-#inicio-sito h1, #inicio-sito p {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* BLOQUE 3: CONTENEDORES TIPO CRISTAL (SCREENS) */
 .screen {
   width: 90%;
   max-width: 400px;
@@ -49,287 +44,138 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1); 
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 25px;
   border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), 
-              inset 0 0 15px rgba(33, 150, 243, 0.1), 
-              0 20px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
 }
 
-/* BLOQUE 4: TIPOGRAFÍA ÉLITE */
-h1, h2 { 
+.active { display: flex !important; }
+
+/* ============================================================
+   BLOQUE 3: BOTONES Y TIPOGRAFÍA ÉLITE
+   ============================================================ */
+h1, h2 {
   color: #d4af37 !important;
   font-size: 26px;
-  margin: 20px 0;
   text-shadow: 2px 2px 4px rgba(0,0,0,1);
   text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
-p { 
-  color: #FFFFFF !important;
-  font-size: 15px;
-  line-height: 1.5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
+p { color: #FFFFFF !important; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
 
-/* BLOQUE 5: BOTONES DE ACCIÓN ÉLITE */
 .btn-primario {
   background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
   color: #020a12 !important;
   padding: 15px;
-  font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  width: 100%;
-}
-
-.btn-primario:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
-}
-
-.btn-secundario {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #f7e08a !important;
-  border: 2px solid #d4af37 !important;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  backdrop-filter: blur(5px);
   cursor: pointer;
   width: 100%;
-  border-radius: 8px;
-  margin-top: 10px;
 }
 
-.active { display: flex; }
-.logo { width: 250px; max-width: 80%; margin-bottom: 40px; }
-
-/* BLOQUE 6: CAMPOS DE ENTRADA */
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  background-color: rgba(2, 10, 18, 0.9) !important;
-  color: #FFFFFF !important;
-  border: 1px solid rgba(212, 175, 55, 0.4) !important;
-  box-sizing: border-box;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-input:focus, select:focus, textarea:focus {
-  background-color: #020a12 !important;
-  border-color: #2196F3 !important;
-  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important;
-}
-
-::placeholder {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* BLOQUE 7: NAVEGACIÓN SUPERIOR */
-.barra-superior {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
-  color: #FFFFFF;
-  font-weight: bold;
-}
-
-.barra-superior button {
-  font-size: 20px;
-  margin-right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-/* BLOQUE 8: MULTIMEDIA Y VIDEO */
-#video-induccion {
-  max-width: 600px !important;
-  width: 90%;
-  height: auto !important;
-  min-height: 900px;
-  padding-bottom: 40px;
-}
-
-#player {
-  width: 100%;
-  height: 550px !important;
-  border-radius: 15px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  overflow: hidden;
-}
-
-/* BLOQUE 9: ESTILO NEÓN (SISTEMA OPERATIVO) */
-.sub-bloque-neon {
-    border: 1px solid rgba(33, 150, 243, 0.4);
-    background: rgba(0, 20, 40, 0.4);
-    box-shadow: inset 0 0 15px rgba(33, 150, 243, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #2196F3;
-    font-size: 10px;
-    font-family: 'Courier New', monospace;
-    animation: pulsadoNeon 2s infinite alternate;
-    border-radius: 8px;
-    position: relative;
-}
-
-@keyframes pulsadoNeon {
-    from {
-        border-color: rgba(33, 150, 243, 0.2);
-        box-shadow: inset 0 0 5px rgba(33, 150, 243, 0.05);
-    }
-    to {
-        border-color: rgba(33, 150, 243, 0.7);
-        box-shadow: inset 0 0 20px rgba(33, 150, 243, 0.2), 0 0 10px rgba(33, 150, 243, 0.2);
-    }
-}
-
-/* BLOQUE 10: REJILLA MAESTRA Y DASHBOARD (ESTABILIZADO) */
+/* ============================================================
+   BLOQUE 4: MOTOR DEL DASHBOARD SITO V5 (RESCATADO)
+   ============================================================ */
 #dashboard-aliado {
-    background: #020a12;
-    min-height: 100vh;
     width: 100vw;
+    height: 100vh;
     display: none;
-    overflow: hidden;
+    background: #020a12;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
 }
 
 .sito-plano-deslizable {
-    width: 100vw;
-    height: 100vh;
+    width: 167%; 
+    height: 167%;
     overflow: auto !important;
-    -webkit-overflow-scrolling: touch;
-    background-color: #020a12;
-    background-image: 
-        linear-gradient(rgba(135, 206, 235, 0.05) 1px, transparent 1px), 
-        linear-gradient(90deg, rgba(135, 206, 235, 0.05) 1px, transparent 1px), 
-        radial-gradient(circle, rgba(135, 206, 235, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px, 40px 40px, 20px 20px;
     transform: scale(0.6);
     transform-origin: top left;
-    min-width: 167%;
-    min-height: 167%;
+    background-image: 
+        linear-gradient(rgba(135, 206, 235, 0.05) 1px, transparent 1px), 
+        linear-gradient(90deg, rgba(135, 206, 235, 0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-color: #020a12;
 }
 
 #master-grid-container {
     display: grid;
-    grid-template-columns: 1fr 440px 440px;
-    grid-template-rows: 660px 320px 1fr 70px;
+    grid-template-columns: 1200px 440px 440px; /* 3 Columnas */
+    grid-template-rows: 660px 320px 800px 100px;
     grid-template-areas: 
         "superior  lateral  lateral2"
         "inter-sup lateral  lateral2"
         "nucleo    lateral  lateral2"
         "pre-foot  lateral  lateral2";
-    width: 2500px;
-    height: 180vh;
-    gap: 15px;
-    padding: 20px;
-    padding-top: 110px;
-    background: transparent;
-    box-sizing: border-box;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    gap: 20px;
+    padding: 100px 40px 40px 40px;
+    width: max-content;
 }
 
-/* UNIONES Y ENERGÍA AZUL CIELO */
-#sec-superior, #sec-inter-sup, #sec-nucleo, #sec-pre-footer, #barra-lateral-derecha,
-.sub-bloque, .sub-bloque-h, .sub-bloque-v, .sub-grid-12 div, .modulo-dual {
+/* Identificadores de área */
+#sec-superior { grid-area: superior; display: flex; gap: 15px; }
+#sec-inter-sup { grid-area: inter-sup; display: flex; flex-direction: column; gap: 15px; }
+#sec-nucleo { grid-area: nucleo; }
+#sec-pre-footer { grid-area: pre-foot; display: flex; gap: 15px; }
+#barra-lateral-derecha { grid-area: lateral; display: flex; flex-direction: column; gap: 15px; }
+#barra-lateral-2 { grid-area: lateral2; display: flex; flex-direction: column; gap: 15px; }
+
+/* Estética de los bloques de datos */
+.sub-bloque, .sub-bloque-h, .sub-bloque-v, .modulo-dual, #sec-nucleo, .sub-grid-12 div {
     border: 1px solid rgba(135, 206, 235, 0.8) !important;
-    box-shadow: 0 0 10px rgba(135, 206, 235, 0.4), inset 0 0 5px rgba(135, 206, 235, 0.2);
-    transition: all 0.3s ease;
-    animation: pulsoUnion 3s infinite alternate;
-}
-
-#barra-lateral-2 {
-    grid-area: lateral2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.modulo-dual {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 10px;
-}
-
-/* ASIGNACIÓN DE ÁREAS */
-#sec-superior { grid-area: superior; display: flex; gap: 10px; }
-#sec-inter-sup { grid-area: inter-sup; display: flex; flex-direction: column; gap: 10px; }
-#sec-nucleo { grid-area: nucleo; background: rgba(135, 206, 235, 0.01); }
-#sec-pre-footer { grid-area: pre-foot; display: flex; gap: 8px; }
-#barra-lateral-derecha { 
-    grid-area: lateral; 
-    display: flex; 
-    flex-direction: column; 
-    background: rgba(0,0,0,0.4); 
-    gap: 10px; 
-}
-
-/* ESTILOS DE SUBDIVISIÓN INTERNA */
-.sub-bloque, .sub-bloque-h, .sub-bloque-v {
-    flex: 1;
+    box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
+    background: rgba(0, 20, 40, 0.5);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #d4af37;
-    font-size: 10px;
     font-family: 'Courier New', monospace;
     text-transform: uppercase;
-    background: rgba(212, 175, 55, 0.05);
-    border-radius: 4px;
+    font-size: 11px;
+    animation: pulsoUnion 3s infinite alternate;
 }
 
-/* CONTROL DE TAMAÑOS SECCIÓN 2 */
-#sec-superior > div:nth-child(1) { flex: 1.6 !important; }
-#sec-superior > div:nth-child(2) { flex: 1 !important; }
-#sec-superior > div:nth-child(3) { flex: 2.7 !important; }
+.modulo-dual { flex: 1; }
 
-/* REJILLA NÚCLEO */
+/* Rejilla interna del núcleo */
 .sub-grid-12 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
     height: 100%;
-    gap: 8px;
-    padding: 10px;
+    gap: 10px;
+    padding: 15px;
 }
 
-.sub-grid-12 div {
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 12px;
+/* ============================================================
+   BLOQUE 5: SISTEMA DE VIDEO Y ANIMACIONES
+   ============================================================ */
+#video-induccion { max-width: 600px !important; width: 90%; min-height: 900px; }
+#player {
+  width: 100%; height: 550px !important; border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  overflow: hidden;
 }
-
-#dashboard-aliado.active { display: block !important; }
 
 @keyframes pulsoUnion {
-    0% { box-shadow: 0 0 8px rgba(135, 206, 235, 0.3); border-color: rgba(135, 206, 235, 0.5); }
-    100% { box-shadow: 0 0 18px rgba(135, 206, 235, 0.7); border-color: rgba(135, 206, 235, 1); }
-  }
-      </style>
+    0% { border-color: rgba(135, 206, 235, 0.4); box-shadow: 0 0 5px rgba(135, 206, 235, 0.2); }
+    100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 15px rgba(135, 206, 235, 0.5); }
+}
+
+/* Campos de entrada Élite */
+input, select {
+  width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px;
+  background-color: rgba(2, 10, 18, 0.9) !important; color: #FFFFFF !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+}
+input:focus { border-color: #2196F3 !important; box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; }
+</style>
+                 
