@@ -111,10 +111,13 @@ if (togglePassword && passwordField) {
 
       console.log("SITO: Solicitando acceso al Núcleo...");
 
+
+
+
       try {
         const { data, error } = await window.supabaseClient
           .from('acceso_aliados')
-          .select('id_interno, estado_acceso')
+          .select('id_interno, estado_acceso, reg_username') // <-- Selección actualizada
           .eq('reg_username', user)
           .eq('reg_password', pass)
           .single();
@@ -131,12 +134,13 @@ if (togglePassword && passwordField) {
 
         // GUARDADO DE SESIÓN Y BIENVENIDA ÉLITE
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        console.log("SITO: Sesión activa para ID:", data.id_interno);
-
-         // Feedback Visual de Éxito: ¡Ahora sí con nombre y ID!
-            const saludo = `¡Bienvenido, ${nombreAliado}!\n[ID: ${idAliado}]`;
-            window.mostrarSitoAlert(saludo, '✅');
+        sessionStorage.setItem('sito_nombre_aliado', data.reg_username); // Guardamos el nombre
         
+        console.log("SITO: Sesión activa para:", data.reg_username);
+        
+        // Alerta con Nombre e ID integrados
+        const mensajeBienvenida = `Acceso Concedido. Bienvenido, Aliado ${data.reg_username} [${data.id_interno}]`;
+        mostrarSitoAlert(mensajeBienvenida, '✅');
         
       } catch (err) {
         mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
@@ -144,6 +148,16 @@ if (togglePassword && passwordField) {
       }
     };
   }
+
+
+
+
+
+
+
+
+      
+      
   
   bind('back-to-start', () => showScreen(screens.inicio));
   bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
