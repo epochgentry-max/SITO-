@@ -120,26 +120,29 @@ if (togglePassword && passwordField) {
           .single();
 
         if (error || !data) {
-          alert('❌ Acceso Denegado: Credenciales no reconocidas por el sistema de seguridad.');
+          mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas por el sistema de seguridad.', '🚫');
           return;
         }
 
         if (data.estado_acceso !== 'activo') {
-          alert('⚠️ Cuenta en Auditoría: Su acceso ha sido restringido temporalmente.');
+          mostrarSitoAlert('⚠️ Cuenta en Auditoría: Su acceso ha sido restringido temporalmente.', '⚖️');
           return;
         }
 
+        // GUARDADO DE SESIÓN Y BIENVENIDA ÉLITE
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        alert('✅ Acceso Concedido. Bienvenido, Aliado ' + data.id_interno);
-        console.log("Sesión activa para ID:", data.id_interno);
+        console.log("SITO: Sesión activa para ID:", data.id_interno);
+        
+        // Llamamos a nuestra alerta personalizada
+        mostrarSitoAlert('Acceso Concedido. Bienvenido, Aliado ' + data.id_interno, '✅');
         
       } catch (err) {
-        alert('Fallo crítico de comunicación con el Núcleo SITO.');
+        mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
         console.error(err);
       }
     };
   }
-
+  
   bind('back-to-start', () => showScreen(screens.inicio));
   bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
 
@@ -304,5 +307,31 @@ if (togglePassword && passwordField) {
     };
   }
 
+  // --- SISTEMA DE COMUNICACIÓN TÁCTICA SITO ---
+  window.mostrarSitoAlert = (mensaje, icono = '✅') => {
+    const modal = document.getElementById('sito-alert');
+    const msg = document.getElementById('sito-alert-msg');
+    const ico = document.getElementById('sito-alert-icon');
+    
+    if(modal && msg && ico) {
+      msg.innerText = mensaje;
+      ico.innerText = icono;
+      modal.style.display = 'flex';
+    }
+  };
+
+  window.cerrarSitoAlert = () => {
+    const modal = document.getElementById('sito-alert');
+    if(modal) modal.style.display = 'none';
+    
+    // Si el acceso fue concedido (existe sesión), disparamos el Dashboard
+    if (sessionStorage.getItem('sito_id_aliado')) {
+       // showScreen(screens.dashboard); // Descomenta cuando el ID del dashboard esté listo
+       console.log("Navegando al Núcleo...");
+       // Aquí podrías poner: screens.login.style.display = 'none'; screens.dashboard.style.display = 'block';
+    }
+  };
+  
+  
 })();
 
