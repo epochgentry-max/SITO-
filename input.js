@@ -116,57 +116,40 @@ if (togglePassword && passwordField) {
 
 
 
-      
-// --- PROTOCOLO DE ACCESO MEJORADO (CONCILIACIÓN DE NOMBRES) ---
-const fLogin = document.getElementById('form-login');
-if(fLogin) {
-    fLogin.onsubmit = async (e) => {
-        e.preventDefault();
-        const user = document.getElementById('login_username').value.trim();
-        const pass = document.getElementById('login_password').value.trim();
 
-        console.log("SITO: Solicitando acceso al Núcleo...");
+      try {
+        const { data, error } = await window.supabaseClient
+          .from('acceso_aliados')
+          .select('id_interno, estado_acceso, reg_nombre') // Añadimos el nombre a la extracción
+          .eq('reg_username', user)
+          .eq('reg_password', pass)
+          .single();
 
-        try {
-            // Nota: Aquí seleccionamos '*' para ver todos los campos si hay dudas de nombres
-            const { data, error } = await window.supabaseClient
-                .from('acceso_aliados')
-                .select('*') 
-                .eq('reg_username', user) // <-- Verifica si en Supabase es 'usuario' o 'reg_username'
-                .eq('reg_password', pass) // <-- Verifica si en Supabase es 'password' o 'reg_password'
-                .single();
-
-            if (error || !data) {
-                window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
-                return;
-            }
-
-            // Conciliación de identidad: Buscamos el nombre en posibles variantes de columna
-            const nombreAliado = data.reg_nombre || data.nombre || "Aliado Desconocido";
-            const idAliado = data.id_interno || data.id || "000";
-
-            if (data.estado_acceso !== 'activo') {
-                window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
-                return;
-            }
-
-            // Persistencia en el Búnker Local (SessionStorage)
-            sessionStorage.setItem('sito_id_aliado', idAliado);
-            sessionStorage.setItem('sito_nombre_aliado', nombreAliado);
-            
-            // Feedback Visual de Éxito
-            const saludo = `¡Bienvenido, ${nombreAliado}!\n[ID: ${idAliado}]`;
-            window.mostrarSitoAlert(saludo, '✅');
-            
-            // Aquí podrías disparar la transición al Dashboard
-            // setTimeout(() => { showScreen(screens.dashboard); }, 1500);
-
-        } catch (err) {
-            console.error("Fallo crítico:", err);
-            window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo.', '☢️');
+        if (error || !data) {
+          window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
+          return;
         }
-    };
-}
+
+        if (data.estado_acceso !== 'activo') {
+          window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
+          return;
+        }
+
+        // GUARDADO DE SESIÓN CON NOMBRE
+        sessionStorage.setItem('sito_id_aliado', data.id_interno);
+        sessionStorage.setItem('sito_nombre_aliado', data.reg_nombre); // Guardamos nombre para el Dashboard
+        
+        // MENSAJE PERSONALIZADO
+        const bienvenida = `Bienvenido, ${data.reg_nombre} \n [ID: ${data.id_interno}]`;
+        window.mostrarSitoAlert(bienvenida, '✅');
+        
+      } catch (err) {
+        window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo.', '☢️');
+      }
+      
+
+      
+
 
 
 
