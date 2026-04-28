@@ -116,37 +116,54 @@ if (togglePassword && passwordField) {
 
       
 
-            try {
-        const { data, error } = await window.supabaseClient
-          .from('acceso_aliados')
-          .select('id_interno, estado_acceso, reg_nombre') // Añadimos el nombre a la extracción
-          .eq('reg_username', user)
-          .eq('reg_password', pass)
-          .single();
+     // --- LÓGICA DE LOGIN AUDITADA (MAPEO EXACTO DE SUPABASE) ---
+const fLogin = document.getElementById('form-login');
+if(fLogin) {
+  fLogin.onsubmit = async (e) => {
+    e.preventDefault();
+    
+    const user = document.getElementById('login_username').value.trim();
+    const pass = document.getElementById('login_password').value.trim();
 
-        if (error || !data) {
-          window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
-          return;
-        }
+    try {
+      const { data, error } = await window.supabaseClient
+        .from('acceso_aliados')
+        .select('id_interno, estado_acceso, reg_username') // Mapeo real de tus columnas
+        .eq('reg_username', user)
+        .eq('reg_password', pass)
+        .single();
 
-        if (data.estado_acceso !== 'activo') {
-          window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
-          return;
-        }
+      if (error || !data) {
+        window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
+        return;
+      }
 
-        // GUARDADO DE SESIÓN CON NOMBRE
-        sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        sessionStorage.setItem('sito_nombre_aliado', data.reg_nombre); // Guardamos nombre para el Dashboard
-        
-        // MENSAJE PERSONALIZADO
-        const bienvenida = `Bienvenido, ${data.reg_nombre} \n [ID: ${data.id_interno}]`;
-        window.mostrarSitoAlert(bienvenida, '✅');
-        
-      } catch (err) {
-        window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo.', '☢️');
-            }
-    };
-  }
+      if (data.estado_acceso !== 'activo') {
+        window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido temporalmente.', '⚖️');
+        return;
+      }
+
+      // GUARDADO DE SESIÓN CON DATOS REALES
+      sessionStorage.setItem('sito_id_aliado', data.id_interno);
+      sessionStorage.setItem('sito_nombre_aliado', data.reg_username); // Usamos el username como nombre
+      
+      // FEEDBACK PERSONALIZADO
+      const saludo = `¡Bienvenido, ${data.reg_username}!\n[ID: ${data.id_interno}]`;
+      window.mostrarSitoAlert(saludo, '✅');
+      
+      // Actualizamos el último ingreso en segundo plano (Opcional pero recomendado)
+      await window.supabaseClient
+        .from('acceso_aliados')
+        .update({ ultimo_ingreso: new Date() })
+        .eq('id_interno', data.id_interno);
+
+    } catch (err) {
+      console.error("Error de conexión:", err);
+      window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
+    }
+  };
+}
+      
 
 
 
