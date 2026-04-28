@@ -32,13 +32,19 @@
     paso2: document.getElementById('formulario-paso2'),
     paso3: document.getElementById('formulario-paso3'),
     paso4: document.getElementById('formulario-paso4'),
-    confirm: document.getElementById('formulario-confirmacion'),
-    carousel: document.getElementById('carousel-container')
+        confirm: document.getElementById('formulario-confirmacion'),
+    carousel: document.getElementById('carousel-container'),
+    dashboard: document.getElementById('dashboard-aliado') // Coordenada de la Nueva Interfaz
   };
 
-  const showScreen = (s) => {
+    const showScreen = (s) => {
+    // 1. Apagado de todas las señales de pantalla activas
     Object.values(screens).forEach(el => { if(el) el.style.display = 'none'; });
-    if(s) s.style.display = 'flex';
+    
+    // 2. Activación quirúrgica: El Dashboard requiere 'block' para mantener el panorama
+    if(s) {
+      s.style.display = (s.id === 'dashboard-aliado') ? 'block' : 'flex';
+    }
   };
 
     // 1. CONTROL DE VIDEO (YOUTUBE API - PROTOCOLO SEGURO)
@@ -336,17 +342,20 @@ if (togglePassword && passwordField) {
     }
   };
 
-  window.cerrarSitoAlert = () => {
+    window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
     if(modal) modal.style.display = 'none';
     
-    // Si el acceso fue concedido (existe sesión), disparamos el Dashboard
+    // 1. Verificación de integridad de sesión
     if (sessionStorage.getItem('sito_id_aliado')) {
-       // showScreen(screens.dashboard); // Descomenta cuando el ID del dashboard esté listo
-       console.log("Navegando al Núcleo...");
-       // Aquí podrías poner: screens.login.style.display = 'none'; screens.dashboard.style.display = 'block';
+       // 2. Ejecución de transición al Dashboard
+       showScreen(screens.dashboard); 
+       
+       // 3. Log de auditoría interna
+       console.log("SITO: Dashboard de Aliado despertando en el Núcleo.");
     }
   };
   
   
 })();
+                                    
