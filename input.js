@@ -114,59 +114,63 @@ if (togglePassword && passwordField) {
 
 
 
-      
 
-     // --- LÓGICA DE LOGIN AUDITADA (MAPEO EXACTO DE SUPABASE) ---
+
+      
+// --- PROTOCOLO DE ACCESO MEJORADO (CONCILIACIÓN DE NOMBRES) ---
 const fLogin = document.getElementById('form-login');
 if(fLogin) {
-  fLogin.onsubmit = async (e) => {
-    e.preventDefault();
-    
-    const user = document.getElementById('login_username').value.trim();
-    const pass = document.getElementById('login_password').value.trim();
+    fLogin.onsubmit = async (e) => {
+        e.preventDefault();
+        const user = document.getElementById('login_username').value.trim();
+        const pass = document.getElementById('login_password').value.trim();
 
-    try {
-      const { data, error } = await window.supabaseClient
-        .from('acceso_aliados')
-        .select('id_interno, estado_acceso, reg_username') // Mapeo real de tus columnas
-        .eq('reg_username', user)
-        .eq('reg_password', pass)
-        .single();
+        console.log("SITO: Solicitando acceso al Núcleo...");
 
-      if (error || !data) {
-        window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
-        return;
-      }
+        try {
+            // Nota: Aquí seleccionamos '*' para ver todos los campos si hay dudas de nombres
+            const { data, error } = await window.supabaseClient
+                .from('acceso_aliados')
+                .select('*') 
+                .eq('reg_username', user) // <-- Verifica si en Supabase es 'usuario' o 'reg_username'
+                .eq('reg_password', pass) // <-- Verifica si en Supabase es 'password' o 'reg_password'
+                .single();
 
-      if (data.estado_acceso !== 'activo') {
-        window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido temporalmente.', '⚖️');
-        return;
-      }
+            if (error || !data) {
+                window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
+                return;
+            }
 
-      // GUARDADO DE SESIÓN CON DATOS REALES
-      sessionStorage.setItem('sito_id_aliado', data.id_interno);
-      sessionStorage.setItem('sito_nombre_aliado', data.reg_username); // Usamos el username como nombre
-      
-      // FEEDBACK PERSONALIZADO
-      const saludo = `¡Bienvenido, ${data.reg_username}!\n[ID: ${data.id_interno}]`;
-      window.mostrarSitoAlert(saludo, '✅');
-      
-      // Actualizamos el último ingreso en segundo plano (Opcional pero recomendado)
-      await window.supabaseClient
-        .from('acceso_aliados')
-        .update({ ultimo_ingreso: new Date() })
-        .eq('id_interno', data.id_interno);
+            // Conciliación de identidad: Buscamos el nombre en posibles variantes de columna
+            const nombreAliado = data.reg_nombre || data.nombre || "Aliado Desconocido";
+            const idAliado = data.id_interno || data.id || "000";
 
-    } catch (err) {
-      console.error("Error de conexión:", err);
-      window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
-    }
-  };
+            if (data.estado_acceso !== 'activo') {
+                window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
+                return;
+            }
+
+            // Persistencia en el Búnker Local (SessionStorage)
+            sessionStorage.setItem('sito_id_aliado', idAliado);
+            sessionStorage.setItem('sito_nombre_aliado', nombreAliado);
+            
+            // Feedback Visual de Éxito
+            const saludo = `¡Bienvenido, ${nombreAliado}!\n[ID: ${idAliado}]`;
+            window.mostrarSitoAlert(saludo, '✅');
+            
+            // Aquí podrías disparar la transición al Dashboard
+            // setTimeout(() => { showScreen(screens.dashboard); }, 1500);
+
+        } catch (err) {
+            console.error("Fallo crítico:", err);
+            window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo.', '☢️');
+        }
+    };
 }
-      
 
 
 
+r
 
 
 
