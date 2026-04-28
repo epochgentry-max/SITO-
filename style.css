@@ -137,28 +137,35 @@ p {
   cursor: pointer;
 }
 
-/* POSICIONAMIENTO TÁCTICO DEL OJO */
+/* RECALIBRACIÓN: SISTEMA DE VISIÓN SITO */
 .password-wrapper {
   position: relative;
   width: 100%;
+  display: flex; /* Alineación forzada */
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .password-wrapper input {
-  padding-right: 45px !important; /* Espacio para que el texto no pise el ojo */
+  width: 100% !important;
+  padding-right: 45px !important; /* Espacio de seguridad para el ojo */
+  margin-bottom: 0 !important; /* El margen lo lleva el wrapper ahora */
 }
 
 .toggle-password {
   position: absolute;
-  right: 15px;
-  top: 50%;
+  right: 12px; /* Distancia del borde derecho */
+  top: 50%; /* Centrado vertical absoluto */
   transform: translateY(-50%);
   cursor: pointer;
-  color: #d4af37; /* Dorado Élite */
+  color: #d4af37; 
   font-size: 18px;
   z-index: 10;
   display: flex;
   align-items: center;
+  background: transparent;
 }
+
 
 
 
