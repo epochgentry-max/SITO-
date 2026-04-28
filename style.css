@@ -733,21 +733,48 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 
 
 
-/* --- ARQUITECTURA PANORÁMICA DASHBOARD --- */
+/* --- ESTABILIZACIÓN PANORÁMICA SITO --- */
 .dashboard-view {
     padding: 0 !important;
-    overflow-x: auto; /* Permite el deslizamiento horizontal */
-    overflow-y: hidden;
-    background: radial-gradient(circle at center, #0a192f 0%, #020a12 100%);
+    overflow-x: scroll !important; /* Fuerza el scroll horizontal */
+    overflow-y: auto; /* Permite scroll vertical si el contenido crece */
+    background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
+    -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
 }
 
+
+
+
+
+
+
 .panorama-viewport {
-    display: flex;
-    width: 400%; /* El ancho extendido que pediste, jefe */
-    height: calc(100vh - 120px); /* Restando header y footer */
+    display: inline-flex; /* Permite que el ancho crezca según el contenido */
+    min-width: 400vw; /* Asegura que el "hijo" sea 4 veces más ancho que la pantalla */
+    height: 100vh;
     padding: 20px;
-    gap: 30px;
+    gap: 40px; /* Espacio generoso entre módulos */
+    box-sizing: border-box;
 }
+
+/* Ajuste de Secciones para que no se compriman */
+.sito-section {
+    min-width: 85vw; /* Cada sección ocupa casi toda la pantalla antes de deslizar a la siguiente */
+    height: 90vh;
+    flex-shrink: 0; /* PROHIBIDO que se compriman */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+
+
+
+
+
+
 
 /* SECCIÓN 2: EL NÚCLEO */
 .section-2 {
