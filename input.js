@@ -111,51 +111,37 @@ if (togglePassword && passwordField) {
 
       console.log("SITO: Solicitando acceso al Núcleo...");
 
-
-
-
-
-
-
       try {
         const { data, error } = await window.supabaseClient
           .from('acceso_aliados')
-          .select('id_interno, estado_acceso, reg_nombre') // Añadimos el nombre a la extracción
+          .select('id_interno, estado_acceso')
           .eq('reg_username', user)
           .eq('reg_password', pass)
           .single();
 
         if (error || !data) {
-          window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
+          mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas por el sistema de seguridad.', '🚫');
           return;
         }
 
         if (data.estado_acceso !== 'activo') {
-          window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
+          mostrarSitoAlert('⚠️ Cuenta en Auditoría: Su acceso ha sido restringido temporalmente.', '⚖️');
           return;
         }
 
-        // GUARDADO DE SESIÓN CON NOMBRE
+        // GUARDADO DE SESIÓN Y BIENVENIDA ÉLITE
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        sessionStorage.setItem('sito_nombre_aliado', data.reg_nombre); // Guardamos nombre para el Dashboard
+        console.log("SITO: Sesión activa para ID:", data.id_interno);
         
-        // MENSAJE PERSONALIZADO
-        const bienvenida = `Bienvenido, ${data.reg_nombre} \n [ID: ${data.id_interno}]`;
-        window.mostrarSitoAlert(bienvenida, '✅');
+        // Llamamos a nuestra alerta personalizada
+        mostrarSitoAlert('Acceso Concedido. Bienvenido, Aliado ' + data.id_interno, '✅');
         
       } catch (err) {
-        window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo.', '☢️');
+        mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
+        console.error(err);
       }
-      
-
-      
-
-
-
-
-
-
-
+    };
+  }
   
   bind('back-to-start', () => showScreen(screens.inicio));
   bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
@@ -348,4 +334,3 @@ if (togglePassword && passwordField) {
   
   
 })();
-
