@@ -134,7 +134,7 @@ if (togglePassword && passwordField) {
         console.log("SITO: Sesión activa para ID:", data.id_interno);
         
         // Llamamos a nuestra alerta personalizada
-        mostrarSitoAlert('Acceso Concedido. Bienvenido:', data.reg_username + data.id_interno, '✅');
+        mostrarSitoAlert('Acceso Concedido. Bienvenido, Aliado', + data.reg_username + data.id_interno, '✅');
         
       } catch (err) {
         mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
