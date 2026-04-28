@@ -275,7 +275,11 @@
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 120px; margin-top: 20px;"> <h2>Iniciar Sesión</h2>
   <form id="form-login">
     <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;">
-    <input type="password" id="login_password" name="login_password" placeholder="Contraseña *" required style="width: 100%; margin-bottom: 20px;">
+    <div class="password-wrapper" style="margin-bottom: 25px;">
+  <input type="password" id="login_password" name="login_password" placeholder="Contraseña *" required>
+  <span id="togglePassword" class="toggle-password">👁️</span>
+    </div>
+      
     <button type="submit" class="btn-primario">Entrar al Sistema</button>
   </form>
   <p style="margin-top: 20px; font-size: 12px; color: #666;">¿Olvidó sus credenciales? Contacte a su analista de cuenta.</p>
