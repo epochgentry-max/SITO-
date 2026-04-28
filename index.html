@@ -265,14 +265,27 @@
     <button class="btn-back" data-target="inicio-sito">←</button>
     <div>Acceso Aliado SITO</div>
   </div>
-  <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 120px; margin-top: 20px;"> <h2>Iniciar Sesión</h2>
+  <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 100px; margin-top: 10px;"> 
+  <h2 style="margin-top: 15px;">Iniciar Sesión</h2>
+  
   <form id="form-login">
-    <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;">
-    <input type="password" id="login_password" name="login_password" placeholder="Contraseña *" required style="width: 100%; margin-bottom: 20px;">
-    <button type="submit" class="btn-primario">Entrar al Sistema</button>
+    <div style="margin-bottom: 20px;">
+      <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required>
+    </div>
+    
+    <div class="password-wrapper" style="margin-bottom: 30px;">
+      <input type="password" id="login_password" name="login_password" placeholder="Contraseña *" required>
+      <span id="togglePassword" class="toggle-password">👁️</span>
+    </div>
+    
+    <button type="submit" class="btn-primario" style="width: 100%;">ENTRAR AL SISTEMA</button>
   </form>
-  <p style="margin-top: 20px; font-size: 12px; color: #666;">¿Olvidó sus credenciales? Contacte a su analista de cuenta.</p>
+  
+  <p style="margin-top: 40px; font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 1px;">
+    ¿OLVIDÓ SUS CREDENCIALES? <br> CONTACTE A SU ANALISTA DE CUENTA.
+  </p>
 </div>
+
 
 <div id="carousel-container">
   <div id="carousel">
