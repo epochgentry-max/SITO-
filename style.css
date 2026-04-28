@@ -71,6 +71,19 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
+/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro */
+#dashboard-aliado.screen {
+  max-width: none !important; /* Rompe el límite del Padre para esta pantalla */
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  overflow-x: auto !important; /* Permite el flujo panorámico */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Ajuste para que los títulos no se pierdan */
 h1, h2 {
   color: #d4af37 !important;
@@ -743,38 +756,25 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 }
 
 
-
-
-
-
-
 .panorama-viewport {
-    display: inline-flex; /* Permite que el ancho crezca según el contenido */
-    min-width: 400vw; /* Asegura que el "hijo" sea 4 veces más ancho que la pantalla */
+    display: flex;
+    width: 500vw; /* 5 Estaciones de trabajo */
     height: 100vh;
-    padding: 20px;
-    gap: 40px; /* Espacio generoso entre módulos */
-    box-sizing: border-box;
+    scroll-snap-type: x mandatory;
 }
 
 /* Ajuste de Secciones para que no se compriman */
 .sito-section {
-    min-width: 85vw; /* Cada sección ocupa casi toda la pantalla antes de deslizar a la siguiente */
-    height: 90vh;
-    flex-shrink: 0; /* PROHIBIDO que se compriman */
+    width: 100vw !important;
+    height: 100vh !important;
+    flex-shrink: 0;
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     padding: 20px;
     box-sizing: border-box;
+    border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
 }
-
-
-
-
-
-
-
-
 
 /* SECCIÓN 2: EL NÚCLEO */
 .section-2 {
@@ -782,7 +782,18 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     display: flex;
     gap: 15px;
 }
-.sub-2-1 { flex: 2; background: rgba(212,175,55,0.05); border: 1px solid #d4af37; padding: 15px; }
+
+/* Posicionamiento de Identidad en Esquina */
+.sub-2-1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Alinea a la izquierda */
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(212,175,55,0.05); 
+    border: 1px solid #d4af37;
+}
+
 .sub-2-2 { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .sub-2-3 { flex: 3; background: rgba(255,255,255,0.02); padding: 15px; overflow-y: auto; }
 
@@ -842,9 +853,10 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 .sito-profile-card {
     text-align: left;
     position: relative;
-    border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Neón Dorado para Perfil */
-    padding: 15px;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    border: 1px solid #d4af37 !important; /* Neón Dorado para Perfil */
+    padding: 10px 20px;
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 
 .card-status-dot {
@@ -857,9 +869,9 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 }
 
 .profile-alias {
-    color: #d4af37; /* Amarillo Dorado */
-    font-size: 24px;
-    font-weight: bold;
+    color: #d4af37 !important; /* Amarillo Aliado */
+    font-size: 26px !important;
+    font-weight: 900;
     margin: 0;
     letter-spacing: 1px;
 }
@@ -886,4 +898,3 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 </style>
 
 
-                    
