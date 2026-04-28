@@ -706,6 +706,32 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
 }
 
+/* ESTÉTICA DE ALERTAS SITO */
+.sito-modal-alert {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(2, 10, 18, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+}
+
+.sito-modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #d4af37;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 320px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+#sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
+#sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
+#sito-alert-icon { font-size: 40px; }
+
+
 
 </style>
 
