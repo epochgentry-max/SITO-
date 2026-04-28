@@ -75,6 +75,30 @@
 
   bind('btn-crear-cuenta', () => showScreen(screens.video));
   bind('btn-iniciar-sesion', () => showScreen(screens.login));
+
+// =============================================
+// PROTOCOLO DE VISIÓN SITO: CONTROL DEL OJO
+// =============================================
+const togglePassword = document.querySelector('#togglePassword');
+const passwordField = document.querySelector('#login_password');
+
+if (togglePassword && passwordField) {
+    togglePassword.addEventListener('click', function () {
+        // 1. Detectar estado actual y alternar
+        const isPassword = passwordField.getAttribute('type') === 'password';
+        const type = isPassword ? 'text' : 'password';
+        
+        // 2. Aplicar cambio al hardware (input)
+        passwordField.setAttribute('type', type);
+        
+        // 3. Actualizar el Icono (Feedback Visual)
+        this.textContent = isPassword ? '🔒' : '👁️';
+        
+        // 4. Efecto de foco para no perder la línea de escritura
+        passwordField.focus();
+    });
+}
+  
   
   // 2.1 LÓGICA DE LOGIN - PROTOCOLO DE ACCESO AUTORIZADO
   const fLogin = document.getElementById('form-login');
