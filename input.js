@@ -132,6 +132,12 @@
     };
   });
   
+// Dentro de la lógica de éxito del login:
+sessionStorage.setItem('sito_id_aliado', data.id_interno);
+document.getElementById('display-sito-id').innerText = data.id_interno; // Sincroniza el ID en el Dashboard
+showScreen(document.getElementById('dashboard-aliado')); // Activa la Placa Base
+  
+  
 
   // 3. LÓGICA DINÁMICA (Hijos, Viajes y Cónyuge)
   const inputHijos = document.getElementById('numero_hijos');
