@@ -132,10 +132,10 @@ if (togglePassword && passwordField) {
         // GUARDADO DE SESIÓN Y BIENVENIDA ÉLITE
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
         console.log("SITO: Sesión activa para ID:", data.id_interno);
-        
-        // Llamamos a nuestra alerta personalizada
-        // BLOQUE DE REEMPLAZO
-mostrarSitoAlert('Acceso Concedido. Bienvenido, Aliado', `${data.reg_username} (ID: ${data.id_interno})`, '✅');
+
+         // Feedback Visual de Éxito: ¡Ahora sí con nombre y ID!
+            const saludo = `¡Bienvenido, ${nombreAliado}!\n[ID: ${idAliado}]`;
+            window.mostrarSitoAlert(saludo, '✅');
         
         
       } catch (err) {
