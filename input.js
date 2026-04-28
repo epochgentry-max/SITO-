@@ -111,37 +111,48 @@ if (togglePassword && passwordField) {
 
       console.log("SITO: Solicitando acceso al Núcleo...");
 
-      try {
+
+
+
+      
+
+            try {
         const { data, error } = await window.supabaseClient
           .from('acceso_aliados')
-          .select('id_interno, estado_acceso')
+          .select('id_interno, estado_acceso, reg_nombre') // Añadimos el nombre a la extracción
           .eq('reg_username', user)
           .eq('reg_password', pass)
           .single();
 
         if (error || !data) {
-          mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas por el sistema de seguridad.', '🚫');
+          window.mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
           return;
         }
 
         if (data.estado_acceso !== 'activo') {
-          mostrarSitoAlert('⚠️ Cuenta en Auditoría: Su acceso ha sido restringido temporalmente.', '⚖️');
+          window.mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
           return;
         }
 
-        // GUARDADO DE SESIÓN Y BIENVENIDA ÉLITE
+        // GUARDADO DE SESIÓN CON NOMBRE
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        console.log("SITO: Sesión activa para ID:", data.id_interno);
+        sessionStorage.setItem('sito_nombre_aliado', data.reg_nombre); // Guardamos nombre para el Dashboard
         
-        // Llamamos a nuestra alerta personalizada
-        mostrarSitoAlert('Acceso Concedido. Bienvenido, Aliado ' + data.id_interno, '✅');
+        // MENSAJE PERSONALIZADO
+        const bienvenida = `Bienvenido, ${data.reg_nombre} \n [ID: ${data.id_interno}]`;
+        window.mostrarSitoAlert(bienvenida, '✅');
         
       } catch (err) {
-        mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
-        console.error(err);
-      }
+        window.mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo.', '☢️');
+            }
     };
   }
+
+
+
+
+
+
   
   bind('back-to-start', () => showScreen(screens.inicio));
   bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
