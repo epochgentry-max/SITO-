@@ -291,6 +291,68 @@
   </div>
 </div>
 
+    <div id="dashboard-aliado" class="screen">
+  <div class="sito-plano-deslizable">
+    
+    <div style="position: absolute; top: 40px; left: 40px; color: #d4af37; font-family: 'Courier New', monospace; z-index: 100;">
+      [ALIADO_ID: <span id="display-sito-id">P-000</span>] <br>
+      <span style="color: rgba(135, 206, 235, 0.8); font-size: 10px;">ESTADO: NÚCLEO_ACTIVO</span>
+    </div>
+
+    <div id="master-grid-container">
+      
+      <section id="sec-superior">
+        <div class="sub-bloque">FLUJO_EFECTIVO: $0.00</div>
+        <div class="sub-bloque">VENTAS_HOY: 0</div>
+        <div class="sub-bloque">MARGEN_UTILIDAD: 0%</div>
+      </section>
+
+      <section id="sec-inter-sup">
+        <div class="sub-bloque-h">NOTIFICACIONES_AUDITORÍA: SIN_NOVEDAD</div>
+        <div class="sub-bloque-h" style="color: #2196F3;">SINCRO_NÚCLEO: EXITOSA</div>
+      </section>
+
+      <section id="sec-nucleo">
+        <div class="sub-grid-12">
+          <div onclick="abrirModulo('ventas')">REGISTRAR_VENTA</div>
+          <div onclick="abrirModulo('inventario')">INVENTARIO</div>
+          <div onclick="abrirModulo('cobranzas')">GESTIÓN_COBROS</div>
+          <div onclick="abrirModulo('gastos')">CONTROL_GASTOS</div>
+          <div onclick="abrirModulo('clientes')">BASE_CLIENTES</div>
+          <div onclick="abrirModulo('reportes')">BALANCES</div>
+          <div onclick="abrirModulo('patrimonio')">PATRIMONIO</div>
+          <div onclick="abrirModulo('ajustes')">CONFIG_SITO</div>
+          <div style="grid-column: span 4; opacity: 0.3;">SITO_OS_CORE_V4_RUNNING...</div>
+        </div>
+      </section>
+
+      <section id="sec-pre-footer">
+        <div class="sub-bloque">SOPORTE_TÉCNICO</div>
+        <div class="sub-bloque" onclick="location.reload()" style="background: rgba(244, 67, 54, 0.1); border-color: #f44336 !important;">DESCONECTAR</div>
+      </section>
+
+      <aside id="barra-lateral-derecha">
+        <div class="sub-bloque-v">VISIÓN_EPOCH</div>
+        <div class="sub-bloque-v">METAS_DEL_MES</div>
+        <div class="sub-bloque-v" style="flex: 2;">REPORTE_SARLAFT_DIARIO</div>
+      </aside>
+
+      <aside id="barra-lateral-2">
+        <div class="modulo-dual">
+          <p style="font-size: 9px; color: #87CEEB;">ESTADÍSTICAS_RED</p>
+          <div style="height: 100px; border: 1px dashed #87CEEB; margin-top: 5px;"></div>
+        </div>
+        <div class="modulo-dual">
+          <p style="font-size: 9px; color: #d4af37;">RECURSOS_HOLDING</p>
+          <div style="height: 100px; border: 1px dashed #d4af37; margin-top: 5px;"></div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+    </div>
+    
+
 <script src="input.js"></script>
 </body>
                                 </html>
