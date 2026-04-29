@@ -642,8 +642,8 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 #master-grid-container {
     display: grid;
     /* RECALIBRACIÓN: Columnas de datos fijos para estabilidad total */
-    grid-template-columns: 1000px 440px 440px; 
-    grid-template-rows: 660px 320px auto 70px;
+    grid-template-columns: 1500px 440px 440px; 
+    grid-template-rows: 660px 320px 700px 70px;
     grid-template-areas: 
         "superior  lateral  lateral2"
         "inter-sup lateral  lateral2"
