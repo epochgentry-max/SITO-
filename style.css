@@ -1,4 +1,308 @@
 <style>
+
+/* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  /* Fondo con la nueva imagen y el degradado de legibilidad actualizado */
+  background: 
+    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+#inicio-sito {
+    /* Cargamos la imagen que me enviaste */
+    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
+    
+    /* Capa de filtro azul (RGBA: Rojo, Verde, Azul, Opacidad) */
+    /* El 0.7 es la intensidad del azul, puedes bajarlo a 0.5 si quieres ver más la foto */
+    background-color: rgba(13, 71, 161, 0.8); 
+    
+    /* Mezcla la imagen con el color */
+    background-blend-mode: multiply;
+    
+    /* Ajustes para que la imagen cubra toda la pantalla y no se repita */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Aseguramos que el contenido sea legible */
+    color: white; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Ajuste opcional para que los textos resalten más sobre la foto */
+#inicio-sito h1, #inicio-sito p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.screen {
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  /* AHUMADO MÁS LIGERO PARA VER AL PERSONAJE */
+  background: rgba(0, 0, 0, 0.1); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  
+  border-radius: 25px;
+  border: 1px solid rgba(212, 175, 55, 0.4); /* Dorado más presente */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro */
+#dashboard-aliado.screen {
+  max-width: none !important; /* Rompe el límite del Padre para esta pantalla */
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  overflow-x: auto !important; /* Permite el flujo panorámico */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ajuste para que los títulos no se pierdan */
+h1, h2 {
+  color: #d4af37 !important;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+}
+
+
+
+/* RECTIFICACIÓN: DORADO SÓLIDO ÉLITE */
+h1, h2 { 
+  color: #d4af37 !important; 
+  font-size: 26px; 
+  margin: 20px 0;
+  /* Eliminamos el azul del texto: Solo sombra negra para profundidad */
+  text-shadow: 2px 2px 4px rgba(0,0,0,1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p { 
+  color: #FFFFFF !important; 
+  font-size: 15px;
+  line-height: 1.5;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* LA LUZ AZUL AHORA ES AMBIENTAL, NO TEXTUAL */
+.screen {
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  /* El resplandor azul ahora emana del contenedor, bañando la pantalla */
+  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
+}
+
+/* REEMPLAZO QUIRÚRGICO: BOTONES ÉLITE */
+.btn-primario {
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
+  color: #020a12 !important;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 8px;
+  /* Sombra de luz azul para el botón dorado */
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-primario:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
+}
+
+
+.btn-secundario {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #f7e08a !important;
+  border: 2px solid #d4af37 !important;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+  cursor: pointer;
+}
+
+/* RECALIBRACIÓN: SISTEMA DE VISIÓN SITO */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex; /* Alineación forzada */
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.password-wrapper input {
+  width: 100% !important;
+  padding-right: 45px !important; /* Espacio de seguridad para el ojo */
+  margin-bottom: 0 !important; /* El margen lo lleva el wrapper ahora */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px; /* Distancia del borde derecho */
+  top: 50%; /* Centrado vertical absoluto */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #d4af37; 
+  font-size: 18px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  background: transparent;
+}
+
+
+
+
+.active {
+  display: flex;
+}
+
+.logo { width: 250px; max-width: 80%; margin-bottom: 40px; }
+
+
+
+/* RECTIFICACIÓN FINAL: INTERFAZ SITO 100% OSCURA Y ÉLITE */
+
+/* 1. ESTADO BASE Y PERMANENTE */
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  
+  /* FONDO OSCURO SIEMPRE: Adiós al parpadeo blanco */
+  background-color: rgba(2, 10, 18, 0.9) !important; 
+  color: #FFFFFF !important; 
+  border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Dorado sutil en reposo */
+  
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* 2. ESTADO DE INTERACCIÓN (FOCO) */
+input:focus, select:focus, textarea:focus {
+  background-color: #020a12 !important; /* Azul profundo SITO */
+  border-color: #2196F3 !important; /* Cambio a Luz Azul */
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Aura azul ambiental */
+}
+
+/* 3. TEXTO DE GUÍA (PLACEHOLDER) */
+::placeholder {
+  color: rgba(255, 255, 255, 0.4); /* Blanco tenue para legibilidad */
+}
+
+
+
+button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+}
+
+
+
+/* CIRUGÍA: VISIBILIDAD BARRA SUPERIOR */
+.barra-superior {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  color: #FFFFFF; /* Letras blancas para los pasos */
+  font-weight: bold;
+}
+
+.barra-superior button {
+  font-size: 20px;
+  margin-right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #FFFFFF; /* La flecha también blanca */
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre flecha y texto */
+}
+
+
+form { width: 100%; }
+a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
+
+/* Carrusel */
+#carousel-container {
+  display: none;
+  max-width: 800px;
+  margin: 40px auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+#carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+#carousel img {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+#carousel-container button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1976D2;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 46px;
+  text-align: center;
+}
+
+#prev { left: 10px; }
+#next { right: 10px; }
+
+/* Ajuste específico para el reproductor de YouTube */
+#player {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
+
 /* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
 
 body {
@@ -135,6 +439,10 @@ p {
   backdrop-filter: blur(5px);
   cursor: pointer;
 }
+
+
+
+
 
 
 .active {
