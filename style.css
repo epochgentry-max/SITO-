@@ -780,10 +780,233 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 .section-2 {
     flex: 2; /* Más prominente */
     display: flex;
+
+
+
+
+  /* ============================================================
+   BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
+   LOGICA: Control de la interfaz mediante dimensiones absolutas.
+   FINALIDAD: Garantizar que la estructura no colapse y mantenga 
+   el diseño de alta gama en cualquier servidor.
+   ============================================================ */
+
+/* CONTENEDOR DE SEGURIDAD (#dashboard-aliado)
+   - Carcasa física del sistema.
+   - background: Define el tono base del hardware.
+   - display: none: Mantiene el sistema apagado hasta la validación.
+   - overflow: hidden: Evita que el scroll del navegador interfiera con SITO.
+*/
+#dashboard-aliado {
+    background: #020a12;
+    min-height: 100vh;
+    width: 100vw;
+    display: none; 
+    overflow: hidden; /* BLOQUEO DE SEGURIDAD: Evita el colapso del sitio en Vercel */
+    position: relative;
+}
+
+/* Activa la visibilidad del dashboard cuando el sistema valida el acceso */
+#dashboard-aliado.active {
+    display: block !important;
+}
+
+/* EL PLANO DESLIZABLE (.sito-plano-deslizable)
+   - Es la "Placa Base" donde se montan los circuitos.
+   - overflow: auto: Permite la navegación libre por el plano gigante.
+   - background-image: Crea el patrón de circuitos usando 3 capas de gradientes.
+   - transform: scale(0.6): Reduce la vista para dar sensación de amplitud.
+   - min-width/height: Define el tamaño real del mapa de trabajo (2500x1800px).
+*/
+.sito-plano-deslizable {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    background-color: #01080e;
+
+    /* ADN Visual: Circuitos refinados con ángulos de 45° */
+    background-image: 
+        linear-gradient(90deg, rgba(135, 206, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(135, 206, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(135, 206, 235, 0.02) 25%, transparent 25%, transparent 50%, rgba(135, 206, 235, 0.02) 50%, rgba(135, 206, 235, 0.02) 75%, transparent 75%, transparent);
+    background-size: 80px 80px, 80px 80px, 20px 20px;
+    
+    /* Configuración de Zoom táctico */
+    transform: scale(0.6); 
+    transform-origin: top left;
+    
+    /* COMPENSACIÓN VERCEL: Dimensiones fijas para evitar el 'Layout Thrashing' */
+    min-width: 2500px; 
+    min-height: 1800px;
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 1);
+}
+
+/* REJILLA MAESTRA (#master-grid-container)
+   - grid-template-columns: Divide el espacio en 3 columnas (1000px, 440px, 440px).
+   - grid-template-rows: Divide en 4 filas (Fila superior, Intermedia, Núcleo y Footer).
+   - grid-template-areas: Mapea los nombres de las secciones para fácil organización.
+   - gap: 15px: Espacio exacto entre los módulos.
+   - contain: paint: Optimización para que Vercel no recalcule innecesariamente.
+*/
+#master-grid-container {
+    display: grid;
+    /* RECALIBRACIÓN: Columnas de datos fijos para estabilidad total */
+    grid-template-columns: 1000px 440px 440px; 
+    grid-template-rows: 660px 320px auto 70px;
+    grid-template-areas: 
+        "superior  lateral  lateral2"
+        "inter-sup lateral  lateral2"
+        "nucleo    lateral  lateral2"
+        "pre-foot  lateral  lateral2";
+    
+    width: fit-content;
+    height: auto;
+    gap: 15px;
+    padding: 110px 40px 40px 40px; /* Margen superior para ID de Aliado */
+    background: transparent;
+    box-sizing: border-box;
+    contain: paint; /* Optimización de renderizado para Vercel */
+}
+
+/* MOTOR DE ENERGÍA NEÓN AZUL CIELO
+   - border: 1px: Línea definida de color azul sky (80% opacidad).
+   - box-shadow: Crea el resplandor exterior e interior del neón.
+   - animation: Llama a 'pulsoUnion' para dar vida al sistema.
+*/
+#sec-superior, #sec-inter-sup, #sec-nucleo, #sec-pre-footer, #barra-lateral-derecha, #barra-lateral-2, .sub-bloque, .sub-bloque-h, .sub-bloque-v, .sub-grid-12 div, .modulo-dual {
+    border: 1px solid rgba(135, 206, 235, 0.8) !important;
+    box-shadow: 0 0 12px rgba(135, 206, 235, 0.3), inset 0 0 8px rgba(135, 206, 235, 0.1);
+    animation: pulsoUnion 3s infinite alternate;
+}
+
+/* ASIGNACIÓN DE ÁREAS DE HARDWARE: Vincula los IDs HTML con las áreas del Grid */
+#sec-superior { grid-area: superior; display: flex; gap: 10px; }
+#sec-inter-sup { grid-area: inter-sup; display: flex; flex-direction: column; gap: 10px; }
+#sec-nucleo { grid-area: nucleo; background: rgba(135, 206, 235, 0.01); }
+#sec-pre-footer { grid-area: pre-foot; display: flex; gap: 8px; }
+#barra-lateral-derecha { grid-area: lateral; display: flex; flex-direction: column; gap: 10px; }
+
+/* BARRA LATERAL 2 (Dual Hardware): Organización en columna para el lado derecho */
+#barra-lateral-2 {
+    grid-area: lateral2;
+    display: flex;
+    flex-direction: column;
     gap: 15px;
 }
 
-/* Posicionamiento de Identidad en Esquina */
+/* MÓDULO DUAL: Contenedores internos con fondo semitransparente para legibilidad */
+.modulo-dual {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 15px;
+}
+
+/* ESTILO DE SUB-MÓDULOS
+   - Tipografía 'Courier New' para look de terminal.
+   - Color #d4af37 (Dorado/Amarillo) para datos críticos.
+*/
+.sub-bloque, .sub-bloque-h, .sub-bloque-v {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    background: rgba(212, 175, 55, 0.03);
+    border-radius: 4px;
+}
+
+/* NÚCLEO (Sub-Grid 12): Grilla interna de 4x3 para los 12 botones principales */
+.sub-grid-12 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+    gap: 8px;
+    padding: 10px;
+}
+
+/* ANIMACIÓN DE PULSO VITAL
+   - Modula el brillo y el color de los bordes suavemente cada 3 segundos.
+*/
+@keyframes pulsoUnion {
+    0% { border-color: rgba(135, 206, 235, 0.5); box-shadow: 0 0 8px rgba(135, 206, 235, 0.2); }
+    100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
+}
+
+/* ESTÉTICA DE ALERTAS SITO
+   - Modales de advertencia con desenfoque de fondo (backdrop-filter).
+   - Estilo dorado (#d4af37) para resaltar importancia.
+*/
+.sito-modal-alert {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(2, 10, 18, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+}
+
+.sito-modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #d4af37;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 320px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+#sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
+#sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
+#sito-alert-icon { font-size: 40px; }
+
+/* ESTABILIZACIÓN PANORÁMICA SITO
+   - .dashboard-view: Contenedor que permite el scroll táctil suave.
+   - .panorama-viewport: Define un ancho de 500vw (5 pantallas de ancho) para expansión futura.
+*/
+.dashboard-view {
+    padding: 0 !important;
+    overflow-x: scroll !important; /* Fuerza el scroll horizontal */
+    overflow-y: auto; /* Permite scroll vertical si el contenido crece */
+    background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
+    -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
+}
+
+.panorama-viewport {
+    display: flex;
+    width: 500vw; /* 5 Estaciones de trabajo */
+    height: 100vh;
+    scroll-snap-type: x mandatory;
+}
+
+/* SITO-SECTION: Cada una de las 5 estaciones del panorama */
+.sito-section {
+    width: 100vw !important;
+    height: 100vh !important;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
+}
+
+/* SECCIÓN 2: EL NÚCLEO (Distribución flex) */
+.section-2 {
+    flex: 2; /* Más prominente */
+    display: flex;
+    gap: 15px;
+}
+
+/* POSICIONAMIENTO DE IDENTIDAD: Tarjeta dorada en la esquina */
 .sub-2-1 {
     width: 100%;
     display: flex;
@@ -797,7 +1020,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 .sub-2-2 { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .sub-2-3 { flex: 3; background: rgba(255,255,255,0.02); padding: 15px; overflow-y: auto; }
 
-/* NUBE IA ☁️ */
+/* NUBE IA ☁️: Burbuja flotante para mensajes de SITO */
 .thought-bubble {
     position: absolute;
     top: -40px;
@@ -810,7 +1033,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     box-shadow: 0 5px 15px rgba(255,255,255,0.2);
 }
 
-/* SECCIÓN 4: 12 BOTONES */
+/* SECCIÓN 4 (12 BOTONES): Comandos operativos en grilla 3x4 */
 .command-grid-12 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -827,7 +1050,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 }
 .cmd-btn:hover { transform: scale(1.05); background: #f1c40f; }
 
-/* SECCIÓN 1: DERECHA (3 PARTES) */
+/* SECCIÓN 1: DERECHA (Organización proporcional 1:3) */
 .section-1-right {
     width: 300px;
     display: flex;
@@ -837,10 +1060,9 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 .part-1-3 { flex: 1; background: rgba(212,175,55,0.1); }
 .part-2-big { flex: 3; background: rgba(212,175,55,0.2); }
 
-
 /* --- PROTOCOLO DE ILUMINACIÓN SITO --- */
 
-/* 1. Neón de Contención (Azul/Cian) para cada Sección */
+/* 1. Neón de Contención (Azul/Cian) */
 .sito-section, 
 .sub-2-1, .sub-2-3, .part-1-3, .part-2-big, .v-sub-5, .h-sub-3-1, .h-sub-3-2 {
     border: 1px solid rgba(0, 255, 255, 0.4) !important; /* Neón Azul/Cian */
@@ -859,6 +1081,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
 }
 
+/* Punto Verde de Estatus: Indicador de conexión en vivo */
 .card-status-dot {
     width: 10px; height: 10px;
     background: #0f0; /* Punto Verde de 'Activo' */
@@ -889,7 +1112,8 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     font-size: 12px;
     margin: 2px 0 0 0;
     font-weight: bold;
-}
+  }
+          
 
 
 
