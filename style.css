@@ -1,3 +1,4 @@
+<style>
 /* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
 
 body {
@@ -134,10 +135,6 @@ p {
   backdrop-filter: blur(5px);
   cursor: pointer;
 }
-
-
-
-
 
 
 .active {
@@ -591,4 +588,5 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 
 
 </style>
-                              
+
+  
