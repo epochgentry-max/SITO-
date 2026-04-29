@@ -862,7 +862,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     
     width: fit-content;
     height: auto;
-    gap: 15px;
+    gap: 25px;
     padding: 110px 40px 40px 40px; /* Margen superior para ID de Aliado */
     background: transparent;
     box-sizing: border-box;
