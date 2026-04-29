@@ -342,19 +342,35 @@ if (togglePassword && passwordField) {
     }
   };
 
-    window.cerrarSitoAlert = () => {
+
+  
+// =============================================
+// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (CORREGIDO)
+// =============================================
+window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
     if(modal) modal.style.display = 'none';
     
     // 1. Verificación de integridad de sesión
-    if (sessionStorage.getItem('sito_id_aliado')) {
-       // 2. Ejecución de transición al Dashboard
+    const aliasSito = sessionStorage.getItem('sito_nombre_aliado');
+    const idSito = sessionStorage.getItem('sito_id_aliado');
+
+    if (idSito) {
+       // 2. INYECTOR DE IDENTIDAD: Escribimos los datos en las cajas del Dashboard
+       const displayAlias = document.getElementById('alias-aliado');
+       const displayID = document.getElementById('id-sito-display');
+
+       if(displayAlias) displayAlias.innerText = aliasSito || "ALIADO ANONIMO";
+       if(displayID) displayID.innerText = idSito;
+
+       // 3. Ejecución de transición al Dashboard
        showScreen(screens.dashboard); 
        
-       // 3. Log de auditoría interna
-       console.log("SITO: Dashboard de Aliado despertando en el Núcleo.");
+       // 4. Log de auditoría interna
+       console.log(`SITO: Dashboard despertando para Aliado: ${aliasSito}`);
     }
-  };
+};
+
   
   
 })();
