@@ -89,19 +89,39 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); /* SOMBRA: Da profundidad sobre el plano base */
 }
 
-/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro (#dashboard-aliado) */
+/* ============================================================
+   RECALIBRACIÓN DE EMERGENCIA: Dashboard Maestro (#dashboard-aliado)
+   Objetivo: Recuperar fondo y centralizar la estructura panorámica.
+   ============================================================ */
+
 #dashboard-aliado.screen {
-  max-width: none !important;       /* LIBERACIÓN: Rompe el límite de 400px del padre */
-  width: 100vw !important;           /* ESCALA: Se expande al ancho total del visor */
-  height: 100vh !important;          /* ESCALA: Se expande al alto total del visor */
-  padding: 0 !important;             /* LIMPIEZA: Elimina márgenes para pegarse a los bordes */
-  border-radius: 0 !important;       /* ESTÉTICA: Elimina bordes redondeados (Pantalla Total) */
-  background: transparent !important; /* TRANSPARENCIA: Permite ver el fondo de la Matrix */
+  max-width: none !important;        /* Mantiene la liberación de ancho */
+  width: 100vw !important;            /* Mantiene la escala completa */
+  height: 100vh !important;           /* Mantiene la altura completa */
+  padding: 0 !important;              /* Mantiene la limpieza de bordes */
+  border-radius: 0 !important;        /* Mantiene la pantalla total */
+  overflow-x: auto !important;        /* Mantiene el flujo panorámico */
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  /* === CORRECCIÓN DE FONDO Y CENTRALIZADO === */
   
-  overflow-x: auto !important;       /* FLUJO: Activa el desplazamiento horizontal panorámico */
-  overflow-y: hidden;                /* BLOQUEO: Evita el rebote vertical innecesario */
-  -webkit-overflow-scrolling: touch; /* MOTOR TÁCTIL: Suavidad de deslizamiento en móviles */
+  /* 1. Recuperamos la Matrix: Re-aplicamos el fondo del body aquí 
+     para que el dashboard transparente no lo tape con negro. */
+  background: 
+    linear-gradient(rgba(2, 10, 18, 0.8), rgba(2, 10, 18, 0.8)), 
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+
+  /* 2. Recuperamos el Motor de Centralizado: Usamos Flexbox para alinear 
+     la cuadrícula al centro de la pantalla. */
+  display: flex !important;           /* Activa flexbox en este contenedor */
+  justify-content: center !important;  /* Centra horizontalmente la estructura */
+  align-items: center !important;      /* Centra verticalmente la estructura */
 }
+
 
 /* JERARQUÍA DE TÍTULOS (h1, h2) - La identidad visual del mando */
 h1, h2 {
