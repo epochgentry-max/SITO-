@@ -367,48 +367,48 @@ window.cerrarSitoAlert = () => {
     }
 };
 
-
-  // =============================================
-// PROTOCOLO SITO V7.0 - BYPASS INTEGRIDAD
+// =============================================
+// PROTOCOLO SITO V9.0 - DOMADOR DE TIGRES
 // =============================================
 async function sincronizarDatosAliado(idInterno) {
     const statusText = document.getElementById('sito-status-db'); 
     const syncText = document.getElementById('sito-last-sync');
     if (!statusText) return; 
 
-    statusText.innerText = "ESTABLECIENDO VÍNCULO...";
+    statusText.innerText = "VERIFICANDO IDENTIDAD...";
     statusText.style.color = "#00f2ff";
 
     try {
-        // Llamada al RPC con los permisos que acabamos de otorgar en SQL
+        // Llamada al RPC con bypass de triggers (bozal activo)
         const { data, error } = await window.supabaseClient
-          .rpc('obtener_perfil_aliado_maestro', { id_buscado: idInterno });
+          .rpc('acceso_nucleo_aliado', { id_solicitado: idInterno });
 
         if (error) throw error;
 
         if (data && data.length > 0) {
             const perfil = data[0];
-            // ÉXITO: El sistema por fin deja pasar la información
+            // ÉXITO TOTAL: El núcleo entrega la información
             statusText.innerText = perfil.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
             
             if(syncText) {
-                syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
+                syncText.innerText = `NÚCLEO SINCRONIZADO: ${perfil.ultima_sincro}`;
             }
-            console.log("SITO: Acceso concedido por el núcleo.");
+            console.log("SITO: Acceso concedido. El tigre fue evadido con éxito.");
         } else {
-            statusText.innerText = "NO AUTORIZADO";
+            statusText.innerText = "NO RECONOCIDO";
             statusText.style.color = "#ffb300";
-            if(syncText) syncText.innerText = "ID NO REGISTRADO EN EL SISTEMA";
+            if(syncText) syncText.innerText = "ID NO HALLADO EN LA TABLA MADRE";
         }
     } catch (err) {
-        console.error("SITO - Error crítico de acceso:", err.message);
-        statusText.innerText = "FALLO DE SISTEMA";
+        console.error("DIAGNÓSTICO CRÍTICO:", err.message);
+        statusText.innerText = "NÚCLEO BRAVO";
         statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "NÚCLEO BLOQUEADO - REVISAR SQL";
+        if(syncText) syncText.innerText = "EL TIGRE SIGUE BLOQUEANDO EL PASO";
     }
 }
   
+
 
 
   
