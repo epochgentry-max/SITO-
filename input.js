@@ -343,9 +343,8 @@ if (togglePassword && passwordField) {
   };
 
 
-  
 // =============================================
-// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (CORREGIDO V4.2)
+// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (V4.4 - FULL DATA)
 // =============================================
 window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
@@ -363,10 +362,8 @@ window.cerrarSitoAlert = () => {
 
        showScreen(screens.dashboard); 
        
-       // Disparo con retardo para asegurar estabilidad de la sesión
-       setTimeout(() => {
-           sincronizarDatosAliado(idSito);
-       }, 300);
+       // Disparo de sincronización total al entrar al Dashboard
+       sincronizarDatosAliado(idSito);
     }
 };
 
@@ -375,37 +372,45 @@ async function sincronizarDatosAliado(idInterno) {
     const syncText = document.getElementById('sito-last-sync');
 
     if (!statusText) return; 
-    statusText.innerText = "BUSCANDO VÍNCULO...";
+    statusText.innerText = "SINCRONIZANDO VÍNCULO...";
 
     try {
         const { data, error } = await window.supabaseClient
           .from('aliados_activos_holding')
-          .select('estado_operativo, ultima_sincro, id_publico_aliado')
-          .eq('id_publico_aliado', idInterno) // <-- Cambio clave: Usamos el ID Público como llave
+          .select('*') // <-- TRACCIÓN TOTAL: Captura cada columna de la fila del aliado
+          .eq('id_publico_aliado', idInterno) 
           .maybeSingle();
 
         if (error) throw error;
 
         if (data) {
+            // 1. Actualización de señales visuales base
             statusText.innerText = data.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
+            
             if(syncText) {
                 syncText.innerText = `VÍNCULO ACTIVO: ${data.ultima_sincro}`;
             }
-            console.log("SITO: Sincronización exitosa vía ID Público.");
+
+            // 2. AUDITORÍA: El objeto 'data' ahora contiene TODO el perfil del aliado
+            console.log("SITO Core: Perfil completo cargado del Núcleo:", data);
+
         } else {
-            statusText.innerText = "NO VINCULADO";
+            statusText.innerText = "ID NO ENCONTRADO";
             statusText.style.color = "#ffb300";
-            if(syncText) syncText.innerText = "VERIFICAR ID EN TABLA MADRE";
+            if(syncText) syncText.innerText = "REVISAR TABLA MADRE";
         }
     } catch (err) {
-        console.error("SITO Error:", err);
-        statusText.innerText = "ERROR DE RED";
+        console.error("SITO Error Sync:", err);
+        statusText.innerText = "BLOQUEO DE SEGURIDAD";
         statusText.style.color = "#ff4b4b";
+        if(syncText) syncText.innerText = "VERIFICAR POLÍTICAS RLS";
     }
 }
+
+
 
   
 })();
 
-  
+        
