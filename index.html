@@ -332,8 +332,7 @@
 
 
  
-                
-                <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
+    <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
     
     <div class="sub-bloque" style="flex: 1.6; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 15px; border-left: 2px solid #00f2ff;">
         <p style="font-size: 10px; margin: 0; color: rgba(255,255,255,0.7);">ESTADO ACTUAL:</p>
@@ -341,29 +340,45 @@
         <p id="sito-last-sync" style="font-size: 8px; color: #d4af37; margin: 0; opacity: 0.8;">SINCRONIZACIÓN: PENDIENTE</p>
     </div>
 
-    <div id="ficha-aliado" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,242,255,0.2); font-size: 11px; color: white; line-height: 1.4; max-height: 200px; overflow-y: auto; scrollbar-width: thin;">
+    <div id="ficha-aliado" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,242,255,0.2); font-size: 11px; color: white; line-height: 1.4;">
+        <h3 style="color: #00f2ff; font-size: 13px; margin-top: 0; border-bottom: 1px solid rgba(0,242,255,0.3); padding-bottom: 5px; letter-spacing: 1px;">DATOS DEL ALIADO</h3>
         
-        <h3 style="color: #00f2ff; font-size: 13px; margin-top: 0; border-bottom: 1px solid rgba(0,242,255,0.3); padding-bottom: 5px; letter-spacing: 1px; position: sticky; top: 0; background: #0a0a0a; z-index: 10;">DATOS DEL ALIADO</h3>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Nombre:</p><span id="dat-nombre" style="color: #00f2ff; font-weight: bold;">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Cédula/NIT:</p><span id="dat-cedula">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Negocio:</p><span id="dat-negocio">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Ciudad/Barrio:</p><span id="dat-ciudad">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Ingresos:</p><span id="dat-ingresos">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Hijos:</p><span id="dat-hijos">...</span></div>
-            
-            <div style="grid-column: span 2;"><p style="margin: 0; color: rgba(255,255,255,0.6);">Dirección:</p><span id="dat-direccion">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Situación:</p><span id="dat-situacion">...</span></div>
-            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">EPS:</p><span id="dat-eps">...</span></div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.6);">Nombre:</p>
+                <span id="dat-nombre" style="color: #00f2ff; font-weight: bold;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.6);">Cédula/NIT:</p>
+                <span id="dat-cedula">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.6);">Negocio:</p>
+                <span id="dat-negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.6);">Ciudad/Barrio:</p>
+                <span id="dat-ciudad">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.6);">Ingresos:</p>
+                <span id="dat-ingresos">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.6);">Hijos:</p>
+                <span id="dat-hijos">...</span>
+            </div>
         </div>
         
-        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 4px; font-size: 10px;">
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; font-size: 10px;">
             <p style="margin: 0;"><strong>E-mail:</strong> <span id="dat-email">...</span></p>
             <p style="margin: 0;"><strong>Tel:</strong> <span id="dat-tel">...</span></p>
         </div>
     </div>
-                </div>
+</div>
+
+                
+                
                 
                 
                 
