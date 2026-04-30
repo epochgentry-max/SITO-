@@ -343,8 +343,8 @@ if (togglePassword && passwordField) {
   };
 
 
-  // =============================================
-// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (V5.1 - RPC FULL ACCESS)
+// =============================================
+// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (V5.2 - RPC BYPASS)
 // =============================================
 window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
@@ -361,6 +361,8 @@ window.cerrarSitoAlert = () => {
        if(displayID) displayID.innerText = idSito;
 
        showScreen(screens.dashboard); 
+       
+       // Sincronización vía túnel RPC (Integridad Total)
        sincronizarDatosAliado(idSito);
     }
 };
@@ -370,33 +372,36 @@ async function sincronizarDatosAliado(idInterno) {
     const syncText = document.getElementById('sito-last-sync');
 
     if (!statusText) return; 
-    statusText.innerText = "SINCRO NÚCLEO...";
+    statusText.innerText = "ACCEDIENDO AL NÚCLEO...";
 
     try {
-        // Llamada al túnel seguro RPC
+        // Llamada a la función RPC de Supabase
         const { data, error } = await window.supabaseClient
           .rpc('obtener_perfil_aliado_v5', { id_buscado: idInterno });
 
-        if (error) {
-            console.error("Error RPC Detalle:", error.message);
-            throw error;
-        }
+        if (error) throw error;
 
+        // Si la función devolvió datos, tomamos el perfil
         const perfil = data && data.length > 0 ? data[0] : null;
 
         if (perfil) {
             statusText.innerText = perfil.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
-            if(syncText) syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
-            console.log("SITO: Acceso total concedido.");
+            
+            if(syncText) {
+                syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
+            }
+            console.log("SITO: Sincronización exitosa. Datos cargados:", perfil);
         } else {
-            statusText.innerText = "ID NO HALLADO";
+            statusText.innerText = "NO VINCULADO";
             statusText.style.color = "#ffb300";
+            if(syncText) syncText.innerText = "ID NO HALLADO EN TABLA MADRE";
         }
     } catch (err) {
-        statusText.innerText = "FALLO DE SISTEMA";
+        console.error("SITO Error Crítico:", err);
+        statusText.innerText = "ERROR DE SISTEMA";
         statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "REVISAR PERMISOS RPC";
+        if(syncText) syncText.innerText = "REVISAR CONEXIÓN CON SUPABASE";
     }
 }
   
