@@ -367,123 +367,41 @@ window.cerrarSitoAlert = () => {
     }
 };
 
+
 // =============================================
-// PROTOCOLO SITO V15.0 - DESPLIEGUE TOTAL + AUDITORÍA
+// PROTOCOLO SITO V15.7 - NÚCLEO CONSOLIDADO (RPC)
 // =============================================
 async function sincronizarDatosAliado(idInterno) {
+    if (!idInterno) return;
+    console.log("🚨 AUDITORÍA SITO INICIADA - ID:", idInterno);
+    
     const statusText = document.getElementById('sito-status-db');
-    if (!statusText) return;
+    if (statusText) {
+        statusText.innerText = "CONECTANDO...";
+        statusText.style.color = "#ffaa00";
+    }
 
     try {
         const { data, error } = await window.supabaseClient
             .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
-        // ===== AUDITORÍA 1: RESPUESTA CRUDA =====
-        console.log("DATA CRUDA:", data);
-        console.log("ERROR RPC:", error);
-
         if (error) throw error;
-
-        // Validación de dataset
+        
         if (!data || data.length === 0) {
             console.warn("SITO: Sin datos para el ID:", idInterno);
-            statusText.innerText = "SIN DATOS";
-            statusText.style.color = "#ffcc00";
+            if (statusText) statusText.innerText = "SIN DATOS";
             return;
         }
 
         const p = data[0];
+        console.log("📡 DATA RECIBIDA (ESPEJO):", p);
 
-        // ===== AUDITORÍA 2: PRIMER REGISTRO =====
-        console.log("PRIMER REGISTRO (p):", p);
-
-        if (p) {
-            // 1. Estado Principal
+        if (statusText) {
             statusText.innerText = (p.f_estado || "ACTIVO").toUpperCase();
-            statusText.style.color = "#00f2ff";
-
-            // 2. Mapeo de columnas
-            const ficha = {
-                'dat-nombre': p.f_nombre_completo,
-                'dat-negocio': p.f_nombre_comercial,
-                'dat-cedula': p.f_cc_nit,
-                'dat-email': p.f_email,
-                'dat-tel': p.f_telefono_movil,
-                'dat-ciudad': p.f_ciudad_negocio,
-                'dat-rubro': p.f_rubro_negocio,
-                'dat-ingresos': p.f_ingresos_mensuales,
-                'dat-hijos': p.f_numero_hijos,
-                'dat-nombres-hijos': p.f_nombres_hijos,
-                'dat-situacion': p.f_situacion_laboral,
-                'dat-eps': p.f_eps_aliado,
-                'dat-arl': p.f_arl_aliado,
-                'dat-pension': p.f_fondo_pensiones,
-                'dat-cargo': p.f_cargo_actual,
-                'dat-empresa': p.f_empresa_laboral,
-                'dat-judicial': p.f_pasado_judicial,
-                'dat-registro': p.f_created_at
-            };
-
-            // 3. Inyección + auditoría por campo
-            Object.keys(ficha).forEach(id => {
-                const elemento = document.getElementById(id);
-
-                // ===== AUDITORÍA 3: CAMPO POR CAMPO =====
-                console.log("MAPEO →", id, "=", ficha[id]);
-
-                if (!elemento) {
-                    console.warn("⚠️ ID NO EXISTE EN HTML:", id);
-                    return;
-                }
-
-                if (ficha[id] === null || ficha[id] === undefined) {
-                    console.warn("⚠️ DATO VACÍO DESDE BD:", id);
-                }
-
-                elemento.innerText = ficha[id] || "No registrado";
-                elemento.style.opacity = "1";
-            });
-
-            console.log("SITO: Despliegue de ficha técnica completo.");
+            statusText.style.color = "#00ff88";
         }
 
-    } catch (err) {
-        console.error("Fallo en despliegue:", err.message);
-        statusText.innerText = "ERROR DE LECTURA";
-        statusText.style.color = "#ff4d4d";
-    }
-}
-
-
-
-/**
- * PROTOCOLO SITO V15.5 - JS SINCRONIZADO
- */
-async function sincronizarDatosAliado(idInterno) {
-    console.log("🚨 AUDITORÍA SITO INICIADA - ID:", idInterno);
-    const statusText = document.getElementById('sito-status-db');
-    if (!statusText) return;
-
-    statusText.innerText = "CONECTANDO...";
-    statusText.style.color = "#ffaa00";
-
-    try {
-        const { data, error } = await window.supabaseClient
-            .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
-
-        if (error) throw error;
-        if (!data || data.length === 0) {
-            statusText.innerText = "SIN DATOS";
-            return;
-        }
-
-        const p = data[0];
-        console.log("📡 DATA RECIBIDA:", p);
-
-        statusText.innerText = (p.f_estado || "ACTIVO").toUpperCase();
-        statusText.style.color = "#00ff88";
-
-        // MAPEO TOTAL SINCRONIZADO CON HTML
+        // MAPEO TOTAL UNIFICADO (V15.0 + V15.5)
         const ficha = {
             'dat-nombre': p.f_nombre_completo,
             'dat-cedula': p.f_cc_nit,
@@ -541,7 +459,6 @@ async function sincronizarDatosAliado(idInterno) {
             'dat-pass': p.f_reg_password
         };
 
-        // Inyección con auditoría individual
         Object.keys(ficha).forEach(id => {
             const el = document.getElementById(id);
             if (el) {
@@ -550,24 +467,25 @@ async function sincronizarDatosAliado(idInterno) {
             }
         });
 
+        console.log("✅ SITO: Despliegue de ficha técnica completo.");
+
     } catch (err) {
-        console.error("❌ FALLO CRÍTICO:", err);
-        statusText.innerText = "ERROR ENLACE";
-        statusText.style.color = "#ff4d4d";
+        console.error("❌ FALLO CRÍTICO ENLACE:", err);
+        if (statusText) {
+            statusText.innerText = "ERROR ENLACE";
+            statusText.style.color = "#ff4d4d";
+        }
     }
 }
 
-// PROTOCOLO DE PERSISTENCIA SITO V15.6
-// Ejecuta un pulso de sincronización cada 5 segundos para asegurar carga total
+// PROTOCOLO DE PERSISTENCIA SITO V15.7 (DINÁMICO)
 document.addEventListener("DOMContentLoaded", () => {
-    const ID_ACTUAL = 1; // ID de sesión
-    
-    // Primer disparo inmediato
-    sincronizarDatosAliado(ID_ACTUAL);
-
-    // Configuración del Pulso de Recarga (5000ms = 5 segundos)
     const pulsoSincro = setInterval(() => {
-        // Verificamos si aún hay campos sin llenar (que contienen "...")
+        // Obtenemos el ID real de la sesión activa
+        const ID_ACTUAL = sessionStorage.getItem('sito_id_aliado');
+        
+        if (!ID_ACTUAL) return; // Si no hay login, no hace nada
+
         const camposIncompletos = document.querySelectorAll('span[id^="dat-"]');
         let necesitaRecarga = false;
 
@@ -579,15 +497,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (necesitaRecarga) {
-            console.log("🔄 SITO: Detectados campos incompletos. Reintentando sincronización...");
+            console.log("🔄 SITO: Sincronizando datos del aliado:", ID_ACTUAL);
             sincronizarDatosAliado(ID_ACTUAL);
         } else {
-            console.log("✅ SITO: Todos los datos cargados. Deteniendo pulso de recarga.");
-            clearInterval(pulsoSincro); // Detenemos el ciclo si ya todo está lleno
+            console.log("✅ SITO: Integridad de datos verificada.");
+            clearInterval(pulsoSincro); 
         }
     }, 3000);
 });
-  
+      
 
   
 })();
