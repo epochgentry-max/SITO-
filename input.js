@@ -343,29 +343,33 @@ if (togglePassword && passwordField) {
   };
 
 
-  // =============================================
-// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (DINÁMICO)
+  
+// =============================================
+// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (CORREGIDO)
 // =============================================
 window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
     if(modal) modal.style.display = 'none';
     
+    // 1. Verificación de integridad de sesión
     const aliasSito = sessionStorage.getItem('sito_nombre_aliado');
     const idSito = sessionStorage.getItem('sito_id_aliado');
 
     if (idSito) {
+       // 2. INYECTOR DE IDENTIDAD: Escribimos los datos en las cajas del Dashboard
        const displayAlias = document.getElementById('alias-aliado');
        const displayID = document.getElementById('id-sito-display');
 
-       if(displayAlias) displayAlias.innerText = aliasSito || "ALIADO ANÓNIMO";
+       if(displayAlias) displayAlias.innerText = aliasSito || "ALIADO ANONIMO";
        if(displayID) displayID.innerText = idSito;
 
-       // 1. Transición al Dashboard
+       // 3. Ejecución de transición al Dashboard
        showScreen(screens.dashboard); 
        
-       // 2. DISPARO QUIRÚRGICO: Sincronizar con la Tabla Madre
+       // 4. DISPARO QUIRÚRGICO: Sincronizar con la Tabla Madre
        sincronizarDatosAliado(idSito);
        
+       // 5. Log de auditoría interna
        console.log(`SITO: Dashboard despertando para Aliado: ${aliasSito}`);
     }
 };
@@ -385,23 +389,23 @@ async function sincronizarDatosAliado(idInterno) {
           .single();
 
         if (data) {
+            // Inyectamos solo el valor, el título ya está en el HTML
             statusText.innerText = data.estado_operativo.toUpperCase();
-            if(syncText) syncText.innerText = `VÍNCULO: ${data.ultima_sincro}`;
             statusText.style.color = "#00f2ff"; 
+            
+            if(syncText) {
+                syncText.innerText = `VÍNCULO ACTIVO: ${data.ultima_sincro}`;
+            }
         } else {
             statusText.innerText = "NO VINCULADO";
+            statusText.style.color = "#ff4b4b";
         }
     } catch (err) {
-        statusText.innerText = "FALLO DE RED";
+        statusText.innerText = "ERROR RED";
         statusText.style.color = "#ff4b4b";
     }
 }
-  
 
-
-
-  
-  
   
 })();
-                                    
+        
