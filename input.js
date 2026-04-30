@@ -585,7 +585,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("✅ SITO: Todos los datos cargados. Deteniendo pulso de recarga.");
             clearInterval(pulsoSincro); // Detenemos el ciclo si ya todo está lleno
         }
-    }, 5000);
+    }, 3000);
 });
   
 
