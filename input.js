@@ -367,52 +367,48 @@ window.cerrarSitoAlert = () => {
     }
 };
 
-// =============================================
-// PROTOCOLO SITO V6.0 - ACCESO DIRECTO AL NÚCLEO
+
+  // =============================================
+// PROTOCOLO SITO V7.0 - BYPASS INTEGRIDAD
 // =============================================
 async function sincronizarDatosAliado(idInterno) {
     const statusText = document.getElementById('sito-status-db'); 
     const syncText = document.getElementById('sito-last-sync');
     if (!statusText) return; 
 
-    statusText.innerText = "ACCEDIENDO AL NÚCLEO...";
+    statusText.innerText = "ESTABLECIENDO VÍNCULO...";
     statusText.style.color = "#00f2ff";
 
     try {
-        // Llamada directa al RPC Maestro (Bypass de Auditoría)
+        // Llamada al RPC con los permisos que acabamos de otorgar en SQL
         const { data, error } = await window.supabaseClient
           .rpc('obtener_perfil_aliado_maestro', { id_buscado: idInterno });
 
-        if (error) {
-            console.error("DIAGNÓSTICO NÚCLEO:", error.message);
-            throw error;
-        }
+        if (error) throw error;
 
-        const perfil = data && data.length > 0 ? data[0] : null;
-
-        if (perfil) {
-            // Actualización de estado en tiempo real
+        if (data && data.length > 0) {
+            const perfil = data[0];
+            // ÉXITO: El sistema por fin deja pasar la información
             statusText.innerText = perfil.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
             
             if(syncText) {
                 syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
             }
-            console.log("SITO: Vínculo con el núcleo establecido exitosamente.");
+            console.log("SITO: Acceso concedido por el núcleo.");
         } else {
-            statusText.innerText = "NO VINCULADO";
+            statusText.innerText = "NO AUTORIZADO";
             statusText.style.color = "#ffb300";
-            if(syncText) syncText.innerText = "ID NO REGISTRADO EN EL NÚCLEO";
+            if(syncText) syncText.innerText = "ID NO REGISTRADO EN EL SISTEMA";
         }
     } catch (err) {
-        console.error("FALLO CRÍTICO EN ACCESO:", err);
-        statusText.innerText = "ERROR DE SISTEMA";
+        console.error("SITO - Error crítico de acceso:", err.message);
+        statusText.innerText = "FALLO DE SISTEMA";
         statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "SOLICITAR ACCESO AL NÚCLEO";
+        if(syncText) syncText.innerText = "NÚCLEO BLOQUEADO - REVISAR SQL";
     }
 }
   
-
 
 
   
