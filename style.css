@@ -89,36 +89,19 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); /* SOMBRA: Da profundidad sobre el plano base */
 }
 
-/* ============================================================
-   RECALIBRACIÓN SITO: Dashboard Maestro (#dashboard-aliado)
-   ============================================================ */
-
-/* 1. CONFIGURACIÓN DEL CHASIS (Cómo se ve cuando se active) */
+/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro */
 #dashboard-aliado.screen {
-  max-width: none !important;
+  max-width: none !important; /* Rompe el límite del Padre para esta pantalla */
   width: 100vw !important;
   height: 100vh !important;
   padding: 0 !important;
   border-radius: 0 !important;
-  overflow-x: auto !important;
+  background: transparent !important;
+  overflow-x: auto !important; /* Permite el flujo panorámico */
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-
-  /* RECUPERACIÓN DE FONDO MATRIX */
-  background: 
-    linear-gradient(rgba(2, 10, 18, 0.8), rgba(2, 10, 18, 0.8)), 
-    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg') !important;
-  background-size: cover !important;
-  background-position: center !important;
-  background-attachment: fixed !important;
-
-  /* MOTOR DE CENTRALIZADO PANORÁMICO */
-  justify-content: center; /* Alinea la cuadrícula al centro */
-  align-items: center;     /* Centra verticalmente */
-  
-  /* SEGURIDAD: Se mantiene oculto por defecto */
-  display: none; 
 }
+
 
 /* 2. PROTOCOLO DE ENCENDIDO (Solo se activa por JavaScript) */
 #dashboard-aliado.screen.active {
