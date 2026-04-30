@@ -368,37 +368,49 @@ window.cerrarSitoAlert = () => {
 };
 
 // =============================================
-// PROTOCOLO SITO V12.0 - EXTRACCIÓN MASIVA
+// PROTOCOLO SITO V12.5 - DESCONGELAMIENTO
 // =============================================
+async function sincronizarDatosAliado(idInterno) {
+    const statusText = document.getElementById('sito-status-db'); 
+    if (!statusText) return; 
+
+    statusText.innerText = "SINCRONIZANDO NÚCLEO...";
+
+    try {
         const { data, error } = await window.supabaseClient
           .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
         if (error) throw error;
 
-        const perfil = data?.[0];
-        if (perfil) {
-            // 1. Actualización de Estado (Lo que ya funciona)
+        if (data && data.length > 0) {
+            const perfil = data[0];
+            
+            // Pintamos los datos principales
             statusText.innerText = (perfil.estado_val || "ACTIVO").toUpperCase();
             
-            // 2. Inyección de Datos Maestros (Asegúrate de tener estos IDs en tu HTML)
-            if(document.getElementById('aliado-nombre')) {
-                document.getElementById('aliado-nombre').innerText = perfil.nombre_completo;
-            }
-            if(document.getElementById('aliado-negocio')) {
-                document.getElementById('aliado-negocio').innerText = perfil.nombre_comercial;
-            }
-            if(document.getElementById('aliado-rubro')) {
-                document.getElementById('aliado-rubro').innerText = perfil.rubro_negocio;
-            }
-            if(document.getElementById('aliado-ciudad')) {
-                document.getElementById('aliado-ciudad').innerText = perfil.ciudad_negocio;
+            // Mapeo masivo (Asegúrate de que estos IDs existan en tu HTML)
+            const mapeo = {
+                'nombre-aliado': perfil.nombre_full,
+                'comercio-aliado': perfil.negocio,
+                'rubro-aliado': perfil.rubro,
+                'ciudad-aliado': perfil.ciudad,
+                'email-aliado': perfil.email_contacto
+            };
+
+            for (const [id, valor] of Object.entries(mapeo)) {
+                const el = document.getElementById(id);
+                if (el) el.innerText = valor || "No definido";
             }
 
-            console.log("SITO: Datos extraídos con éxito para:", perfil.nombre_completo);
+            console.log("SITO: Datos inyectados. Sistema fluido.");
         }
+    } catch (err) {
+        console.error("Fallo de descongelamiento:", err.message);
+        statusText.innerText = "SISTEMA PROTEGIDO";
+        statusText.style.color = "#ff4b4b";
+    }
+}
   
-
-
 
   
 })();
