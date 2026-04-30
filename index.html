@@ -333,114 +333,148 @@
 
 
               
-                            <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; max-height: 650px; margin: 0;">
+// =============================================
+// PROTOCOLO SITO V15.2 - DESPLIEGUE TOTAL + AUDITORÍA EXTENDIDA
+// =============================================
 
-    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 15px; border-left: 3px solid #00f2ff; background: rgba(0, 242, 255, 0.05); height: 50px;">
-        <p style="font-size: 9px; margin: 0; color: rgba(255,255,255,0.6);">ESTADO:</p>
-        <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 0; color: #00f2ff;">CONECTANDO...</p>
-    </div>
+async function sincronizarDatosAliado(idInterno) {
+    console.log("🚨 FUNCION EJECUTADA", idInterno);
 
-    <div id="ficha-aliado" style="flex: 1; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid rgba(0,242,255,0.2); overflow-y: auto; scrollbar-width: thin;">
-        
-        <h3 style="color: #00f2ff; font-size: 11px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(0,242,255,0.2); padding-bottom: 5px; letter-spacing: 1px; position: sticky; top: 0; background: rgba(0,0,0,0.9); z-index: 10;">
-            DATOS DEL ALIADO
-        </h3>
-        
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 10px;">
+    const statusText = document.getElementById('sito-status-db');
+    if (!statusText) {
+        console.error("❌ No existe elemento #sito-status-db");
+        return;
+    }
 
-            <div style="grid-column: span 2;">
-                <p>Nombre:</p>
-                <span id="dat-nombre">...</span>
-            </div>
+    // 🔄 Estado inicial REAL
+    statusText.innerText = "CONECTANDO...";
+    statusText.style.color = "#ffaa00";
 
-            <div>
-                <p>CC/NIT:</p>
-                <span id="dat-cedula">...</span>
-            </div>
+    try {
+        const { data, error } = await window.supabaseClient
+            .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
-            <div>
-                <p>Ciudad:</p>
-                <span id="dat-ciudad">...</span>
-            </div>
+        // ===== AUDITORÍA 1 =====
+        console.log("📡 DATA CRUDA:", data);
+        console.log("📡 ERROR RPC:", error);
 
-            <div style="grid-column: span 2;">
-                <p>Teléfono:</p>
-                <span id="dat-tel">...</span>
-            </div>
+        if (error) throw error;
 
-            <div style="grid-column: span 2;">
-                <p>Email:</p>
-                <span id="dat-email">...</span>
-            </div>
+        if (!data || data.length === 0) {
+            console.warn("⚠️ SIN DATOS para ID:", idInterno);
+            statusText.innerText = "SIN DATOS";
+            statusText.style.color = "#ffcc00";
+            return;
+        }
 
-            <div style="grid-column: span 2;">
-                <p>Negocio:</p>
-                <span id="dat-negocio">...</span>
-            </div>
+        const p = data[0];
 
-            <div>
-                <p>Rubro:</p>
-                <span id="dat-rubro">...</span>
-            </div>
+        // ===== AUDITORÍA 2 =====
+        console.log("🧩 REGISTRO (p):", p);
 
-            <div>
-                <p>Ingresos:</p>
-                <span id="dat-ingresos">...</span>
-            </div>
+        if (!p.f_nombre_completo) {
+            console.warn("⚠️ ESTRUCTURA INCOMPLETA:", p);
+            statusText.innerText = "DATOS INCOMPLETOS";
+            statusText.style.color = "#ff8800";
+            return;
+        }
 
-            <div>
-                <p>Hijos:</p>
-                <span id="dat-hijos">...</span>
-            </div>
+        // ✅ Estado válido
+        statusText.innerText = "CONECTADO";
+        statusText.style.color = "#00ff88";
 
-            <div>
-                <p>Estado Laboral:</p>
-                <span id="dat-situacion">...</span>
-            </div>
+        // 🧠 MAPEO COMPLETO (ALINEADO A TU HTML)
+        const ficha = {
 
-            <div style="grid-column: span 2;">
-                <p>Nombres Hijos:</p>
-                <span id="dat-nombres-hijos">...</span>
-            </div>
+            // CORE
+            'dat-nombre': p.f_nombre_completo,
+            'dat-negocio': p.f_nombre_comercial,
+            'dat-cedula': p.f.f_cc_nit,
+            'dat-email': p.f_email,
+            'dat-tel': p.f_telefono_movil,
+            'dat-ciudad': p.f_ciudad_negocio,
+            'dat-rubro': p.f_rubro_negocio,
+            'dat-ingresos': p.f_ingresos_mensuales,
+            'dat-hijos': p.f_numero_hijos,
+            'dat-nombres-hijos': p.f_nombres_hijos,
+            'dat-situacion': p.f_situacion_laboral,
+            'dat-eps': p.f_eps_aliado,
+            'dat-arl': p.f_arl_aliado,
+            'dat-pension': p.f_fondo_pensiones,
+            'dat-cargo': p.f_cargo_actual,
+            'dat-empresa': p.f_empresa_laboral,
+            'dat-judicial': p.f_pasado_judicial,
+            'dat-registro': p.f_created_at,
 
-            <div>
-                <p>EPS:</p>
-                <span id="dat-eps">...</span>
-            </div>
+            // NUEVOS
+            'dat-id-publico': p.f_id_publico_aliado,
+            'dat-estrato': p.f_estrato_social,
+            'dat-direccion': p.f_direccion_residencia,
+            'dat-tel-negocio': p.f_tel_negocio,
+            'dat-email-negocio': p.f_email_negocio,
+            'dat-rut': p.f_num_rut,
+            'dat-camara': p.f_num_camara_comercio,
+            'dat-web': p.f_web_negocio,
+            'dat-sarlaft': p.f_acepto_sarlaft,
+            'dat-origen': p.f_origen_fondos,
+            'dat-enfermedad': p.f_enfermedad_diagnosticada,
+            'dat-viajes': p.f_viajes_exterior,
+            'dat-destinos': p.f_destinos_viaje,
+            'dat-nivel': p.f_nivel_educativo,
+            'dat-institucion': p.f_institucion_educativa,
+            'dat-titulo': p.f_titulo_obtenido,
+            'dat-tiempo': p.f_tiempo_laborado,
+            'dat-jefe': p.f_jefe_inmediato
+        };
 
-            <div>
-                <p>ARL:</p>
-                <span id="dat-arl">...</span>
-            </div>
+        // 🔄 INYECCIÓN + AUDITORÍA DETALLADA
+        Object.keys(ficha).forEach(id => {
+            const el = document.getElementById(id);
 
-            <div>
-                <p>Pensión:</p>
-                <span id="dat-pension">...</span>
-            </div>
+            console.log("MAPEO →", id, "=", ficha[id]);
 
-            <div>
-                <p>Cargo:</p>
-                <span id="dat-cargo">...</span>
-            </div>
+            if (!el) {
+                console.warn("⚠️ ID NO EXISTE EN HTML:", id);
+                return;
+            }
 
-            <div>
-                <p>Empresa:</p>
-                <span id="dat-empresa">...</span>
-            </div>
+            if (ficha[id] === null || ficha[id] === undefined) {
+                console.warn("⚠️ DATO VACÍO:", id);
+            }
 
-            <div style="grid-column: span 2;">
-                <p>Antecedentes:</p>
-                <span id="dat-judicial">...</span>
-            </div>
+            el.innerText = ficha[id] || "No registrado";
+            el.style.opacity = "1";
+        });
 
-            <div style="grid-column: span 2;">
-                <p>Registro:</p>
-                <span id="dat-registro">...</span>
-            </div>
+        console.log("✅ SITO: Ficha desplegada correctamente");
 
-        </div>
-    </div>
-                            </div>
+    } catch (err) {
+        console.error("❌ ERROR REAL:", err);
+
+        statusText.innerText = "ERROR CONEXIÓN";
+        statusText.style.color = "#ff4d4d";
+    }
+}
+
+// =============================================
+// 🚀 AUTOEJECUCIÓN CONTROLADA
+// =============================================
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("📦 DOM CARGADO");
+
+    const ID_TEST = 1; // ⚠️ Ajusta a un ID real
+
+    console.log("🧪 Ejecutando con ID:", ID_TEST);
+
+    sincronizarDatosAliado(ID_TEST);
+});
+                
+
+
+
+
+
+
                 
                 
                 
