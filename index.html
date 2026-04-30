@@ -332,263 +332,39 @@
 
 
 
-              <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; max-height: 280px; margin: 0;">
+              <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 15px; width: 100%;">
     
-    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 15px; border-left: 3px solid #00f2ff; background: rgba(0, 242, 255, 0.05); height: 50px;">
-        <p style="font-size: 9px; margin: 0; color: rgba(255,255,255,0.6);">ESTADO:</p>
-        <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 0; color: #00f2ff;">APROBADO</p>
+    <div class="sub-bloque" style="flex: 1.6; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 15px; border-left: 2px solid #00f2ff;">
+        <p style="font-size: 10px; margin: 0; color: rgba(255,255,255,0.7);">ESTADO ACTUAL:</p>
+        <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 2px 0; letter-spacing: 1px;">CONECTANDO...</p>
+        <p id="sito-last-sync" style="font-size: 8px; color: #d4af37; margin: 0; opacity: 0.8;">SINCRONIZACIÓN: PENDIENTE</p>
     </div>
 
-    <div id="ficha-aliado" style="flex: 1; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid rgba(0,242,255,0.2); overflow-y: auto; scrollbar-width: thin;">
+    <div id="ficha-aliado" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,242,255,0.2); font-size: 11px; color: white; line-height: 1.4; max-height: 200px; overflow-y: auto; scrollbar-width: thin;">
         
-        <h3 style="color: #00f2ff; font-size: 11px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(0,242,255,0.2); padding-bottom: 5px; letter-spacing: 1px; position: sticky; top: 0; background: rgba(0,0,0,0.9); z-index: 10;">DATOS DEL ALIADO</h3>
+        <h3 style="color: #00f2ff; font-size: 13px; margin-top: 0; border-bottom: 1px solid rgba(0,242,255,0.3); padding-bottom: 5px; letter-spacing: 1px; position: sticky; top: 0; background: #0a0a0a; z-index: 10;">DATOS DEL ALIADO</h3>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 10px;">
-            <div style="grid-column: span 2;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Nombre:</p>
-                <span id="nombre_completo" style="color: #00f2ff; font-weight: bold;">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">ID (CC/NIT):</p>
-                <span id="cc_nit" style="color: #fff;">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Ciudad:</p>
-                <span id="ciudad_negocio" style="color: #fff;">...</span>
-            </div>
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Teléfono Móvil:</p>
-                <span id="telefono_movil" style="color: #fff;">...</span>
-            </div>
-            <div style="grid-column: span 2;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Email:</p>
-                <span id="email" style="color: #fff;">...</span>
-            </div>
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">
-                <p style="margin: 0; color: #d4af37;">Nombre Comercial:</p>
-                <span id="nombre_comercial" style="color: #d4af37; font-weight: bold;">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Rubro:</p>
-                <span id="rubro_negocio">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">ID Público:</p>
-                <span id="id_publico_aliado">...</span>
-            </div>
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Situación Laboral:</p>
-                <span id="situacion_laboral">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Ingresos:</p>
-                <span id="ingresos_mensuales" style="color: #00ff88;">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Estrato:</p>
-                <span id="estrato_social">...</span>
-            </div>
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">EPS / ARL:</p>
-                <span style="color: #fff;"><span id="eps_aliado">...</span> / <span id="arl_aliado">...</span></span>
-            </div>
-
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Hijos:</p>
-                <span id="numero_hijos">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Estado Civil:</p>
-                <span id="estado_civil">...</span>
-            </div>
-            <div style="grid-column: span 2;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Nombres Hijos:</p>
-                <span id="nombres_hijos" style="font-size: 9px; font-style: italic;">...</span>
-            </div>
-
-<!-- ================= NUEVA INFORMACIÓN ================= -->
-
-<div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">
-    <p style="margin: 0; color: #00f2ff;">INFORMACIÓN LEGAL / FINANCIERA:</p>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Aceptó SARLAFT:</p>
-    <span id="acepto_sarlaft">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Origen de Fondos:</p>
-    <span id="origen_fondos">...</span>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">RUT:</p>
-    <span id="num_rut">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Cámara Comercio:</p>
-    <span id="num_camara_comercio">...</span>
-</div>
-
-<div style="grid-column: span 2;">
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Web Negocio:</p>
-    <span id="web_negocio">...</span>
-</div>
-
-<div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-    <p style="margin: 0; color: #d4af37;">UBICACIÓN:</p>
-</div>
-
-<div style="grid-column: span 2;">
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Dirección Residencia:</p>
-    <span id="direccion_residencia">...</span>
-</div>
-
-<div style="grid-column: span 2;">
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Dirección Negocio:</p>
-    <span id="direccion_negocio">...</span>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Barrio:</p>
-    <span id="barrio_negocio">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Tel. Negocio:</p>
-    <span id="tel_negocio">...</span>
-</div>
-
-<div style="grid-column: span 2;">
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Email Negocio:</p>
-    <span id="email_negocio">...</span>
-</div>
-
-<div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-    <p style="margin: 0; color: #00f2ff;">INFORMACIÓN FAMILIAR:</p>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Cónyuge:</p>
-    <span id="nombre_conyuge">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Madre:</p>
-    <span id="nombre_madre">...</span>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Padre:</p>
-    <span id="nombre_padre">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Hermanos:</p>
-    <span id="nombre_hermanos">...</span>
-</div>
-
-<div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-    <p style="margin: 0; color: #00f2ff;">SALUD / PERFIL:</p>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Fondo Pensiones:</p>
-    <span id="fondo_pensiones">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Enfermedades:</p>
-    <span id="enfermedad_diagnosticada">...</span>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Viajes Exterior:</p>
-    <span id="viajes_exterior">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Destinos:</p>
-    <span id="destinos_viaje">...</span>
-</div>
-
-<div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-    <p style="margin: 0; color: #00f2ff;">EDUCACIÓN / LABORAL:</p>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Nivel Educativo:</p>
-    <span id="nivel_educativo">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Institución:</p>
-    <span id="institucion_educativa">...</span>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Título:</p>
-    <span id="titulo_obtenido">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Cargo:</p>
-    <span id="cargo_actual">...</span>
-</div>
-
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Empresa:</p>
-    <span id="empresa_laboral">...</span>
-</div>
-<div>
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Tiempo:</p>
-    <span id="tiempo_laborado">...</span>
-</div>
-
-<div style="grid-column: span 2;">
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Jefe Inmediato:</p>
-    <span id="jefe_inmediato">...</span>
-</div>
-
-<div style="grid-column: span 2;">
-    <p style="margin: 0; color: rgba(255,255,255,0.5);">Pasado Judicial:</p>
-    <span id="pasado_judicial">...</span>
-</div>
-
-<div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-    <p style="margin: 0; color: #00f2ff;">REFERENCIAS ADICIONALES:</p>
-</div>
-
-<div style="grid-column: span 2; font-size: 9px;">
-    <p style="margin: 2px 0;">F2: <span id="ref_fam_nom_2">...</span> (<span id="ref_fam_tel_2">...</span>)</p>
-    <p style="margin: 2px 0;">P2: <span id="ref_per_nom_2">...</span> (<span id="ref_per_tel_2">...</span>)</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Nombre:</p><span id="dat-nombre" style="color: #00f2ff; font-weight: bold;">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Cédula/NIT:</p><span id="dat-cedula">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Negocio:</p><span id="dat-negocio">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Ciudad/Barrio:</p><span id="dat-ciudad">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Ingresos:</p><span id="dat-ingresos">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Hijos:</p><span id="dat-hijos">...</span></div>
             
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; font-size: 9px;">
-                <p style="margin: 0; color: #00f2ff; opacity: 0.8;">REFERENCIAS:</p>
-                <p style="margin: 2px 0;">F1: <span id="ref_fam_nom_1">...</span> (<span id="ref_fam_tel_1">...</span>)</p>
-                <p style="margin: 2px 0;">P1: <span id="ref_per_nom_1">...</span> (<span id="ref_per_tel_1">...</span>)</p>
-            </div>
+            <div style="grid-column: span 2;"><p style="margin: 0; color: rgba(255,255,255,0.6);">Dirección:</p><span id="dat-direccion">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">Situación:</p><span id="dat-situacion">...</span></div>
+            <div><p style="margin: 0; color: rgba(255,255,255,0.6);">EPS:</p><span id="dat-eps">...</span></div>
+        </div>
+        
+        <div style="margin-top: 10px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 4px; font-size: 10px;">
+            <p style="margin: 0;"><strong>E-mail:</strong> <span id="dat-email">...</span></p>
+            <p style="margin: 0;"><strong>Tel:</strong> <span id="dat-tel">...</span></p>
         </div>
     </div>
-                </div>
+              </div>
+                
 
-                
-                
                 
                 
                 
