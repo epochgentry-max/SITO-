@@ -367,58 +367,64 @@ window.cerrarSitoAlert = () => {
     }
 };
 
-
-  // =============================================
-// PROTOCOLO SITO V14.0 - DATA INJECTION TOTAL
+// =============================================
+// PROTOCOLO SITO V15.0 - DESPLIEGUE TOTAL
 // =============================================
 async function sincronizarDatosAliado(idInterno) {
-    const { data, error } = await window.supabaseClient
-        .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
+    const statusText = document.getElementById('sito-status-db');
+    if (!statusText) return;
 
-    if (error) {
-        console.error("ERROR CRÍTICO:", error.message);
-        return;
-    }
+    try {
+        const { data, error } = await window.supabaseClient
+            .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
-    const p = data?.[0];
-    if (p) {
-        // Mapeamos TODAS las columnas a IDs de tu HTML
-        const mapaTotal = {
-            'info-nombre': p.f_nombre_completo,
-            'info-cedula': p.f_cc_nit,
-            'info-email': p.f_email,
-            'info-tel': p.f_telefono_movil,
-            'info-direccion': p.f_direccion_residencia,
-            'info-estado': p.f_estado,
-            'info-negocio': p.f_nombre_comercial,
-            'info-rubro': p.f_rubro_negocio,
-            'info-ciudad': p.f_ciudad_negocio,
-            'info-ingresos': p.f_ingresos_mensuales,
-            'info-hijos': p.f_numero_hijos,
-            'info-web': p.f_web_negocio,
-            'info-cargo': p.f_cargo_actual,
-            'info-empresa': p.f_empresa_laboral,
-            'info-eps': p.f_eps_aliado,
-            'info-arl': p.f_arl_aliado,
-            'info-pension': p.f_fondo_pensiones,
-            'info-created': p.f_created_at
-        };
+        if (error) throw error;
 
-        // Inyección automática: Si el ID existe en el HTML, pone el dato
-        Object.keys(mapaTotal).forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.innerText = mapaTotal[id] || "---";
-        });
-
-        // Actualizamos el letrero principal de estado
-        const statusText = document.getElementById('sito-status-db');
-        if (statusText) {
-            statusText.innerText = p.f_estado.toUpperCase();
+        const p = data?.[0];
+        if (p) {
+            // 1. Estado Principal
+            statusText.innerText = (p.f_estado || "ACTIVO").toUpperCase();
             statusText.style.color = "#00f2ff";
+
+            // 2. Mapeo de TODAS las columnas a tu interfaz
+            // Asegúrate de que los IDs en tu HTML coincidan con la izquierda
+            const ficha = {
+                'dat-nombre': p.f_nombre_completo,
+                'dat-negocio': p.f_nombre_comercial,
+                'dat-cedula': p.f_cc_nit,
+                'dat-email': p.f_email,
+                'dat-tel': p.f_telefono_movil,
+                'dat-ciudad': p.f_ciudad_negocio,
+                'dat-rubro': p.f_rubro_negocio,
+                'dat-ingresos': p.f_ingresos_mensuales,
+                'dat-hijos': p.f_numero_hijos,
+                'dat-nombres-hijos': p.f_nombres_hijos,
+                'dat-situacion': p.f_situacion_laboral,
+                'dat-eps': p.f_eps_aliado,
+                'dat-arl': p.f_arl_aliado,
+                'dat-pension': p.f_fondo_pensiones,
+                'dat-cargo': p.f_cargo_actual,
+                'dat-empresa': p.f_empresa_laboral,
+                'dat-judicial': p.f_pasado_judicial,
+                'dat-registro': p.f_created_at
+            };
+
+            // Inyección automática
+            Object.keys(ficha).forEach(id => {
+                const elemento = document.getElementById(id);
+                if (elemento) {
+                    elemento.innerText = ficha[id] || "No registrado";
+                    elemento.style.opacity = "1"; // Por si estaban ocultos
+                }
+            });
+
+            console.log("SITO: Despliegue de ficha técnica completo.");
         }
+    } catch (err) {
+        console.error("Fallo en despliegue:", err.message);
+        statusText.innerText = "ERROR DE LECTURA";
     }
 }
-  
   
 
   
