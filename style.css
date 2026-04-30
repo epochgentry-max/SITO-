@@ -1,803 +1,79 @@
 <style>
 
-/* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  /* Fondo con la nueva imagen y el degradado de legibilidad actualizado */
-  background: 
-    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
-    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
-#inicio-sito {
-    /* Cargamos la imagen que me enviaste */
-    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
-    
-    /* Capa de filtro azul (RGBA: Rojo, Verde, Azul, Opacidad) */
-    /* El 0.7 es la intensidad del azul, puedes bajarlo a 0.5 si quieres ver más la foto */
-    background-color: rgba(13, 71, 161, 0.8); 
-    
-    /* Mezcla la imagen con el color */
-    background-blend-mode: multiply;
-    
-    /* Ajustes para que la imagen cubra toda la pantalla y no se repita */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Aseguramos que el contenido sea legible */
-    color: white; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Ajuste opcional para que los textos resalten más sobre la foto */
-#inicio-sito h1, #inicio-sito p {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-
-
-.screen {
-  width: 90%;
-  max-width: 400px;
-  padding: 30px;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  
-  /* AHUMADO MÁS LIGERO PARA VER AL PERSONAJE */
-  background: rgba(0, 0, 0, 0.1); 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  border-radius: 25px;
-  border: 1px solid rgba(212, 175, 55, 0.4); /* Dorado más presente */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro */
-#dashboard-aliado.screen {
-  max-width: none !important; /* Rompe el límite del Padre para esta pantalla */
-  width: 100vw !important;
-  height: 100vh !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  overflow-x: auto !important; /* Permite el flujo panorámico */
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Ajuste para que los títulos no se pierdan */
-h1, h2 {
-  color: #d4af37 !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-}
-
-
-
-/* RECTIFICACIÓN: DORADO SÓLIDO ÉLITE */
-h1, h2 { 
-  color: #d4af37 !important; 
-  font-size: 26px; 
-  margin: 20px 0;
-  /* Eliminamos el azul del texto: Solo sombra negra para profundidad */
-  text-shadow: 2px 2px 4px rgba(0,0,0,1);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-p { 
-  color: #FFFFFF !important; 
-  font-size: 15px;
-  line-height: 1.5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
-
-/* LA LUZ AZUL AHORA ES AMBIENTAL, NO TEXTUAL */
-.screen {
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  /* El resplandor azul ahora emana del contenedor, bañando la pantalla */
-  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
-}
-
-/* REEMPLAZO QUIRÚRGICO: BOTONES ÉLITE */
-.btn-primario {
-  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
-  color: #020a12 !important;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 8px;
-  /* Sombra de luz azul para el botón dorado */
-  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-primario:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
-}
-
-
-.btn-secundario {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #f7e08a !important;
-  border: 2px solid #d4af37 !important;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  backdrop-filter: blur(5px);
-  cursor: pointer;
-}
-
-/* RECALIBRACIÓN: SISTEMA DE VISIÓN SITO */
-.password-wrapper {
-  position: relative;
-  width: 100%;
-  display: flex; /* Alineación forzada */
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.password-wrapper input {
-  width: 100% !important;
-  padding-right: 45px !important; /* Espacio de seguridad para el ojo */
-  margin-bottom: 0 !important; /* El margen lo lleva el wrapper ahora */
-}
-
-.toggle-password {
-  position: absolute;
-  right: 12px; /* Distancia del borde derecho */
-  top: 50%; /* Centrado vertical absoluto */
-  transform: translateY(-50%);
-  cursor: pointer;
-  color: #d4af37; 
-  font-size: 18px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  background: transparent;
-}
-
-
-
-
-.active {
-  display: flex;
-}
-
-.logo { width: 250px; max-width: 80%; margin-bottom: 40px; }
-
-
-
-/* RECTIFICACIÓN FINAL: INTERFAZ SITO 100% OSCURA Y ÉLITE */
-
-/* 1. ESTADO BASE Y PERMANENTE */
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  
-  /* FONDO OSCURO SIEMPRE: Adiós al parpadeo blanco */
-  background-color: rgba(2, 10, 18, 0.9) !important; 
-  color: #FFFFFF !important; 
-  border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Dorado sutil en reposo */
-  
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-/* 2. ESTADO DE INTERACCIÓN (FOCO) */
-input:focus, select:focus, textarea:focus {
-  background-color: #020a12 !important; /* Azul profundo SITO */
-  border-color: #2196F3 !important; /* Cambio a Luz Azul */
-  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Aura azul ambiental */
-}
-
-/* 3. TEXTO DE GUÍA (PLACEHOLDER) */
-::placeholder {
-  color: rgba(255, 255, 255, 0.4); /* Blanco tenue para legibilidad */
-}
-
-
-
-button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: none;
-}
-
-
-
-/* CIRUGÍA: VISIBILIDAD BARRA SUPERIOR */
-.barra-superior {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
-  color: #FFFFFF; /* Letras blancas para los pasos */
-  font-weight: bold;
-}
-
-.barra-superior button {
-  font-size: 20px;
-  margin-right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FFFFFF; /* La flecha también blanca */
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Espacio entre flecha y texto */
-}
-
-
-form { width: 100%; }
-a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
-
-/* Carrusel */
-#carousel-container {
-  display: none;
-  max-width: 800px;
-  margin: 40px auto;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-#carousel {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-#carousel img {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-#carousel-container button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #1976D2;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  font-size: 28px;
-  line-height: 46px;
-  text-align: center;
-}
-
-#prev { left: 10px; }
-#next { right: 10px; }
-
-/* Ajuste específico para el reproductor de YouTube */
-#player {
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-}
-
-/* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
-
-body {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  /* Fondo con la nueva imagen y el degradado de legibilidad actualizado */
-  background: 
-    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
-    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-
-#inicio-sito {
-    /* Cargamos la imagen que me enviaste */
-    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
-    
-    /* Capa de filtro azul (RGBA: Rojo, Verde, Azul, Opacidad) */
-    /* El 0.7 es la intensidad del azul, puedes bajarlo a 0.5 si quieres ver más la foto */
-    background-color: rgba(13, 71, 161, 0.8); 
-    
-    /* Mezcla la imagen con el color */
-    background-blend-mode: multiply;
-    
-    /* Ajustes para que la imagen cubra toda la pantalla y no se repita */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    /* Aseguramos que el contenido sea legible */
-    color: white; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Ajuste opcional para que los textos resalten más sobre la foto */
-#inicio-sito h1, #inicio-sito p {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-
-
-.screen {
-  width: 90%;
-  max-width: 400px;
-  padding: 30px;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  
-  /* AHUMADO MÁS LIGERO PARA VER AL PERSONAJE */
-  background: rgba(0, 0, 0, 0.1); 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  
-  border-radius: 25px;
-  border: 1px solid rgba(212, 175, 55, 0.4); /* Dorado más presente */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-}
-
-/* Ajuste para que los títulos no se pierdan */
-h1, h2 {
-  color: #d4af37 !important;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-}
-
-
-
-/* RECTIFICACIÓN: DORADO SÓLIDO ÉLITE */
-h1, h2 { 
-  color: #d4af37 !important; 
-  font-size: 26px; 
-  margin: 20px 0;
-  /* Eliminamos el azul del texto: Solo sombra negra para profundidad */
-  text-shadow: 2px 2px 4px rgba(0,0,0,1);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-p { 
-  color: #FFFFFF !important; 
-  font-size: 15px;
-  line-height: 1.5;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
-
-/* LA LUZ AZUL AHORA ES AMBIENTAL, NO TEXTUAL */
-.screen {
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  /* El resplandor azul ahora emana del contenedor, bañando la pantalla */
-  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
-}
-
-/* REEMPLAZO QUIRÚRGICO: BOTONES ÉLITE */
-.btn-primario {
-  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
-  color: #020a12 !important;
-  padding: 15px;
-  font-size: 18px;
-  font-weight: bold;
-  text-transform: uppercase;
-  border-radius: 8px;
-  /* Sombra de luz azul para el botón dorado */
-  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-primario:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
-}
-
-
-.btn-secundario {
-  background: rgba(255, 255, 255, 0.05) !important;
-  color: #f7e08a !important;
-  border: 2px solid #d4af37 !important;
-  padding: 15px;
-  font-size: 16px;
-  font-weight: bold;
-  backdrop-filter: blur(5px);
-  cursor: pointer;
-}
-
-
-
-
-
-
-.active {
-  display: flex;
-}
-
-.logo { width: 250px; max-width: 80%; margin-bottom: 40px; }
-
-
-
-/* RECTIFICACIÓN FINAL: INTERFAZ SITO 100% OSCURA Y ÉLITE */
-
-/* 1. ESTADO BASE Y PERMANENTE */
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  font-size: 16px;
-  border-radius: 8px;
-  
-  /* FONDO OSCURO SIEMPRE: Adiós al parpadeo blanco */
-  background-color: rgba(2, 10, 18, 0.9) !important; 
-  color: #FFFFFF !important; 
-  border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Dorado sutil en reposo */
-  
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-/* 2. ESTADO DE INTERACCIÓN (FOCO) */
-input:focus, select:focus, textarea:focus {
-  background-color: #020a12 !important; /* Azul profundo SITO */
-  border-color: #2196F3 !important; /* Cambio a Luz Azul */
-  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Aura azul ambiental */
-}
-
-/* 3. TEXTO DE GUÍA (PLACEHOLDER) */
-::placeholder {
-  color: rgba(255, 255, 255, 0.4); /* Blanco tenue para legibilidad */
-}
-
-
-
-button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: none;
-}
-
-
-
-/* CIRUGÍA: VISIBILIDAD BARRA SUPERIOR */
-.barra-superior {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 20px;
-  color: #FFFFFF; /* Letras blancas para los pasos */
-  font-weight: bold;
-}
-
-.barra-superior button {
-  font-size: 20px;
-  margin-right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #FFFFFF; /* La flecha también blanca */
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Espacio entre flecha y texto */
-}
-
-
-form { width: 100%; }
-a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
-
-/* Carrusel */
-#carousel-container {
-  display: none;
-  max-width: 800px;
-  margin: 40px auto;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-#carousel {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-#carousel img {
-  width: 100%;
-  flex-shrink: 0;
-}
-
-#carousel-container button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #1976D2;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-  font-size: 28px;
-  line-height: 46px;
-  text-align: center;
-}
-
-#prev { left: 10px; }
-#next { right: 10px; }
-
-/* Ajuste específico para el reproductor de YouTube */
-/* REEMPLAZO QUIRÚRGICO: ESTIRAMIENTO VERTICAL SITO */
-/* REPARACIÓN FINAL: CONTENEDOR EXPANDIDO PARA VIDEO LARGO */
-
-#video-induccion {
-  /* Dejamos el ancho que te gusta pero liberamos el alto */
-  max-width: 600px !important; 
-  width: 90%;
-  height: auto !important; /* La ventana ahora crece según el contenido */
-  min-height: 900px; /* Asegura espacio suficiente para el video largo */
-  padding-bottom: 40px;
-  display: none; /* Se activa con la clase .active */
-}
-
-#video-induccion.active {
-  display: flex;
-}
-
-#player {
-  width: 100%;
-  /* Mantenemos tu largo de 550px hacia abajo */
-  height: 550px !important; 
-  border-radius: 15px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-  /* Evita que el video se salga de los bordes redondeados */
-  overflow: hidden; 
-}
-
-/* Ajuste del botón para que no se salga de la ventana */
-#btn-continuar-postulacion {
-  margin-top: 25px;
-  width: 100%;
-}
-
 /* ============================================================
-   BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
-   LOGICA: Control de la interfaz mediante dimensiones absolutas.
+   SITO OS V6.0 - NÚCLEO INTEGRAL SIN PÉRDIDAS
+   Jerarquía: Hardware > Acceso > Inducción > Dashboard > Grid
    ============================================================ */
 
-/* Contenedor de seguridad: Actúa como la "carcasa" física del hardware */
-#dashboard-aliado {
-    background: #020a12;
-    min-height: 100vh;
-    width: 100vw;
-    display: none; 
-    overflow: hidden; /* BLOQUEO DE SEGURIDAD: Evita el colapso del sitio en Vercel */
-    position: relative;
+/* 1. HARDWARE Y ENTORNO GLOBAL */
+body {
+    margin: 0; padding: 0; width: 100vw; height: 100vh;
+    background: linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
+                url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
+    background-size: cover; background-position: center; background-attachment: fixed;
+    display: flex; justify-content: center; align-items: center;
+    font-family: 'Segoe UI', sans-serif; color: #FFFFFF; overflow: hidden;
 }
 
-#dashboard-aliado.active {
-    display: block !important;
+/* 2. SISTEMA DE ACCESO (SCREENS) */
+.screen {
+    width: 90%; max-width: 400px; padding: 30px; display: none;
+    flex-direction: column; align-items: center; text-align: center;
+    background: rgba(0, 0, 0, 0.1); backdrop-filter: blur(10px);
+    border-radius: 25px; border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
-/* El Plano Deslizable: Ahora con dimensiones de "Placa Base" real */
+.active { display: flex !important; }
+
+#inicio-sito {
+    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
+    background-color: rgba(13, 71, 161, 0.8); background-blend-mode: multiply;
+    background-size: cover; background-position: center;
+}
+
+/* 3. LÓGICA DE FORMULARIOS Y VISIÓN SITO */
+h1, h2 { color: #d4af37 !important; text-shadow: 2px 2px 4px rgba(0,0,0,1); text-transform: uppercase; letter-spacing: 1px; }
+p { font-size: 15px; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+
+input, select, textarea {
+    width: 100%; padding: 12px; margin-bottom: 15px; border-radius: 8px;
+    background-color: rgba(2, 10, 18, 0.9) !important; color: #FFFFFF !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important; outline: none; transition: 0.3s;
+}
+
+input:focus { border-color: #2196F3 !important; box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; }
+
+.password-wrapper { position: relative; width: 100%; display: flex; align-items: center; margin-bottom: 20px; }
+.password-wrapper input { padding-right: 45px !important; margin-bottom: 0 !important; }
+.toggle-password { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #d4af37; z-index: 10; }
+
+.barra-superior { display: flex; align-items: center; width: 100%; margin-bottom: 20px; font-weight: bold; }
+.barra-superior button { background: none; border: none; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 20px; }
+
+/* 4. VIDEO INDUCCIÓN (EXPANDIDO) */
+#video-induccion { max-width: 600px !important; width: 90%; min-height: 900px; padding-bottom: 40px; }
+#player { width: 100%; height: 550px !important; border-radius: 15px; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); overflow: hidden; }
+
+/* 5. DASHBOARD MAESTRO (EL PLANO DESLIZABLE) */
+#dashboard-aliado { background: #020a12; width: 100vw; height: 100vh; display: none; overflow: hidden; position: fixed; top: 0; left: 0; }
+
 .sito-plano-deslizable {
-    width: 100vw;
-    height: 100vh;
-    overflow: auto !important;
-    -webkit-overflow-scrolling: touch;
+    width: 100vw; height: 100vh; overflow: auto !important;
     background-color: #01080e;
-
-    /* ADN Visual: Circuitos refinados con ángulos de 45° */
     background-image: 
         linear-gradient(90deg, rgba(135, 206, 235, 0.03) 1px, transparent 1px),
         linear-gradient(rgba(135, 206, 235, 0.03) 1px, transparent 1px),
         linear-gradient(45deg, rgba(135, 206, 235, 0.02) 25%, transparent 25%, transparent 50%, rgba(135, 206, 235, 0.02) 50%, rgba(135, 206, 235, 0.02) 75%, transparent 75%, transparent);
     background-size: 80px 80px, 80px 80px, 20px 20px;
-    
-    /* Configuración de Zoom táctico */
-    transform: scale(0.6); 
-    transform-origin: top left;
-    
-    /* COMPENSACIÓN VERCEL: Dimensiones fijas para evitar el 'Layout Thrashing' */
-    min-width: 2500px; 
-    min-height: 1800px;
+    transform: scale(0.6); transform-origin: top left;
+    min-width: 2500px; min-height: 1800px;
     box-shadow: inset 0 0 150px rgba(0, 0, 0, 1);
 }
 
-/* Rejilla Maestra coordinada por Áreas */
+/* 6. REJILLA MAESTRA Y ÁREAS DE HARDWARE */
 #master-grid-container {
     display: grid;
-    /* RECALIBRACIÓN: Columnas de datos fijos para estabilidad total */
-    grid-template-columns: 1500px 440px 440px; 
-    grid-template-rows: 660px 320px 700px 70px;
-    grid-template-areas: 
-        "superior  lateral  lateral2"
-        "inter-sup lateral  lateral2"
-        "nucleo    lateral  lateral2"
-        "pre-foot  lateral  lateral2";
-    
-    width: fit-content;
-    height: auto;
-    gap: 15px;
-    padding: 110px 40px 40px 40px; /* Margen superior para ID de Aliado */
-    background: transparent;
-    box-sizing: border-box;
-    contain: paint; /* Optimización de renderizado para Vercel */
-}
-
-/* --- MOTOR DE ENERGÍA NEÓN AZUL CIELO (AJUSTADO) --- */
-#sec-superior, #sec-inter-sup, #sec-nucleo, #sec-pre-footer, #barra-lateral-derecha, #barra-lateral-2, .sub-bloque, .sub-bloque-h, .sub-bloque-v, .sub-grid-12 div, .modulo-dual {
-    border: 1px solid rgba(135, 206, 235, 0.8) !important;
-    box-shadow: 0 0 12px rgba(135, 206, 235, 0.3), inset 0 0 8px rgba(135, 206, 235, 0.1);
-    animation: pulsoUnion 3s infinite alternate;
-}
-
-/* Áreas de Hardware */
-#sec-superior { grid-area: superior; display: flex; gap: 10px; }
-#sec-inter-sup { grid-area: inter-sup; display: flex; flex-direction: column; gap: 10px; }
-#sec-nucleo { grid-area: nucleo; background: rgba(135, 206, 235, 0.01); }
-#sec-pre-footer { grid-area: pre-foot; display: flex; gap: 8px; }
-#barra-lateral-derecha { grid-area: lateral; display: flex; flex-direction: column; gap: 10px; }
-
-/* Barra Lateral 2 (Dual Hardware) */
-#barra-lateral-2 {
-    grid-area: lateral2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.modulo-dual {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 15px;
-}
-
-/* Estilo de Sub-Módulos */
-.sub-bloque, .sub-bloque-h, .sub-bloque-v {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #d4af37;
-    font-size: 11px;
-    font-family: 'Courier New', monospace;
-    text-transform: uppercase;
-    background: rgba(212, 175, 55, 0.03);
-    border-radius: 4px;
-}
-
-/* La Gran Rejilla del Núcleo (Sección 4) */
-.sub-grid-12 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    height: 100%;
-    gap: 8px;
-    padding: 10px;
-}
-
-/* Animación de Pulso Vital */
-@keyframes pulsoUnion {
-    0% { border-color: rgba(135, 206, 235, 0.5); box-shadow: 0 0 8px rgba(135, 206, 235, 0.2); }
-    100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
-}
-
-/* ESTÉTICA DE ALERTAS SITO */
-.sito-modal-alert {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background: rgba(2, 10, 18, 0.85);
-    backdrop-filter: blur(8px);
-    align-items: center; justify-content: center;
-
-
-  /* ============================================================
-   BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
-   LOGICA: Control de la interfaz mediante dimensiones absolutas.
-   FINALIDAD: Garantizar que la estructura no colapse y mantenga 
-   el diseño de alta gama en cualquier servidor.
-   ============================================================ */
-
-/* CONTENEDOR DE SEGURIDAD (#dashboard-aliado)
-   - Carcasa física del sistema.
-   - background: Define el tono base del hardware.
-   - display: none: Mantiene el sistema apagado hasta la validación.
-   - overflow: hidden: Evita que el scroll del navegador interfiera con SITO.
-*/
-#dashboard-aliado {
-    background: #020a12;
-    min-height: 100vh;
-    width: 100vw;
-    display: none; 
-    overflow: hidden; /* BLOQUEO DE SEGURIDAD: Evita el colapso del sitio en Vercel */
-    position: relative;
-}
-
-/* Activa la visibilidad del dashboard cuando el sistema valida el acceso */
-#dashboard-aliado.active {
-    display: block !important;
-}
-
-/* EL PLANO DESLIZABLE (.sito-plano-deslizable)
-   - Es la "Placa Base" donde se montan los circuitos.
-   - overflow: auto: Permite la navegación libre por el plano gigante.
-   - background-image: Crea el patrón de circuitos usando 3 capas de gradientes.
-   - transform: scale(0.6): Reduce la vista para dar sensación de amplitud.
-   - min-width/height: Define el tamaño real del mapa de trabajo (2500x1800px).
-*/
-.sito-plano-deslizable {
-    width: 100vw;
-    height: 100vh;
-    overflow: auto !important;
-    -webkit-overflow-scrolling: touch;
-    background-color: #01080e;
-
-    /* ADN Visual: Circuitos refinados con ángulos de 45° */
-    background-image: 
-        linear-gradient(90deg, rgba(135, 206, 235, 0.03) 1px, transparent 1px),
-        linear-gradient(rgba(135, 206, 235, 0.03) 1px, transparent 1px),
-        linear-gradient(45deg, rgba(135, 206, 235, 0.02) 25%, transparent 25%, transparent 50%, rgba(135, 206, 235, 0.02) 50%, rgba(135, 206, 235, 0.02) 75%, transparent 75%, transparent);
-    background-size: 80px 80px, 80px 80px, 20px 20px;
-    
-    /* Configuración de Zoom táctico */
-    transform: scale(0.6); 
-    transform-origin: top left;
-    
-    /* COMPENSACIÓN VERCEL: Dimensiones fijas para evitar el 'Layout Thrashing' */
-    min-width: 2500px; 
-    min-height: 1800px;
-    box-shadow: inset 0 0 150px rgba(0, 0, 0, 1);
-}
-
-/* REJILLA MAESTRA (#master-grid-container)
-   - grid-template-columns: Divide el espacio en 3 columnas (1000px, 440px, 440px).
-   - grid-template-rows: Divide en 4 filas (Fila superior, Intermedia, Núcleo y Footer).
-   - grid-template-areas: Mapea los nombres de las secciones para fácil organización.
-   - gap: 15px: Espacio exacto entre los módulos.
-   - contain: paint: Optimización para que Vercel no recalcule innecesariamente.
-*/
-#master-grid-container {
-    display: grid;
-    /* RECALIBRACIÓN: Columnas de datos fijos para estabilidad total */
     grid-template-columns: 1000px 440px 440px; 
     grid-template-rows: 660px 320px auto 70px;
     grid-template-areas: 
@@ -805,261 +81,61 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
         "inter-sup lateral  lateral2"
         "nucleo    lateral  lateral2"
         "pre-foot  lateral  lateral2";
-    
-    width: fit-content;
-    height: auto;
-    gap: 15px;
-    padding: 110px 40px 40px 40px; /* Margen superior para ID de Aliado */
-    background: transparent;
-    box-sizing: border-box;
-    contain: paint; /* Optimización de renderizado para Vercel */
+    width: fit-content; gap: 15px; padding: 110px 40px 40px 40px; contain: paint;
 }
 
-/* MOTOR DE ENERGÍA NEÓN AZUL CIELO
-   - border: 1px: Línea definida de color azul sky (80% opacidad).
-   - box-shadow: Crea el resplandor exterior e interior del neón.
-   - animation: Llama a 'pulsoUnion' para dar vida al sistema.
-*/
-#sec-superior, #sec-inter-sup, #sec-nucleo, #sec-pre-footer, #barra-lateral-derecha, #barra-lateral-2, .sub-bloque, .sub-bloque-h, .sub-bloque-v, .sub-grid-12 div, .modulo-dual {
+#sec-superior, #sec-inter-sup, #sec-nucleo, #sec-pre-footer, 
+#barra-lateral-derecha, #barra-lateral-2, .sub-bloque, .sub-bloque-h, 
+.sub-bloque-v, .modulo-dual, .sito-section, .sub-2-1, .sub-2-3, 
+.part-1-3, .part-2-big, .v-sub-5, .h-sub-3-1, .h-sub-3-2 {
     border: 1px solid rgba(135, 206, 235, 0.8) !important;
     box-shadow: 0 0 12px rgba(135, 206, 235, 0.3), inset 0 0 8px rgba(135, 206, 235, 0.1);
-    animation: pulsoUnion 3s infinite alternate;
+    animation: pulsoUnion 3s infinite alternate; background: rgba(2, 10, 18, 0.85); border-radius: 8px;
 }
 
-/* ASIGNACIÓN DE ÁREAS DE HARDWARE: Vincula los IDs HTML con las áreas del Grid */
 #sec-superior { grid-area: superior; display: flex; gap: 10px; }
 #sec-inter-sup { grid-area: inter-sup; display: flex; flex-direction: column; gap: 10px; }
-#sec-nucleo { grid-area: nucleo; background: rgba(135, 206, 235, 0.01); }
+#sec-nucleo { grid-area: nucleo; }
 #sec-pre-footer { grid-area: pre-foot; display: flex; gap: 8px; }
 #barra-lateral-derecha { grid-area: lateral; display: flex; flex-direction: column; gap: 10px; }
+#barra-lateral-2 { grid-area: lateral2; display: flex; flex-direction: column; gap: 15px; }
 
-/* BARRA LATERAL 2 (Dual Hardware): Organización en columna para el lado derecho */
-#barra-lateral-2 {
-    grid-area: lateral2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* 7. SISTEMA PANORÁMICO Y ESTACIONES */
+.dashboard-view { padding: 0 !important; overflow-x: scroll !important; background: rgba(0,0,0,0.8); -webkit-overflow-scrolling: touch; }
+.panorama-viewport { display: flex; width: 500vw; height: 100vh; scroll-snap-type: x mandatory; }
+
+.sito-section {
+    width: 100vw !important; height: 100vh !important; flex-shrink: 0;
+    scroll-snap-align: start; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box;
 }
 
-/* MÓDULO DUAL: Contenedores internos con fondo semitransparente para legibilidad */
-.modulo-dual {
-    flex: 1;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 5px;
-    overflow: hidden;
-    padding: 15px;
+.section-2 { flex: 2; display: flex; gap: 15px; }
+.sub-2-1 { width: 100%; display: flex; justify-content: flex-start; padding: 20px; background: rgba(212,175,55,0.05); border: 1px solid #d4af37 !important; }
+.sub-2-2 { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.sub-2-3 { flex: 3; background: rgba(255,255,255,0.02); padding: 15px; overflow-y: auto; }
+
+/* 8. IDENTIDAD Y BOTONES ÉLITE */
+.sito-profile-card { text-align: left; position: relative; border: 1px solid #d4af37 !important; padding: 10px 20px; background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+.profile-alias { color: #d4af37 !important; font-size: 26px; font-weight: 900; letter-spacing: 1px; }
+.card-status-dot { width: 10px; height: 10px; background: #0f0; border-radius: 50%; position: absolute; top: 10px; right: 10px; box-shadow: 0 0 10px #0f0; }
+
+.btn-primario {
+    background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
+    color: #020a12 !important; padding: 15px; font-size: 18px; font-weight: bold;
+    text-transform: uppercase; border-radius: 8px; border: none; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
 }
 
-/* ESTILO DE SUB-MÓDULOS
-   - Tipografía 'Courier New' para look de terminal.
-   - Color #d4af37 (Dorado/Amarillo) para datos críticos.
-*/
-.sub-bloque, .sub-bloque-h, .sub-bloque-v {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #d4af37;
-    font-size: 11px;
-    font-family: 'Courier New', monospace;
-    text-transform: uppercase;
-    background: rgba(212, 175, 55, 0.03);
-    border-radius: 4px;
-}
+.sub-grid-12, .command-grid-12 { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(3, 1fr); height: 100%; gap: 8px; padding: 10px; }
+.cmd-btn { background: #d4af37; color: black; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
 
-/* NÚCLEO (Sub-Grid 12): Grilla interna de 4x3 para los 12 botones principales */
-.sub-grid-12 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    height: 100%;
-    gap: 8px;
-    padding: 10px;
-}
-
-/* ANIMACIÓN DE PULSO VITAL
-   - Modula el brillo y el color de los bordes suavemente cada 3 segundos.
-*/
+/* 9. ANIMACIÓN Y ALERTAS */
 @keyframes pulsoUnion {
     0% { border-color: rgba(135, 206, 235, 0.5); box-shadow: 0 0 8px rgba(135, 206, 235, 0.2); }
     100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
 }
 
-/* ESTÉTICA DE ALERTAS SITO
-   - Modales de advertencia con desenfoque de fondo (backdrop-filter).
-   - Estilo dorado (#d4af37) para resaltar importancia.
-*/
-.sito-modal-alert {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0; top: 0; width: 100%; height: 100%;
-    background: rgba(2, 10, 18, 0.85);
-    backdrop-filter: blur(8px);
-    align-items: center; justify-content: center;
-}
+.sito-modal-alert { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(2, 10, 18, 0.85); backdrop-filter: blur(8px); align-items: center; justify-content: center; }
+.sito-modal-content { background: rgba(0, 0, 0, 0.9); border: 1px solid #d4af37; padding: 40px; border-radius: 20px; text-align: center; }
 
-.sito-modal-content {
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid #d4af37;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 320px;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-}
-
-#sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
-#sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
-#sito-alert-icon { font-size: 40px; }
-
-/* ESTABILIZACIÓN PANORÁMICA SITO
-   - .dashboard-view: Contenedor que permite el scroll táctil suave.
-   - .panorama-viewport: Define un ancho de 500vw (5 pantallas de ancho) para expansión futura.
-*/
-.dashboard-view {
-    padding: 0 !important;
-    overflow-x: scroll !important; /* Fuerza el scroll horizontal */
-    overflow-y: auto; /* Permite scroll vertical si el contenido crece */
-    background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
-    -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
-}
-
-.panorama-viewport {
-    display: flex;
-    width: 500vw; /* 5 Estaciones de trabajo */
-    height: 100vh;
-    scroll-snap-type: x mandatory;
-}
-
-/* SITO-SECTION: Cada una de las 5 estaciones del panorama */
-.sito-section {
-    width: 100vw !important;
-    height: 100vh !important;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box;
-    border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
-}
-
-/* SECCIÓN 2: EL NÚCLEO (Distribución flex) */
-.section-2 {
-    flex: 2; /* Más prominente */
-    display: flex;
-    gap: 15px;
-}
-
-/* POSICIONAMIENTO DE IDENTIDAD: Tarjeta dorada en la esquina */
-.sub-2-1 {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start; /* Alinea a la izquierda */
-    padding: 20px;
-    box-sizing: border-box;
-    background: rgba(212,175,55,0.05); 
-    border: 1px solid #d4af37;
-}
-
-.sub-2-2 { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.sub-2-3 { flex: 3; background: rgba(255,255,255,0.02); padding: 15px; overflow-y: auto; }
-
-/* NUBE IA ☁️: Burbuja flotante para mensajes de SITO */
-.thought-bubble {
-    position: absolute;
-    top: -40px;
-    background: white;
-    color: #020a12;
-    padding: 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
-}
-
-/* SECCIÓN 4 (12 BOTONES): Comandos operativos en grilla 3x4 */
-.command-grid-12 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 10px;
-}
-.cmd-btn {
-    background: #d4af37;
-    color: black;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-.cmd-btn:hover { transform: scale(1.05); background: #f1c40f; }
-
-/* SECCIÓN 1: DERECHA (Organización proporcional 1:3) */
-.section-1-right {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-.part-1-3 { flex: 1; background: rgba(212,175,55,0.1); }
-.part-2-big { flex: 3; background: rgba(212,175,55,0.2); }
-
-/* --- PROTOCOLO DE ILUMINACIÓN SITO --- */
-
-/* 1. Neón de Contención (Azul/Cian) */
-.sito-section, 
-.sub-2-1, .sub-2-3, .part-1-3, .part-2-big, .v-sub-5, .h-sub-3-1, .h-sub-3-2 {
-    border: 1px solid rgba(0, 255, 255, 0.4) !important; /* Neón Azul/Cian */
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); /* Resplandor suave */
-    border-radius: 8px; /* Bordes redondeados */
-    background: rgba(2, 10, 18, 0.85); /* Fondo oscuro para contraste */
-}
-
-/* 2. Tarjeta de Identidad (Esquina Superior Izquierda, Amarillo) */
-.sito-profile-card {
-    text-align: left;
-    position: relative;
-    border: 1px solid #d4af37 !important; /* Neón Dorado para Perfil */
-    padding: 10px 20px;
-    background: rgba(212, 175, 55, 0.1);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-}
-
-/* Punto Verde de Estatus: Indicador de conexión en vivo */
-.card-status-dot {
-    width: 10px; height: 10px;
-    background: #0f0; /* Punto Verde de 'Activo' */
-    border-radius: 50%;
-    position: absolute;
-    top: 10px; right: 10px;
-    box-shadow: 0 0 10px #0f0;
-}
-
-.profile-alias {
-    color: #d4af37 !important; /* Amarillo Aliado */
-    font-size: 26px !important;
-    font-weight: 900;
-    margin: 0;
-    letter-spacing: 1px;
-}
-
-.profile-label {
-    color: #fff;
-    font-size: 10px;
-    opacity: 0.6;
-    margin: 5px 0 0 0;
-    letter-spacing: 1px;
-}
-
-.profile-id {
-    color: #fff;
-    font-size: 12px;
-    margin: 2px 0 0 0;
-    font-weight: bold;
-  }
-          
-
-</style>
-  
+  </style>
