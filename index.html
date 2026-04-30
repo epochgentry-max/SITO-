@@ -331,78 +331,38 @@
             <div id="sec-superior">
 
 
-<div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 12px; width: 100%; min-height: 300px; max-height: 300px;">
+<div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
     
-    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 10px 15px; border-left: 2px solid #00f2ff; background: rgba(255,255,255,0.03);">
-        <p style="font-size: 10px; margin: 0; color: rgba(255,255,255,0.7); letter-spacing: 1px;">ESTADO ACTUAL:</p>
-        <p id="sito-status-db" style="font-size: 15px; font-weight: bold; margin: 2px 0; color: #00f2ff; text-shadow: 0 0 8px rgba(0,242,255,0.5);">CONECTANDO...</p>
-        <p id="sito-last-sync" style="font-size: 9px; color: #d4af37; margin: 0; opacity: 0.8; font-family: monospace;">SINCRONIZACIÓN: PENDIENTE</p>
+    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 15px; border-left: 2px solid #00f2ff;">
+        <p style="font-size: 10px; margin: 0; color: rgba(255,255,255,0.7);">ESTADO ACTUAL:</p>
+        <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 2px 0; letter-spacing: 1px;">CONECTANDO...</p>
+        <p id="sito-last-sync" style="font-size: 8px; color: #d4af37; margin: 0; opacity: 0.8;">SINCRONIZACIÓN: PENDIENTE</p>
     </div>
 
-    <div id="ficha-aliado" style="flex: 1; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,242,255,0.2); overflow-y: auto; scrollbar-width: thin; scrollbar-color: #00f2ff rgba(0,0,0,0.1);">
+    <div id="ficha-aliado" style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid rgba(0,242,255,0.2); font-size: 11px; color: white; line-height: 1.4; max-height: 250px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #00f2ff rgba(0,0,0,0.1);">
         
-        <h3 style="color: #00f2ff; font-size: 13px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(0,242,255,0.3); padding-bottom: 8px; position: sticky; top: -15px; background: #0a0a0a; z-index: 10; letter-spacing: 2px; text-align: center;">EXPEDIENTE TÉCNICO</h3>
+        <h3 style="color: #00f2ff; font-size: 13px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(0,242,255,0.3); padding-bottom: 5px; position: sticky; top: -15px; background: rgba(15,15,15,1); z-index: 10; letter-spacing: 1px;">DATOS DEL ALIADO</h3>
         
         <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+            <p style="margin: 0;"><strong>Nombre:</strong> <br><span id="dat-nombre" style="color: #00f2ff; font-weight: bold;">...</span></p>
+            <p style="margin: 0;"><strong>Cédula/NIT:</strong> <br><span id="dat-cedula">...</span></p>
+            <p style="margin: 0;"><strong>Negocio:</strong> <br><span id="dat-negocio" style="color: #d4af37;">...</span></p>
+            <p style="margin: 0;"><strong>Rubro:</strong> <br><span id="dat-rubro">...</span></p>
+            <p style="margin: 0;"><strong>Ciudad:</strong> <br><span id="dat-ciudad">...</span></p>
+            <p style="margin: 0;"><strong>Dirección:</strong> <br><span id="dat-direccion">...</span></p>
+            <p style="margin: 0;"><strong>Ingresos:</strong> <br><span id="dat-ingresos" style="color: #00ff88;">...</span></p>
+            <p style="margin: 0;"><strong>Hijos:</strong> <br><span id="dat-hijos">...</span> (<span id="dat-nombres-hijos" style="font-size: 9px; opacity: 0.7;">...</span>)</p>
+            <p style="margin: 0;"><strong>Seguridad Social:</strong> <br><span id="dat-eps">...</span> / <span id="dat-arl">...</span></p>
+            <p style="margin: 0;"><strong>Situación:</strong> <br><span id="dat-situacion">...</span></p>
             
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">NOMBRE COMPLETO:</strong><br>
-                <span id="dat-nombre" style="color: #00f2ff; font-weight: bold; font-size: 12px;">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">IDENTIFICACIÓN:</strong><br>
-                <span id="dat-cedula">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">NEGOCIO / COMERCIO:</strong><br>
-                <span id="dat-negocio" style="color: #d4af37;">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">RUBRO Y ACTIVIDAD:</strong><br>
-                <span id="dat-rubro">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">UBICACIÓN (CIUDAD/BARRIO):</strong><br>
-                <span id="dat-ciudad">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">DIRECCIÓN DE RESIDENCIA:</strong><br>
-                <span id="dat-direccion">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">ESTRUCTURA FAMILIAR (HIJOS):</strong><br>
-                <span id="dat-hijos">...</span> - <span id="dat-nombres-hijos" style="font-style: italic; font-size: 10px; color: #ccc;">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">INGRESOS MENSUALES ESTIMADOS:</strong><br>
-                <span id="dat-ingresos" style="color: #00ff88;">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">SEGURIDAD SOCIAL (EPS/ARL):</strong><br>
-                <span id="dat-eps">...</span> / <span id="dat-arl">...</span>
-            </p>
-
-            <p style="margin: 0; font-size: 11px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px;">
-                <strong style="color: rgba(255,255,255,0.6);">SITUACIÓN LABORAL ACTUAL:</strong><br>
-                <span id="dat-situacion">...</span>
-            </p>
-
-            <div style="margin-top: 5px; background: rgba(0,242,255,0.05); padding: 10px; border-radius: 4px;">
-                <p style="margin: 0 0 5px 0; font-size: 10px; color: #00f2ff;"><strong>CANALES DE CONTACTO:</strong></p>
-                <p style="margin: 0; font-size: 11px;">📧 <span id="dat-email">...</span></p>
-                <p style="margin: 0; font-size: 11px;">📱 <span id="dat-tel">...</span></p>
+            <div style="margin-top: 5px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+                <p style="margin: 0;"><strong>Email:</strong> <span id="dat-email">...</span></p>
+                <p style="margin: 0;"><strong>Tel:</strong> <span id="dat-tel">...</span></p>
             </div>
         </div>
     </div>
 </div>
+                
                 
                 
                 
