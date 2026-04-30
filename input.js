@@ -368,7 +368,7 @@ window.cerrarSitoAlert = () => {
 };
 
 // =============================================
-// PROTOCOLO SITO V15.0 - DESPLIEGUE TOTAL
+// PROTOCOLO SITO V15.0 - DESPLIEGUE TOTAL + AUDITORÍA
 // =============================================
 async function sincronizarDatosAliado(idInterno) {
     const statusText = document.getElementById('sito-status-db');
@@ -378,16 +378,31 @@ async function sincronizarDatosAliado(idInterno) {
         const { data, error } = await window.supabaseClient
             .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
+        // ===== AUDITORÍA 1: RESPUESTA CRUDA =====
+        console.log("DATA CRUDA:", data);
+        console.log("ERROR RPC:", error);
+
         if (error) throw error;
 
-        const p = data?.[0];
+        // Validación de dataset
+        if (!data || data.length === 0) {
+            console.warn("SITO: Sin datos para el ID:", idInterno);
+            statusText.innerText = "SIN DATOS";
+            statusText.style.color = "#ffcc00";
+            return;
+        }
+
+        const p = data[0];
+
+        // ===== AUDITORÍA 2: PRIMER REGISTRO =====
+        console.log("PRIMER REGISTRO (p):", p);
+
         if (p) {
             // 1. Estado Principal
             statusText.innerText = (p.f_estado || "ACTIVO").toUpperCase();
             statusText.style.color = "#00f2ff";
 
-            // 2. Mapeo de TODAS las columnas a tu interfaz
-            // Asegúrate de que los IDs en tu HTML coincidan con la izquierda
+            // 2. Mapeo de columnas
             const ficha = {
                 'dat-nombre': p.f_nombre_completo,
                 'dat-negocio': p.f_nombre_comercial,
@@ -409,23 +424,35 @@ async function sincronizarDatosAliado(idInterno) {
                 'dat-registro': p.f_created_at
             };
 
-            // Inyección automática
+            // 3. Inyección + auditoría por campo
             Object.keys(ficha).forEach(id => {
                 const elemento = document.getElementById(id);
-                if (elemento) {
-                    elemento.innerText = ficha[id] || "No registrado";
-                    elemento.style.opacity = "1"; // Por si estaban ocultos
+
+                // ===== AUDITORÍA 3: CAMPO POR CAMPO =====
+                console.log("MAPEO →", id, "=", ficha[id]);
+
+                if (!elemento) {
+                    console.warn("⚠️ ID NO EXISTE EN HTML:", id);
+                    return;
                 }
+
+                if (ficha[id] === null || ficha[id] === undefined) {
+                    console.warn("⚠️ DATO VACÍO DESDE BD:", id);
+                }
+
+                elemento.innerText = ficha[id] || "No registrado";
+                elemento.style.opacity = "1";
             });
 
             console.log("SITO: Despliegue de ficha técnica completo.");
         }
+
     } catch (err) {
         console.error("Fallo en despliegue:", err.message);
         statusText.innerText = "ERROR DE LECTURA";
+        statusText.style.color = "#ff4d4d";
     }
 }
-  
 
   
 })();
