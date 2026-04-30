@@ -367,38 +367,45 @@ window.cerrarSitoAlert = () => {
     }
 };
 
-  async function sincronizarDatosAliado(idInterno) {
+  // =============================================
+// PROTOCOLO SITO V5.5 - RESILIENCIA TOTAL
+// =============================================
+async function sincronizarDatosAliado(idInterno, reintentos = 2) {
     const statusText = document.getElementById('sito-status-db'); 
     const syncText = document.getElementById('sito-last-sync');
-
     if (!statusText) return; 
+
     statusText.innerText = "ACCEDIENDO AL NÚCLEO...";
 
     try {
-        // Llamada al túnel seguro RPC
         const { data, error } = await window.supabaseClient
           .rpc('obtener_perfil_aliado_maestro', { id_buscado: idInterno });
 
         if (error) throw error;
 
-        const perfil = data && data.length > 0 ? data[0] : null;
-
+        const perfil = data?.[0];
         if (perfil) {
             statusText.innerText = perfil.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
             if(syncText) syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
-            console.log("SITO: Sincronización exitosa. Auditoría procesada internamente.");
+            console.log("SITO: Conexión establecida con éxito.");
         } else {
-            statusText.innerText = "ID NO REGISTRADO";
+            statusText.innerText = "NO ENCONTRADO";
             statusText.style.color = "#ffb300";
         }
     } catch (err) {
-        console.error("SITO Error Crítico:", err);
-        statusText.innerText = "ERROR DE SISTEMA";
-        statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "REVISAR CONEXIÓN MAESTRA";
+        console.error("SITO Error Interno:", err.message);
+        
+        if (reintentos > 0) {
+            statusText.innerText = "REINTENTANDO VÍNCULO...";
+            setTimeout(() => sincronizarDatosAliado(idInterno, reintentos - 1), 2000);
+        } else {
+            statusText.innerText = "ERROR DE SISTEMA";
+            statusText.style.color = "#ff4b4b";
+            if(syncText) syncText.innerText = "SOLICITAR ACCESO AL NÚCLEO";
+        }
     }
-  }
+}
   
 
 
