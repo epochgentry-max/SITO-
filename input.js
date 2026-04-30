@@ -368,18 +368,8 @@ window.cerrarSitoAlert = () => {
 };
 
 // =============================================
-// PROTOCOLO SITO V9.0 - DOMADOR DE TIGRES
+// PROTOCOLO SITO V12.0 - EXTRACCIÓN MASIVA
 // =============================================
-// =============================================
-// PROTOCOLO SITO V11.0 - VÍNCULO CONSOLIDADO
-// =============================================
-async function sincronizarDatosAliado(idInterno) {
-    const statusText = document.getElementById('sito-status-db'); 
-    const syncText = document.getElementById('sito-last-sync');
-    if (!statusText) return; 
-
-    try {
-        // Llamada al acceso directo (Bypass de Auditoría)
         const { data, error } = await window.supabaseClient
           .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
@@ -387,22 +377,25 @@ async function sincronizarDatosAliado(idInterno) {
 
         const perfil = data?.[0];
         if (perfil) {
-            // ÉXITO: El estado fluye desde el núcleo
+            // 1. Actualización de Estado (Lo que ya funciona)
             statusText.innerText = (perfil.estado_val || "ACTIVO").toUpperCase();
-            statusText.style.color = "#00f2ff"; 
             
-            if(syncText) {
-                const fecha = perfil.sincro ? perfil.sincro.split('T')[0] : 'S/D';
-                syncText.innerText = `VÍNCULO ACTIVO: ${fecha}`;
+            // 2. Inyección de Datos Maestros (Asegúrate de tener estos IDs en tu HTML)
+            if(document.getElementById('aliado-nombre')) {
+                document.getElementById('aliado-nombre').innerText = perfil.nombre_completo;
             }
-            console.log("SITO: Conexión estable. Núcleo en línea.");
+            if(document.getElementById('aliado-negocio')) {
+                document.getElementById('aliado-negocio').innerText = perfil.nombre_comercial;
+            }
+            if(document.getElementById('aliado-rubro')) {
+                document.getElementById('aliado-rubro').innerText = perfil.rubro_negocio;
+            }
+            if(document.getElementById('aliado-ciudad')) {
+                document.getElementById('aliado-ciudad').innerText = perfil.ciudad_negocio;
+            }
+
+            console.log("SITO: Datos extraídos con éxito para:", perfil.nombre_completo);
         }
-    } catch (err) {
-        console.error("SITO Error:", err.message);
-        statusText.innerText = "SISTEMA PROTEGIDO";
-        statusText.style.color = "#ff4b4b";
-    }
-}
   
 
 
