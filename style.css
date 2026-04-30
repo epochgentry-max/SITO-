@@ -89,18 +89,51 @@ body {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); /* SOMBRA: Da profundidad sobre el plano base */
 }
 
-/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro */
+/* ============================================================
+   RECALIBRACIÓN FINAL: Dashboard Panorámico Centralizado
+   ============================================================ */
+
 #dashboard-aliado.screen {
-  max-width: none !important; /* Rompe el límite del Padre para esta pantalla */
+  max-width: none !important;
   width: 100vw !important;
   height: 100vh !important;
   padding: 0 !important;
   border-radius: 0 !important;
-  background: transparent !important;
-  overflow-x: auto !important; /* Permite el flujo panorámico */
+  
+  /* FONDO MATRIX RECUPERADO */
+  background: 
+    linear-gradient(rgba(2, 10, 18, 0.8), rgba(2, 10, 18, 0.8)), 
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+
+  /* MOTOR DE DESPLAZAMIENTO */
+  overflow-x: auto !important;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  
+  /* ESTADO INICIAL */
+  display: none; 
 }
+
+/* PROTOCOLO DE ENCENDIDO Y ALINEACIÓN */
+#dashboard-aliado.screen.active {
+  display: flex !important;
+  flex-direction: row !important; /* Mantiene las estaciones en línea */
+  align-items: center !important;  /* Centra verticalmente en el visor */
+  justify-content: flex-start !important; /* Permite que el carrusel fluya */
+}
+
+/* ANCLAJE DE LA CUADRÍCULA (El toque maestro) */
+#dashboard-aliado .contenedor-panoramico {
+  display: flex !important;
+  margin: 0 auto !important; /* ESTO es lo que obliga al contenido a no esquinarse */
+  min-width: max-content;    /* Obliga al contenedor a respetar el ancho de las estaciones */
+  height: 100%;
+  align-items: center;
+}
+
 
 
 /* JERARQUÍA DE TÍTULOS (h1, h2) - La identidad visual del mando */
