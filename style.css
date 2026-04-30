@@ -781,6 +781,7 @@ a {
     border-radius: 8px; /* Bordes redondeados */
     background: rgba(2, 10, 18, 0.85); /* Fondo oscuro para contraste */
 }
+  
 
 /* 2. Tarjeta de Identidad (Esquina Superior Izquierda, Amarillo) */
 .sito-profile-card {
@@ -826,7 +827,95 @@ a {
   }
           
 
+/* ============================================================
+   RECALIBRACIÓN FINAL SITO: BLINDAJE DE ESTRUCTURA Y FONDO
+   ============================================================ */
 
+/* 1. EL DASHBOARD COMO CAPA INDEPENDIENTE */
+#dashboard-aliado {
+  position: fixed !important;        /* Se despega del body para no heredar su centrado */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;                     /* Se mantiene apagado por defecto */
+  z-index: 9999;                     /* Capa superior absoluta */
+  background: #020a12;               /* Fondo de seguridad */
+  overflow: hidden;                  /* Evita que el scroll del navegador ensucie el sistema */
+}
+
+/* 2. ACTIVACIÓN DEL SISTEMA */
+#dashboard-aliado.active {
+  display: block !important;
+}
+
+/* 3. EL PLANO DESLIZABLE (Donde vive la Matrix) */
+.sito-plano-deslizable {
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto !important;       /* Permite navegar el panorama horizontal */
+  overflow-y: auto !important;       /* Permite scroll vertical si es necesario */
+  -webkit-overflow-scrolling: touch;
+  
+  /* RECUPERACIÓN DE FONDO MATRIX ORIGINAL */
+  background: 
+    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
+
+/* 4. EL CONTENEDOR PANORÁMICO (El corazón de la cuadrícula) */
+.panorama-viewport {
+  display: flex;
+  width: 500vw;                      /* 5 Pantallas de ancho para expansión */
+  height: 100vh;
+  scroll-snap-type: x mandatory;     /* Efecto de anclaje magnético al deslizar */
+  align-items: center;               /* CENTRADO VERTICAL DE ESTACIONES */
+}
+
+/* 5. CADA ESTACIÓN DE TRABAJO (Blindaje de escala) */
+.sito-section {
+  width: 100vw !important;           /* Cada sección mide exactamente una pantalla */
+  height: 100vh !important;
+  flex-shrink: 0;                    /* Evita que el navegador las comprima */
+  scroll-snap-align: start;          /* Punto de anclaje del imán */
+  display: flex;
+  flex-direction: column;
+  padding: 40px;                     /* Espacio de lujo */
+  box-sizing: border-box;
+  
+  /* MOTOR DE CENTRALIZADO INTERNO: Esto quita el 'esquinado' de los módulos */
+  justify-content: center;
+  align-items: center;
+}
+
+/* RECTIFICACIÓN DE LOS MÓDULOS INTERNOS (Neones) */
+.sito-section > * {
+  width: 100%;
+  max-width: 1400px;                 /* Evita que los módulos se estiren feo en pantallas ultra-wide */
+}
+
+/* --- PROTOCOLO DE ILUMINACIÓN SITO (ACTUALIZADO) --- */
+.sito-section, 
+.sub-2-1, .sub-2-3, .part-1-3, .part-2-big, .v-sub-5, .h-sub-3-1, .h-sub-3-2 {
+    border: 1px solid rgba(0, 255, 255, 0.4) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.15), inset 0 0 10px rgba(0, 255, 255, 0.05);
+    border-radius: 12px;
+    background: rgba(2, 10, 18, 0.85); /* Fondo oscuro profundo */
+    backdrop-filter: blur(10px);       /* Efecto cristal en cada estación */
+}
+
+/* TARJETA DE PERFIL: FIJADA EN EL ENTORNO */
+.sito-profile-card {
+    border: 1px solid #d4af37 !important;
+    padding: 15px 25px;
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    align-self: flex-start; /* Se mantiene arriba a la izquierda de su sección */
+}
+  
 
 
 
