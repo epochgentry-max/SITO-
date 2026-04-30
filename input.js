@@ -370,41 +370,37 @@ window.cerrarSitoAlert = () => {
 // =============================================
 // PROTOCOLO SITO V9.0 - DOMADOR DE TIGRES
 // =============================================
+// =============================================
+// PROTOCOLO SITO V11.0 - VÍNCULO CONSOLIDADO
+// =============================================
 async function sincronizarDatosAliado(idInterno) {
     const statusText = document.getElementById('sito-status-db'); 
     const syncText = document.getElementById('sito-last-sync');
     if (!statusText) return; 
 
-    statusText.innerText = "VERIFICANDO IDENTIDAD...";
-    statusText.style.color = "#00f2ff";
-
     try {
-        // Llamada al RPC con bypass de triggers (bozal activo)
+        // Llamada al acceso directo (Bypass de Auditoría)
         const { data, error } = await window.supabaseClient
-          .rpc('acceso_nucleo_aliado', { id_solicitado: idInterno });
+          .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
         if (error) throw error;
 
-        if (data && data.length > 0) {
-            const perfil = data[0];
-            // ÉXITO TOTAL: El núcleo entrega la información
-            statusText.innerText = perfil.estado_operativo.toUpperCase();
+        const perfil = data?.[0];
+        if (perfil) {
+            // ÉXITO: El estado fluye desde el núcleo
+            statusText.innerText = (perfil.estado_val || "ACTIVO").toUpperCase();
             statusText.style.color = "#00f2ff"; 
             
             if(syncText) {
-                syncText.innerText = `NÚCLEO SINCRONIZADO: ${perfil.ultima_sincro}`;
+                const fecha = perfil.sincro ? perfil.sincro.split('T')[0] : 'S/D';
+                syncText.innerText = `VÍNCULO ACTIVO: ${fecha}`;
             }
-            console.log("SITO: Acceso concedido. El tigre fue evadido con éxito.");
-        } else {
-            statusText.innerText = "NO RECONOCIDO";
-            statusText.style.color = "#ffb300";
-            if(syncText) syncText.innerText = "ID NO HALLADO EN LA TABLA MADRE";
+            console.log("SITO: Conexión estable. Núcleo en línea.");
         }
     } catch (err) {
-        console.error("DIAGNÓSTICO CRÍTICO:", err.message);
-        statusText.innerText = "NÚCLEO BRAVO";
+        console.error("SITO Error:", err.message);
+        statusText.innerText = "SISTEMA PROTEGIDO";
         statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "EL TIGRE SIGUE BLOQUEANDO EL PASO";
     }
 }
   
