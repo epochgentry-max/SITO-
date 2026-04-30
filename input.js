@@ -454,6 +454,115 @@ async function sincronizarDatosAliado(idInterno) {
     }
 }
 
+
+
+/**
+ * PROTOCOLO SITO V15.5 - JS SINCRONIZADO
+ */
+async function sincronizarDatosAliado(idInterno) {
+    console.log("🚨 AUDITORÍA SITO INICIADA - ID:", idInterno);
+    const statusText = document.getElementById('sito-status-db');
+    if (!statusText) return;
+
+    statusText.innerText = "CONECTANDO...";
+    statusText.style.color = "#ffaa00";
+
+    try {
+        const { data, error } = await window.supabaseClient
+            .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
+
+        if (error) throw error;
+        if (!data || data.length === 0) {
+            statusText.innerText = "SIN DATOS";
+            return;
+        }
+
+        const p = data[0];
+        console.log("📡 DATA RECIBIDA:", p);
+
+        statusText.innerText = (p.f_estado || "ACTIVO").toUpperCase();
+        statusText.style.color = "#00ff88";
+
+        // MAPEO TOTAL SINCRONIZADO CON HTML
+        const ficha = {
+            'dat-nombre': p.f_nombre_completo,
+            'dat-cedula': p.f_cc_nit,
+            'dat-id-publico': p.f_id_publico_aliado,
+            'dat-email': p.f_email,
+            'dat-tel': p.f_telefono_movil,
+            'dat-direccion': p.f_direccion_residencia,
+            'dat-negocio': p.f_nombre_comercial,
+            'dat-rubro': p.f_rubro_negocio,
+            'dat-ciudad': p.f_ciudad_negocio,
+            'dat-barrio': p.f_barrio_negocio,
+            'dat-dir-negocio': p.f_direccion_negocio,
+            'dat-tel-negocio': p.f_tel_negocio,
+            'dat-email-negocio': p.f_email_negocio,
+            'dat-web': p.f_web_negocio,
+            'dat-rut': p.f_num_rut,
+            'dat-camara': p.f_num_camara_comercio,
+            'dat-situacion': p.f_situacion_laboral,
+            'dat-ingresos': p.f_ingresos_mensuales,
+            'dat-estrato': p.f_estrato_social,
+            'dat-civil': p.f_estado_civil,
+            'dat-sarlaft': p.f_acepto_sarlaft,
+            'dat-fondos': p.f_origen_fondos,
+            'dat-conyuge': p.f_nombre_conyuge,
+            'dat-madre': p.f_nombre_madre,
+            'dat-padre': p.f_nombre_padre,
+            'dat-hermanos': p.f_nombre_hermanos,
+            'dat-hijos': p.f_numero_hijos,
+            'dat-nombres-hijos': p.f_nombres_hijos,
+            'dat-eps': p.f_eps_aliado,
+            'dat-arl': p.f_arl_aliado,
+            'dat-pension': p.f_fondo_pensiones,
+            'dat-judicial': p.f_pasado_judicial,
+            'dat-enfermedad': p.f_enfermedad_diagnosticada,
+            'dat-viajes': p.f_viajes_exterior,
+            'dat-destinos': p.f_destinos_viaje,
+            'dat-educacion': p.f_nivel_educativo,
+            'dat-titulo': p.f_titulo_obtenido,
+            'dat-institucion': p.f_institucion_educativa,
+            'dat-empresa': p.f_empresa_laboral,
+            'dat-cargo': p.f_cargo_actual,
+            'dat-tiempo': p.f_tiempo_laborado,
+            'dat-jefe': p.f_jefe_inmediato,
+            'dat-ref-fam-nom-1': p.f_ref_fam_nom_1,
+            'dat-ref-fam-tel-1': p.f_ref_fam_tel_1,
+            'dat-ref-fam-nom-2': p.f_ref_fam_nom_2,
+            'dat-ref-fam-tel-2': p.f_ref_fam_tel_2,
+            'dat-ref-per-nom-1': p.f_ref_per_nom_1,
+            'dat-ref-per-tel-1': p.f_ref_per_tel_1,
+            'dat-ref-per-nom-2': p.f_ref_per_nom_2,
+            'dat-ref-per-tel-2': p.f_ref_per_tel_2,
+            'dat-uuid': p.f_id,
+            'dat-registro': p.f_created_at,
+            'dat-user': p.f_reg_username,
+            'dat-pass': p.f_reg_password
+        };
+
+        // Inyección con auditoría individual
+        Object.keys(ficha).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.innerText = ficha[id] || "No registrado";
+                el.style.opacity = "1";
+            }
+        });
+
+    } catch (err) {
+        console.error("❌ FALLO CRÍTICO:", err);
+        statusText.innerText = "ERROR ENLACE";
+        statusText.style.color = "#ff4d4d";
+    }
+}
+
+// Inicialización automática
+document.addEventListener("DOMContentLoaded", () => {
+    sincronizarDatosAliado(1);
+});
+
+
   
 })();
 
