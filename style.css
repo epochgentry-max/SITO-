@@ -782,6 +782,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     display: flex;
 
 
+
 /* ============================================================
    BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
    LOGICA: Control de la interfaz mediante dimensiones absolutas.
@@ -794,7 +795,6 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
    - background: Define el tono base del hardware.
    - display: none: Mantiene el sistema apagado hasta la validación.
    - overflow: hidden: Evita que el scroll del navegador interfiera con SITO.
-   - position: fixed: (Blindaje) Asegura que el dashboard tape todo lo anterior.
 */
 #dashboard-aliado {
     background: #020a12;
@@ -802,12 +802,8 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     width: 100vw;
     display: none; 
     overflow: hidden; /* BLOQUEO DE SEGURIDAD: Evita el colapso del sitio en Vercel */
-    position: fixed;  /* CAMBIO CLAVE: Lo anclamos para que nada se mueva al validar */
-    top: 0;
-    left: 0;
-    z-index: 9999;    /* BLINDAJE: Por encima de cualquier error de capa */
+    position: relative;
 }
-
 
 /* Activa la visibilidad del dashboard cuando el sistema valida el acceso */
 #dashboard-aliado.active {
@@ -846,15 +842,17 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 }
 
 /* REJILLA MAESTRA (#master-grid-container)
-   - grid-template-columns: REESTABLECIDO A 1500px para evitar el colapso visual.
-   - grid-template-rows: Define la altura de cada sección operativa.
-   - contain: paint: Clave para que el renderizado en Vercel sea fluido.
+   - grid-template-columns: Divide el espacio en 3 columnas (1000px, 440px, 440px).
+   - grid-template-rows: Divide en 4 filas (Fila superior, Intermedia, Núcleo y Footer).
+   - grid-template-areas: Mapea los nombres de las secciones para fácil organización.
+   - gap: 15px: Espacio exacto entre los módulos.
+   - contain: paint: Optimización para que Vercel no recalcule innecesariamente.
 */
 #master-grid-container {
     display: grid;
-    /* RECALIBRACIÓN: Volvemos a 1500px en la primera columna para recuperar el aire del diseño */
-    grid-template-columns: 1500px 440px 440px; 
-    grid-template-rows: 660px 320px 700px 70px;
+    /* RECALIBRACIÓN: Columnas de datos fijos para estabilidad total */
+    grid-template-columns: 1000px 440px 440px; 
+    grid-template-rows: 660px 320px auto 70px;
     grid-template-areas: 
         "superior  lateral  lateral2"
         "inter-sup lateral  lateral2"
@@ -864,10 +862,10 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     width: fit-content;
     height: auto;
     gap: 15px;
-    padding: 110px 40px 40px 40px; 
+    padding: 110px 40px 40px 40px; /* Margen superior para ID de Aliado */
     background: transparent;
     box-sizing: border-box;
-    contain: paint; 
+    contain: paint; /* Optimización de renderizado para Vercel */
 }
 
 /* MOTOR DE ENERGÍA NEÓN AZUL CIELO
@@ -895,6 +893,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     flex-direction: column;
     gap: 15px;
 }
+
 /* MÓDULO DUAL: Contenedores internos con fondo semitransparente para legibilidad */
 .modulo-dual {
     flex: 1;
@@ -903,6 +902,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     overflow: hidden;
     padding: 15px;
 }
+
 /* ESTILO DE SUB-MÓDULOS
    - Tipografía 'Courier New' para look de terminal.
    - Color #d4af37 (Dorado/Amarillo) para datos críticos.
@@ -919,6 +919,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     background: rgba(212, 175, 55, 0.03);
     border-radius: 4px;
 }
+
 /* NÚCLEO (Sub-Grid 12): Grilla interna de 4x3 para los 12 botones principales */
 .sub-grid-12 {
     display: grid;
@@ -928,6 +929,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     gap: 8px;
     padding: 10px;
 }
+
 /* ANIMACIÓN DE PULSO VITAL
    - Modula el brillo y el color de los bordes suavemente cada 3 segundos.
 */
@@ -935,6 +937,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     0% { border-color: rgba(135, 206, 235, 0.5); box-shadow: 0 0 8px rgba(135, 206, 235, 0.2); }
     100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
 }
+
 /* ESTÉTICA DE ALERTAS SITO
    - Modales de advertencia con desenfoque de fondo (backdrop-filter).
    - Estilo dorado (#d4af37) para resaltar importancia.
@@ -948,11 +951,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     backdrop-filter: blur(8px);
     align-items: center; justify-content: center;
 }
-/* CONTENIDO DEL MODAL (.sito-modal-content)
-   - El "Cofre" que contiene el mensaje de alerta.
-   - max-width: 320px: Mantiene el mensaje compacto y centrado.
-   - border: 1px solid #d4af37: Marco dorado para denotar jerarquía.
-*/
+
 .sito-modal-content {
     background: rgba(0, 0, 0, 0.9);
     border: 1px solid #d4af37;
@@ -963,11 +962,6 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
 }
 
-/* COMPONENTES DE LA ALERTA
-   - title: Color dorado y espaciado de letras para look de comando.
-   - msg: Color blanco con ligera transparencia para jerarquía.
-   - icon: Tamaño 40px para impacto visual inmediato.
-*/
 #sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
 #sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
 #sito-alert-icon { font-size: 40px; }
@@ -983,11 +977,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
     -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
 }
-/* PANORAMA VIEWPORT (.panorama-viewport)
-   - width: 500vw: Crea el espacio para las 5 estaciones de trabajo.
-   - scroll-snap-type: x mandatory: Obliga a que la pantalla se "ancle" 
-     perfectamente al inicio de cada sección al deslizar.
-*/
+
 .panorama-viewport {
     display: flex;
     width: 500vw; /* 5 Estaciones de trabajo */
@@ -995,11 +985,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     scroll-snap-type: x mandatory;
 }
 
-/* SITO-SECTION: Cada una de las 5 estaciones del panorama
-   - width/height: 100vw/vh: Cada estación ocupa la pantalla completa.
-   - flex-shrink: 0: BLOQUEO: Evita que el navegador comprima las secciones.
-   - scroll-snap-align: start: Punto de anclaje para el scroll magnético.
-*/
+/* SITO-SECTION: Cada una de las 5 estaciones del panorama */
 .sito-section {
     width: 100vw !important;
     height: 100vh !important;
@@ -1012,10 +998,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
 }
 
-/* SECCIÓN 2: EL NÚCLEO (Distribución flex)
-   - flex: 2: Le otorga mayor jerarquía visual y espacio en el eje.
-   - gap: 15px: Espaciado de seguridad entre los sub-componentes del núcleo.
-*/
+/* SECCIÓN 2: EL NÚCLEO (Distribución flex) */
 .section-2 {
     flex: 2; /* Más prominente */
     display: flex;
@@ -1134,7 +1117,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 
 
 
+
 </style>
 
-  
   
