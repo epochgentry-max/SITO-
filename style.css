@@ -1,1 +1,761 @@
+<style>
 
+/* PASO: REFINAMIENTO DE FONDO Y PERSONAJE SITO */
+
+/* ESTRUCTURA BASE DEL HARDWARE (BODY) */
+body {
+  margin: 0;                             /* ELIMINA: Márgenes residuales del navegador */
+  padding: 0;                            /* ELIMINA: Espaciado interno por defecto */
+  width: 100vw;                          /* ANCHO: Ocupa el 100% de la ventana de vista */
+  height: 100vh;                         /* ALTO: Ocupa el 100% de la altura de pantalla */
+  
+  /* CAPAS DE VISUALIZACIÓN:
+     - linear-gradient: Filtro de oscuridad (90% a 70%) para que el neón resalte.
+     - url: Enlace directo a la placa base visual (InShot_20260425).
+  */
+  background: 
+    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), 
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
+    
+  background-size: cover;                /* AJUSTE: La imagen siempre llena la pantalla */
+  background-position: center;           /* CENTRADO: El núcleo de la imagen queda al medio */
+  background-attachment: fixed;          /* ANCLAJE: El fondo no se mueve al hacer scroll */
+  display: flex;                         /* MOTOR: Activa el sistema de cajas flexibles */
+  justify-content: center;               /* ALINEACIÓN: Centra el contenido horizontalmente */
+  align-items: center;                   /* ALINEACIÓN: Centra el contenido verticalmente */
+  font-family: 'Segoe UI', sans-serif;   /* ADN TIPOGRÁFICO: Fuente base para lectura fluida */
+}
+
+/* PANTALLA DE INICIO (#inicio-sito) - El umbral del sistema */
+#inicio-sito {
+    /* HARDWARE VISUAL: Carga la placa base InShot_20260425_1437 */
+    background-image: url('https://i.ibb.co/6J7TJwxk/In-Shot-20260425-143744255.jpg');
+    
+    /* FILTRO DE ATMÓSFERA: Azul profundo con 80% de opacidad (Protección visual) */
+    background-color: rgba(13, 71, 161, 0.8); 
+    
+    /* FUSIÓN DE CAPAS: Mezcla el color azul con la imagen para el efecto 'Matrix' */
+    background-blend-mode: multiply;
+    
+    /* ESCALADO TÁCTICO: La imagen se expande para llenar el visor sin deformarse */
+    background-size: cover;
+    
+    /* CENTRADO DE ÓPTICA: Enfoca el centro de la imagen en el visor */
+    background-position: center;
+    
+    /* BLOQUEO DE DUPLICADOS: Evita que la imagen se repita si la pantalla es muy grande */
+    background-repeat: no-repeat;
+    
+    /* ADN TIPOGRÁFICO: Texto en blanco puro para máximo contraste */
+    color: white; 
+    
+    /* MOTOR DE ALINEACIÓN: Centrado absoluto de los elementos de acceso */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* BLINDAJE DE LEGIBILIDAD (#inicio-sito h1, p) */
+#inicio-sito h1, #inicio-sito p {
+    /* EFECTO DE SOMBRA:
+       - 2px 2px: Desplazamiento de la sombra (Derecha y Abajo).
+       - 4px: Nivel de desenfoque para suavizar el contorno.
+       - rgba(0, 0, 0, 0.5): Color negro con 50% de opacidad.
+    */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* VISOR DE INTERFAZ (.screen) - Contenedor de pantallas individuales */
+.screen {
+  width: 90%;                          /* ANCHO RELATIVO: Se adapta a dispositivos móviles */
+  max-width: 400px;                    /* LÍMITE DE ESCALA: Evita que el visor se deforme en PC */
+  padding: 30px;                       /* ESPACIADO: Aire interno para los elementos del GUI */
+  display: none;                       /* ESTADO INICIAL: Oculto (Se activa mediante JS) */
+  flex-direction: column;              /* MOTOR: Apila el contenido de forma vertical */
+  align-items: center;                 /* ALINEACIÓN: Centra el contenido horizontalmente */
+  text-align: center;                  /* TIPOGRAFÍA: Centra todos los textos del visor */
+  
+  /* EFECTO CRISTAL (Glassmorphism):
+     - background: Capa de color negro casi transparente (10%).
+     - blur: Desenfoque de 10px para separar la interfaz del fondo.
+  */
+  background: rgba(0, 0, 0, 0.1); 
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);  /* COMPATIBILIDAD: Soporte para Safari/iOS */
+  
+  border-radius: 25px;                 /* ESTÉTICA: Bordes redondeados para look moderno */
+  border: 1px solid rgba(212, 175, 55, 0.4); /* MARCO: Dorado Epoch con 40% de presencia */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6); /* SOMBRA: Da profundidad sobre el plano base */
+}
+
+/* EXCEPCIÓN DE EXPANSIÓN: Solo para el Dashboard Maestro (#dashboard-aliado) */
+#dashboard-aliado.screen {
+  max-width: none !important;       /* LIBERACIÓN: Rompe el límite de 400px del padre */
+  width: 100vw !important;           /* ESCALA: Se expande al ancho total del visor */
+  height: 100vh !important;          /* ESCALA: Se expande al alto total del visor */
+  padding: 0 !important;             /* LIMPIEZA: Elimina márgenes para pegarse a los bordes */
+  border-radius: 0 !important;       /* ESTÉTICA: Elimina bordes redondeados (Pantalla Total) */
+  background: transparent !important; /* TRANSPARENCIA: Permite ver el fondo de la Matrix */
+  
+  overflow-x: auto !important;       /* FLUJO: Activa el desplazamiento horizontal panorámico */
+  overflow-y: hidden;                /* BLOQUEO: Evita el rebote vertical innecesario */
+  -webkit-overflow-scrolling: touch; /* MOTOR TÁCTIL: Suavidad de deslizamiento en móviles */
+}
+
+/* JERARQUÍA DE TÍTULOS (h1, h2) - La identidad visual del mando */
+h1, h2 {
+  /* ADN COLOR: Dorado Epoch blindado con !important para evitar herencias de otras capas */
+  color: #d4af37 !important; 
+  
+  /* CONTRASTE CRÍTICO: 
+     - 2px 2px: Desplazamiento sutil.
+     - 4px: Difuminado para suavizar la sombra.
+     - rgba(0,0,0,0.9): Negro casi puro (90%) para máxima legibilidad sobre neones.
+  */
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+}
+/* RECTIFICACIÓN: DORADO SÓLIDO ÉLITE (Títulos h1, h2) */
+h1, h2 { 
+  color: #d4af37 !important;     /* ADN COLOR: Dorado sólido sin degradados externos */
+  font-size: 26px;               /* ESCALA: Tamaño optimizado para visibilidad en dashboard */
+  margin: 20px 0;                /* ESPACIADO: Aire vertical para evitar colisiones */
+  
+  /* PROFUNDIDAD TÁCTICA: 
+     - Sombra negra pura (opacidad 1) para despegar el texto del fondo neón 
+  */
+  text-shadow: 2px 2px 4px rgba(0,0,0,1);
+  
+  text-transform: uppercase;     /* ESTÉTICA: Fuerza mayúsculas para look de comando */
+  letter-spacing: 1px;           /* RITMO: Espaciado entre caracteres para mejorar lectura */
+}
+
+/* CAPA DE TEXTO (Párrafos) - El flujo de información del sistema */
+p { 
+  color: #FFFFFF !important;           /* ADN COLOR: Blanco puro blindado para máxima visibilidad */
+  font-size: 15px;                      /* ESCALA: Tamaño de lectura óptimo para el dashboard */
+  line-height: 1.5;                     /* RITMO: Espaciado entre líneas para evitar fatiga visual */
+  
+  /* PROFUNDIDAD DE LECTURA:
+     - Crea un sutil contorno negro para separar las letras del fondo complejo.
+  */
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+/* ILUMINACIÓN AMBIENTAL (.screen) - El pulso vital del hardware */
+.screen {
+  /* MARCO DE IDENTIDAD: Borde dorado con 40% de opacidad para definir la estructura */
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  
+  /* SISTEMA DE LUCES (Box Shadow):
+     - 0 0 30px rgba(33, 150, 243, 0.2): Resplandor EXTERNO azul (baña el fondo).
+     - inset 0 0 15px rgba(33, 150, 243, 0.1): Resplandor INTERNO azul (baña el contenido).
+  */
+  box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), inset 0 0 15px rgba(33, 150, 243, 0.1);
+}
+/* REEMPLAZO QUIRÚRGICO: BOTONES ÉLITE (.btn-primario) */
+.btn-primario {
+  /* ADN COLOR: Degradado de oro metálico (del #d4af37 al #b8860b) */
+  background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%) !important;
+  
+  /* CONTRASTE: Texto en azul casi negro (fondo del hardware) para máxima lectura */
+  color: #020a12 !important;
+  
+  padding: 15px;                        /* ERGONOMÍA: Tamaño de toque optimizado para móviles */
+  font-size: 18px;                      /* ESCALA: Fuente grande para comandos de acción */
+  font-weight: bold;                    /* PESO: Grosor de letra para denotar importancia */
+  text-transform: uppercase;            /* ESTÉTICA: Estilo de comando militar/técnico */
+  border-radius: 8px;                   /* FORMA: Esquinas suavizadas para look moderno */
+  
+  /* AURA TÉCNICA: Sombra de luz azul que conecta el botón con el resto del hardware */
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+  
+  border: none;                         /* LIMPIEZA: Elimina bordes estándar de navegador */
+  cursor: pointer;                      /* INTERACCIÓN: Indica que es un elemento accionable */
+  
+  /* DINÁMICA: Suaviza el cambio de tamaño y sombra al interactuar */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* INTERACCIÓN DINÁMICA: EFECTO HOVER DEL BOTÓN PRIMARIO */
+.btn-primario:hover {
+  /* FÍSICA: Eleva el botón 2px hacia arriba para dar sensación de relieve al tacto */
+  transform: translateY(-2px);
+  
+  /* SOBRECARGA: Aumenta la sombra azul a un 70% de opacidad (Efecto Energizado) */
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.7);
+}
+
+/* BOTÓN SECUNDARIO (.btn-secundario) - Comandos de apoyo */
+.btn-secundario {
+  /* FONTO: Blanco casi invisible (5%) para dejar ver el fondo del hardware */
+  background: rgba(255, 255, 255, 0.05) !important;
+  
+  /* ADN COLOR: Dorado pálido/crema para diferenciarlo de la acción principal */
+  color: #f7e08a !important;
+  
+  /* MARCO: Borde sólido de 2px en Dorado Élite para mantener la estructura */
+  border: 2px solid #d4af37 !important;
+  
+  padding: 15px;                        /* ERGONOMÍA: Mismo tamaño que el primario */
+  font-size: 16px;                      /* ESCALA: Un poco más pequeño para jerarquía visual */
+  font-weight: bold;                    /* PESO: Mantiene la autoridad del texto */
+  
+  /* EFECTO CRISTAL: Desenfoque de 5px para suavizar lo que hay detrás del botón */
+  backdrop-filter: blur(5px);
+  
+  cursor: pointer;                      /* INTERACCIÓN: Indica elemento accionable */
+}
+
+/* RECALIBRACIÓN: SISTEMA DE VISIÓN SITO (Ojo de Contraseña) */
+.password-wrapper {
+  position: relative;            /* ANCLAJE: Permite que el icono se posicione respecto a este cuadro */
+  width: 100%;                   /* ESCALA: Ocupa todo el ancho disponible del visor */
+  display: flex;                 /* MOTOR: Alineación interna para componentes de entrada */
+  align-items: center;           /* CENTRADO: Alinea verticalmente el input y el icono */
+  margin-bottom: 20px;           /* SEPARACIÓN: Espacio táctico con el siguiente componente */
+}
+
+.password-wrapper input {
+  width: 100% !important;        /* EXPANSIÓN: El campo de texto llena el contenedor */
+  padding-right: 45px !important; /* BLINDAJE: Espacio reservado para que el texto no tape el icono */
+  margin-bottom: 0 !important;   /* RECTIFICACIÓN: El margen lo controla el wrapper, no el input */
+}
+
+.toggle-password {
+  position: absolute;            /* POSICIONAMIENTO: Flota sobre el input sin desplazarlo */
+  right: 12px;                   /* ÓPTICA: Distancia fija desde el borde derecho del campo */
+  top: 50%;                      /* CENTRADO: Ubicación al 50% de la altura del padre */
+  transform: translateY(-50%);   /* AJUSTE FINO: Compensa su propia altura para un centrado perfecto */
+  cursor: pointer;               /* INTERACCIÓN: Indica que es un interruptor accionable */
+  color: #d4af37;                /* ADN COLOR: Dorado Epoch para el sistema de visión */
+  font-size: 18px;               /* ESCALA: Tamaño optimizado para visibilidad clara */
+  z-index: 10;                   /* JERARQUÍA: Asegura que el icono esté por encima del texto escrito */
+  display: flex;                 /* MOTOR: Mantiene el glifo del icono centrado */
+  align-items: center;           /* ALINEACIÓN: Centrado interno del icono */
+  background: transparent;       /* LIMPIEZA: Sin fondo para integrarse al cristal del input */
+}
+
+/* ESTADO OPERATIVO (.active) - El interruptor de visibilidad */
+.active {
+  display: flex;                /* ACTIVACIÓN: Hace visible la pantalla seleccionada */
+}
+
+/* IDENTIDAD VISUAL (LOGO) */
+.logo { 
+  width: 250px;                 /* ESCALA: Tamaño estándar para el emblema Epoch */
+  max-width: 80%;               /* ADAPTABILIDAD: Evita que el logo desborde en móviles */
+  margin-bottom: 40px;          /* ESPACIADO: Aire táctico antes de los campos de entrada */
+}
+
+/* RECTIFICACIÓN FINAL: INTERFAZ SITO 100% OSCURA Y ÉLITE */
+
+/* 1. ESTADO BASE Y PERMANENTE (Inputs, Select, Textarea) */
+input, select, textarea {
+  width: 100%;                  /* EXPANSIÓN: Ocupa el ancho total del visor */
+  padding: 12px;                /* ERGONOMÍA: Espacio interno para que el texto respire */
+  margin-bottom: 15px;          /* RITMO: Separación constante entre campos */
+  font-size: 16px;              /* ESCALA: Tamaño de lectura estándar en hardware */
+  border-radius: 8px;           /* FORMA: Esquinas suavizadas para look moderno */
+  
+  /* BLINDAJE DE OSCURIDAD: 
+     - background-color: Azul casi negro (90%) para eliminar parpadeos claros.
+     - color: Blanco puro para máximo contraste de escritura.
+     - border: Marco dorado sutil (40%) para definir el límite del campo.
+  */
+  background-color: rgba(2, 10, 18, 0.9) !important; 
+  color: #FFFFFF !important; 
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  
+  outline: none;                /* LIMPIEZA: Elimina el borde azul estándar del navegador */
+  transition: all 0.3s ease;    /* DINÁMICA: Suaviza cualquier cambio de estado (focus) */
+}
+
+/* 2. ESTADO DE INTERACCIÓN (FOCO) - El campo se activa al tacto/clic */
+input:focus, select:focus, textarea:focus {
+  /* FONDO: Cambia a azul casi negro puro para resaltar sobre el panel */
+  background-color: #020a12 !important; 
+  
+  /* MARCO ACTIVO: El borde cambia de Dorado a Luz Azul SITO (#2196F3) */
+  border-color: #2196F3 !important; 
+  
+  /* REACCIÓN ENERGÉTICA: 
+     - Genera un aura azul de 15px para indicar que el sistema está recibiendo datos.
+  */
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; 
+}
+
+/* 3. TEXTO DE GUÍA (PLACEHOLDER) - Etiquetas temporales dentro del campo */
+::placeholder {
+  /* ADN COLOR: Blanco con 40% de opacidad para no competir con el texto real */
+  color: rgba(255, 255, 255, 0.4); 
+}
+
+/* ACTUADOR BASE (button) - Reglas globales para todos los botones */
+button {
+  cursor: pointer;      /* INTERACCIÓN: Cambia el cursor a 'mano' para indicar que es clickeable */
+  border-radius: 10px;  /* FORMA: Curvatura de 10px para alinearse al diseño moderno del dashboard */
+  border: none;         /* LIMPIEZA: Elimina el borde de relieve industrial que trae el navegador */
+}
+
+/* CIRUGÍA: VISIBILIDAD BARRA SUPERIOR */
+.barra-superior {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  color: #FFFFFF; /* Letras blancas para los pasos */
+  font-weight: bold;
+}
+
+.barra-superior button {
+  font-size: 20px;
+  margin-right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #FFFFFF; /* La flecha también blanca */
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre flecha y texto */
+}
+
+/* ESTRUCTURA DE FORMULARIO Y ENLACES */
+form { width: 100%; }                /* EXPANSIÓN: El formulario ocupa todo el ancho del visor */
+a { 
+  color: #1976D2;                    /* ADN COLOR: Azul estándar para enlaces (Acciones externas) */
+  text-decoration: none;             /* LIMPIEZA: Elimina el subrayado clásico */
+  display: block;                    /* POSICIÓN: Se comporta como bloque para mejor clic */
+  margin-top: 10px;                  /* SEPARACIÓN: Espacio respecto al elemento superior */
+}
+
+/* MÓDULO DE CARRUSEL (#carousel-container) */
+#carousel-container {
+  display: none;                     /* ESTADO INICIAL: Oculto hasta que se active por lógica */
+  max-width: 800px;                  /* LÍMITE: Ancho máximo para no romper la estética en PC */
+  margin: 40px auto;                 /* CENTRADO: Espaciado vertical y centrado horizontal */
+  position: relative;                /* ANCLAJE: Base para posicionar los botones de flecha */
+  overflow: hidden;                  /* MÁSCARA: Oculta las fotos que están "fuera de escena" */
+  border-radius: 10px;               /* FORMA: Esquinas suavizadas para el visor de fotos */
+}
+
+/* MOTOR DE MOVIMIENTO (#carousel) */
+#carousel {
+  display: flex;                     /* ALINEACIÓN: Pone las imágenes una al lado de la otra */
+  transition: transform 0.5s ease;   /* DINÁMICA: Velocidad y suavidad del deslizamiento (0.5s) */
+}
+
+/* COMPONENTE VISUAL (IMG) */
+#carousel img {
+  width: 100%;                       /* ESCALA: Cada imagen ocupa el 100% del contenedor */
+  flex-shrink: 0;                    /* BLOQUEO: Evita que el navegador comprima las fotos */
+}
+
+/* NAVEGADORES DEL CARRUSEL (Buttons) */
+#carousel-container button {
+  position: absolute;                /* FLOTANTE: Se coloca encima de las imágenes */
+  top: 50%;                          /* CENTRADO: Ubicación a mitad de la altura */
+  transform: translateY(-50%);       /* AJUSTE: Centrado vertical exacto */
+  background: #1976D2;               /* ADN COLOR: Azul técnico para los botones de control */
+  color: white;                      /* CONTRASTE: Flechas blancas */
+  border: none;                      /* LIMPIEZA: Sin bordes residuales */
+  border-radius: 50%;                /* FORMA: Botones circulares perfectos */
+  width: 50px;                       /* ESCALA: Tamaño táctil para dedos o puntero */
+  height: 50px;                      /* ESCALA: Mantiene la proporción circular */
+  cursor: pointer;                   /* INTERACCIÓN: Indica elemento accionable */
+  font-size: 28px;                   /* VISIBILIDAD: Tamaño de la flecha de navegación */
+  line-height: 46px;                 /* AJUSTE: Centrado del glifo dentro del círculo */
+  text-align: center;                /* ALINEACIÓN: Centra horizontalmente la flecha */
+}
+
+/* POSICIONAMIENTO DE NAVEGADORES DEL CARRUSEL */
+#prev { left: 10px; }                /* ÓPTICA: Botón previo alineado a la izquierda */
+#next { right: 10px; }               /* ÓPTICA: Botón siguiente alineado a la derecha */
+
+/* REPARACIÓN FINAL: CONTENEDOR EXPANDIDO (#video-induccion) */
+#video-induccion {
+  max-width: 600px !important;       /* LÍMITE: Ancho optimizado para visualización cinematográfica */
+  width: 90%;                        /* ADAPTABILIDAD: Escala en dispositivos móviles */
+  height: auto !important;           /* FLUIDEZ: La ventana crece dinámicamente */
+  min-height: 900px;                 /* SEGURO: Espacio garantizado para video + controles */
+  padding-bottom: 40px;              /* AIRE: Margen inferior para que el botón no toque el borde */
+  display: none;                     /* ESTADO: Oculto hasta activación por sistema */
+}
+
+/* ACTIVACIÓN DE MÓDULO */
+#video-induccion.active {
+  display: flex;                     /* ENCENDIDO: Hace visible el módulo de video */
+}
+
+/* REPRODUCTOR DE VIDEO (#player) - Ajuste SITO */
+#player {
+  width: 100%;                       /* EXPANSIÓN: Llena el ancho del contenedor */
+  height: 550px !important;          /* ESCALA VERTICAL: Largo optimizado para inducción */
+  border-radius: 15px;               /* ESTÉTICA: Bordes suavizados para look de pantalla premium */
+  border: 1px solid rgba(212, 175, 55, 0.4); /* MARCO: Dorado Epoch envolviendo el contenido */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* PROFUNDIDAD: Despega el video del fondo */
+  overflow: hidden;                  /* MÁSCARA: Obliga al video a respetar los bordes redondeados */
+}
+
+/* ACTUADOR DE PROGRESO (#btn-continuar-postulacion) */
+#btn-continuar-postulacion {
+  margin-top: 25px;                  /* SEPARACIÓN: Distancia de seguridad respecto al reproductor */
+  width: 100%;                       /* ALCANCE: Botón de ancho completo para fácil acceso */
+}
+
+
+  /* ============================================================
+   BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
+   LOGICA: Control de la interfaz mediante dimensiones absolutas.
+   FINALIDAD: Garantizar que la estructura no colapse y mantenga 
+   el diseño de alta gama en cualquier servidor.
+   ============================================================ */
+
+/* CONTENEDOR DE SEGURIDAD (#dashboard-aliado)
+   - Carcasa física del sistema.
+   - background: Define el tono base del hardware.
+   - display: none: Mantiene el sistema apagado hasta la validación.
+   - overflow: hidden: Evita que el scroll del navegador interfiera con SITO.
+   - position: fixed: (Blindaje) Asegura que el dashboard tape todo lo anterior.
+*/
+#dashboard-aliado {
+    background: #020a12;
+    min-height: 100vh;
+    width: 100vw;
+    display: none; 
+    overflow: hidden; /* BLOQUEO DE SEGURIDAD: Evita el colapso del sitio en Vercel */
+    position: fixed;  /* CAMBIO CLAVE: Lo anclamos para que nada se mueva al validar */
+    top: 0;
+    left: 0;
+    z-index: 9999;    /* BLINDAJE: Por encima de cualquier error de capa */
+}
+
+
+/* Activa la visibilidad del dashboard cuando el sistema valida el acceso */
+#dashboard-aliado.active {
+    display: block !important;
+}
+
+/* EL PLANO DESLIZABLE (.sito-plano-deslizable)
+   - Es la "Placa Base" donde se montan los circuitos.
+   - overflow: auto: Permite la navegación libre por el plano gigante.
+   - background-image: Crea el patrón de circuitos usando 3 capas de gradientes.
+   - transform: scale(0.6): Reduce la vista para dar sensación de amplitud.
+   - min-width/height: Define el tamaño real del mapa de trabajo (2500x1800px).
+*/
+.sito-plano-deslizable {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+    background-color: #01080e;
+
+    /* ADN Visual: Circuitos refinados con ángulos de 45° */
+    background-image: 
+        linear-gradient(90deg, rgba(135, 206, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(135, 206, 235, 0.03) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(135, 206, 235, 0.02) 25%, transparent 25%, transparent 50%, rgba(135, 206, 235, 0.02) 50%, rgba(135, 206, 235, 0.02) 75%, transparent 75%, transparent);
+    background-size: 80px 80px, 80px 80px, 20px 20px;
+    
+    /* Configuración de Zoom táctico */
+    transform: scale(0.6); 
+    transform-origin: top left;
+    
+    /* COMPENSACIÓN VERCEL: Dimensiones fijas para evitar el 'Layout Thrashing' */
+    min-width: 2500px; 
+    min-height: 1800px;
+    box-shadow: inset 0 0 150px rgba(0, 0, 0, 1);
+}
+
+/* REJILLA MAESTRA (#master-grid-container)
+   - grid-template-columns: REESTABLECIDO A 1500px para evitar el colapso visual.
+   - grid-template-rows: Define la altura de cada sección operativa.
+   - contain: paint: Clave para que el renderizado en Vercel sea fluido.
+*/
+#master-grid-container {
+    display: grid;
+    /* RECALIBRACIÓN: Volvemos a 1500px en la primera columna para recuperar el aire del diseño */
+    grid-template-columns: 1500px 440px 440px; 
+    grid-template-rows: 660px 320px 700px 70px;
+    grid-template-areas: 
+        "superior  lateral  lateral2"
+        "inter-sup lateral  lateral2"
+        "nucleo    lateral  lateral2"
+        "pre-foot  lateral  lateral2";
+    
+    width: fit-content;
+    height: auto;
+    gap: 15px;
+    padding: 110px 40px 40px 40px; 
+    background: transparent;
+    box-sizing: border-box;
+    contain: paint; 
+}
+
+/* MOTOR DE ENERGÍA NEÓN AZUL CIELO
+   - border: 1px: Línea definida de color azul sky (80% opacidad).
+   - box-shadow: Crea el resplandor exterior e interior del neón.
+   - animation: Llama a 'pulsoUnion' para dar vida al sistema.
+*/
+#sec-superior, #sec-inter-sup, #sec-nucleo, #sec-pre-footer, #barra-lateral-derecha, #barra-lateral-2, .sub-bloque, .sub-bloque-h, .sub-bloque-v, .sub-grid-12 div, .modulo-dual {
+    border: 1px solid rgba(135, 206, 235, 0.8) !important;
+    box-shadow: 0 0 12px rgba(135, 206, 235, 0.3), inset 0 0 8px rgba(135, 206, 235, 0.1);
+    animation: pulsoUnion 3s infinite alternate;
+}
+
+/* ASIGNACIÓN DE ÁREAS DE HARDWARE: Vincula los IDs HTML con las áreas del Grid */
+#sec-superior { grid-area: superior; display: flex; gap: 10px; }
+#sec-inter-sup { grid-area: inter-sup; display: flex; flex-direction: column; gap: 10px; }
+#sec-nucleo { grid-area: nucleo; background: rgba(135, 206, 235, 0.01); }
+#sec-pre-footer { grid-area: pre-foot; display: flex; gap: 8px; }
+#barra-lateral-derecha { grid-area: lateral; display: flex; flex-direction: column; gap: 10px; }
+
+/* BARRA LATERAL 2 (Dual Hardware): Organización en columna para el lado derecho */
+#barra-lateral-2 {
+    grid-area: lateral2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+/* MÓDULO DUAL: Contenedores internos con fondo semitransparente para legibilidad */
+.modulo-dual {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 15px;
+}
+/* ESTILO DE SUB-MÓDULOS
+   - Tipografía 'Courier New' para look de terminal.
+   - Color #d4af37 (Dorado/Amarillo) para datos críticos.
+*/
+.sub-bloque, .sub-bloque-h, .sub-bloque-v {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    background: rgba(212, 175, 55, 0.03);
+    border-radius: 4px;
+}
+/* NÚCLEO (Sub-Grid 12): Grilla interna de 4x3 para los 12 botones principales */
+.sub-grid-12 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+    gap: 8px;
+    padding: 10px;
+}
+/* ANIMACIÓN DE PULSO VITAL
+   - Modula el brillo y el color de los bordes suavemente cada 3 segundos.
+*/
+@keyframes pulsoUnion {
+    0% { border-color: rgba(135, 206, 235, 0.5); box-shadow: 0 0 8px rgba(135, 206, 235, 0.2); }
+    100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
+}
+/* ESTÉTICA DE ALERTAS SITO
+   - Modales de advertencia con desenfoque de fondo (backdrop-filter).
+   - Estilo dorado (#d4af37) para resaltar importancia.
+*/
+.sito-modal-alert {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(2, 10, 18, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+}
+/* CONTENIDO DEL MODAL (.sito-modal-content)
+   - El "Cofre" que contiene el mensaje de alerta.
+   - max-width: 320px: Mantiene el mensaje compacto y centrado.
+   - border: 1px solid #d4af37: Marco dorado para denotar jerarquía.
+*/
+.sito-modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #d4af37;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 320px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+/* COMPONENTES DE LA ALERTA
+   - title: Color dorado y espaciado de letras para look de comando.
+   - msg: Color blanco con ligera transparencia para jerarquía.
+   - icon: Tamaño 40px para impacto visual inmediato.
+*/
+#sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
+#sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
+#sito-alert-icon { font-size: 40px; }
+
+/* ESTABILIZACIÓN PANORÁMICA SITO
+   - .dashboard-view: Contenedor que permite el scroll táctil suave.
+   - .panorama-viewport: Define un ancho de 500vw (5 pantallas de ancho) para expansión futura.
+*/
+.dashboard-view {
+    padding: 0 !important;
+    overflow-x: scroll !important; /* Fuerza el scroll horizontal */
+    overflow-y: auto; /* Permite scroll vertical si el contenido crece */
+    background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
+    -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
+}
+/* PANORAMA VIEWPORT (.panorama-viewport)
+   - width: 500vw: Crea el espacio para las 5 estaciones de trabajo.
+   - scroll-snap-type: x mandatory: Obliga a que la pantalla se "ancle" 
+     perfectamente al inicio de cada sección al deslizar.
+*/
+.panorama-viewport {
+    display: flex;
+    width: 500vw; /* 5 Estaciones de trabajo */
+    height: 100vh;
+    scroll-snap-type: x mandatory;
+}
+
+/* SITO-SECTION: Cada una de las 5 estaciones del panorama
+   - width/height: 100vw/vh: Cada estación ocupa la pantalla completa.
+   - flex-shrink: 0: BLOQUEO: Evita que el navegador comprima las secciones.
+   - scroll-snap-align: start: Punto de anclaje para el scroll magnético.
+*/
+.sito-section {
+    width: 100vw !important;
+    height: 100vh !important;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
+}
+
+/* SECCIÓN 2: EL NÚCLEO (Distribución flex)
+   - flex: 2: Le otorga mayor jerarquía visual y espacio en el eje.
+   - gap: 15px: Espaciado de seguridad entre los sub-componentes del núcleo.
+*/
+.section-2 {
+    flex: 2; /* Más prominente */
+    display: flex;
+    gap: 15px;
+}
+
+/* POSICIONAMIENTO DE IDENTIDAD: Tarjeta dorada en la esquina */
+.sub-2-1 {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Alinea a la izquierda */
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(212,175,55,0.05); 
+    border: 1px solid #d4af37;
+}
+
+.sub-2-2 { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.sub-2-3 { flex: 3; background: rgba(255,255,255,0.02); padding: 15px; overflow-y: auto; }
+
+/* NUBE IA ☁️: Burbuja flotante para mensajes de SITO */
+.thought-bubble {
+    position: absolute;
+    top: -40px;
+    background: white;
+    color: #020a12;
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+}
+
+/* SECCIÓN 4 (12 BOTONES): Comandos operativos en grilla 3x4 */
+.command-grid-12 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+}
+.cmd-btn {
+    background: #d4af37;
+    color: black;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.cmd-btn:hover { transform: scale(1.05); background: #f1c40f; }
+
+/* SECCIÓN 1: DERECHA (Organización proporcional 1:3) */
+.section-1-right {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.part-1-3 { flex: 1; background: rgba(212,175,55,0.1); }
+.part-2-big { flex: 3; background: rgba(212,175,55,0.2); }
+
+/* --- PROTOCOLO DE ILUMINACIÓN SITO --- */
+
+/* 1. Neón de Contención (Azul/Cian) */
+.sito-section, 
+.sub-2-1, .sub-2-3, .part-1-3, .part-2-big, .v-sub-5, .h-sub-3-1, .h-sub-3-2 {
+    border: 1px solid rgba(0, 255, 255, 0.4) !important; /* Neón Azul/Cian */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2); /* Resplandor suave */
+    border-radius: 8px; /* Bordes redondeados */
+    background: rgba(2, 10, 18, 0.85); /* Fondo oscuro para contraste */
+}
+
+/* 2. Tarjeta de Identidad (Esquina Superior Izquierda, Amarillo) */
+.sito-profile-card {
+    text-align: left;
+    position: relative;
+    border: 1px solid #d4af37 !important; /* Neón Dorado para Perfil */
+    padding: 10px 20px;
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Punto Verde de Estatus: Indicador de conexión en vivo */
+.card-status-dot {
+    width: 10px; height: 10px;
+    background: #0f0; /* Punto Verde de 'Activo' */
+    border-radius: 50%;
+    position: absolute;
+    top: 10px; right: 10px;
+    box-shadow: 0 0 10px #0f0;
+}
+
+.profile-alias {
+    color: #d4af37 !important; /* Amarillo Aliado */
+    font-size: 26px !important;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.profile-label {
+    color: #fff;
+    font-size: 10px;
+    opacity: 0.6;
+    margin: 5px 0 0 0;
+    letter-spacing: 1px;
+}
+
+.profile-id {
+    color: #fff;
+    font-size: 12px;
+    margin: 2px 0 0 0;
+    font-weight: bold;
+  }
+          
+
+
+
+
+
+</style>
+                              
