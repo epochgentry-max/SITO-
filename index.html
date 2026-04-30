@@ -329,11 +329,11 @@
         <div id="master-grid-container">
             
             <div id="sec-superior">
-                <div class="sub-bloque" style="flex: 1.6;">
-    <p style="font-size: 10px; margin-bottom: 5px;">ESTADO: <span id="sito-status-db">CONECTANDO...</span></p>
-    <p style="font-size: 9px; color: #d4af37;" id="sito-last-sync">SINCRONIZACIÓN: ESPERANDO ID</p>
-                </div>
-                
+                <div class="sub-bloque" style="flex: 1.6; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 15px;">
+    <p style="font-size: 10px; margin: 0; color: rgba(255,255,255,0.7);">ESTADO ACTUAL:</p>
+    <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 2px 0; letter-spacing: 1px;">CONECTANDO...</p>
+    <p id="sito-last-sync" style="font-size: 8px; color: #d4af37; margin: 0; opacity: 0.8;">SINCRONIZACIÓN: PENDIENTE</p>
+</div>
                 <div class="sub-bloque" style="flex: 1;">
                     <img src="tu-robot-avatar.png" alt="SITO AI" style="width: 50px;">
                 </div>
@@ -380,5 +380,5 @@
     
 <script src="input.js"></script>
 </body>
-            </html>
-    
+</html>
+
