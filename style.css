@@ -90,24 +90,21 @@ body {
 }
 
 /* ============================================================
-   RECALIBRACIÓN DE EMERGENCIA: Dashboard Maestro (#dashboard-aliado)
-   Objetivo: Recuperar fondo y centralizar la estructura panorámica.
+   RECALIBRACIÓN SITO: Dashboard Maestro (#dashboard-aliado)
    ============================================================ */
 
+/* 1. CONFIGURACIÓN DEL CHASIS (Cómo se ve cuando se active) */
 #dashboard-aliado.screen {
-  max-width: none !important;        /* Mantiene la liberación de ancho */
-  width: 100vw !important;            /* Mantiene la escala completa */
-  height: 100vh !important;           /* Mantiene la altura completa */
-  padding: 0 !important;              /* Mantiene la limpieza de bordes */
-  border-radius: 0 !important;        /* Mantiene la pantalla total */
-  overflow-x: auto !important;        /* Mantiene el flujo panorámico */
+  max-width: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  overflow-x: auto !important;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 
-  /* === CORRECCIÓN DE FONDO Y CENTRALIZADO === */
-  
-  /* 1. Recuperamos la Matrix: Re-aplicamos el fondo del body aquí 
-     para que el dashboard transparente no lo tape con negro. */
+  /* RECUPERACIÓN DE FONDO MATRIX */
   background: 
     linear-gradient(rgba(2, 10, 18, 0.8), rgba(2, 10, 18, 0.8)), 
     url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg') !important;
@@ -115,12 +112,19 @@ body {
   background-position: center !important;
   background-attachment: fixed !important;
 
-  /* 2. Recuperamos el Motor de Centralizado: Usamos Flexbox para alinear 
-     la cuadrícula al centro de la pantalla. */
-  display: flex !important;           /* Activa flexbox en este contenedor */
-  justify-content: center !important;  /* Centra horizontalmente la estructura */
-  align-items: center !important;      /* Centra verticalmente la estructura */
+  /* MOTOR DE CENTRALIZADO PANORÁMICO */
+  justify-content: center; /* Alinea la cuadrícula al centro */
+  align-items: center;     /* Centra verticalmente */
+  
+  /* SEGURIDAD: Se mantiene oculto por defecto */
+  display: none; 
 }
+
+/* 2. PROTOCOLO DE ENCENDIDO (Solo se activa por JavaScript) */
+#dashboard-aliado.screen.active {
+  display: flex !important; /* Aquí es donde realmente se centraliza y aparece */
+}
+
 
 
 /* JERARQUÍA DE TÍTULOS (h1, h2) - La identidad visual del mando */
