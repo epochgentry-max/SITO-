@@ -113,26 +113,66 @@ body {
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   
-  /* ESTADO INICIAL */
-  display: none; 
+
+
+
+
+
+/* ============================================================
+   RECALIBRACIÓN SITO: Blindaje de Centralizado y Fondo Matrix
+   ============================================================ */
+
+#dashboard-aliado.screen {
+  /* 1. RESET DE ESTRUCTURA: Eliminamos cualquier herencia que lo esquinee */
+  position: fixed !important;        /* Lo ancla al visor global, no al body */
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: none !important;
+  margin: 0 !important;              /* Mata cualquier margen que lo empuje */
+  padding: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+  
+  /* 2. RECUPERACIÓN DE FONDO MATRIX: Aseguramos que la placa base sea el fondo */
+  background: 
+    linear-gradient(rgba(2, 10, 18, 0.8), rgba(2, 10, 18, 0.8)), 
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+
+  /* 3. MOTOR DE DESPLAZAMIENTO PANORÁMICO */
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  display: none;                     /* Se mantiene oculto hasta el login */
 }
 
-/* PROTOCOLO DE ENCENDIDO Y ALINEACIÓN */
+/* 4. ACTIVACIÓN Y ALINEACIÓN DE ESTACIONES */
 #dashboard-aliado.screen.active {
   display: flex !important;
-  flex-direction: row !important; /* Mantiene las estaciones en línea */
-  align-items: center !important;  /* Centra verticalmente en el visor */
-  justify-content: flex-start !important; /* Permite que el carrusel fluya */
+  align-items: center !important;    /* Centra las estaciones verticalmente */
+  justify-content: center !important; /* Centra el bloque de estaciones en el medio del visor */
 }
 
-/* ANCLAJE DE LA CUADRÍCULA (El toque maestro) */
+/* 5. CONTENEDOR DE ESTACIONES: El alma de la panorámica */
 #dashboard-aliado .contenedor-panoramico {
   display: flex !important;
-  margin: 0 auto !important; /* ESTO es lo que obliga al contenido a no esquinarse */
-  min-width: max-content;    /* Obliga al contenedor a respetar el ancho de las estaciones */
-  height: 100%;
-  align-items: center;
+  flex-direction: row !important;
+  min-width: max-content;            /* Evita que se encoja */
+  height: 90vh;                      /* Deja un margen visual arriba y abajo */
+  gap: 50px;                         /* Espacio de lujo entre estaciones */
+  padding: 0 100px;                  /* Colchón para que la primera y última no toquen el borde */
 }
+  
+
+
+
+
+
+  
+
 
 
 
