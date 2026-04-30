@@ -103,13 +103,6 @@ body {
 }
 
 
-/* 2. PROTOCOLO DE ENCENDIDO (Solo se activa por JavaScript) */
-#dashboard-aliado.screen.active {
-  display: flex !important; /* Aquí es donde realmente se centraliza y aparece */
-}
-
-
-
 /* JERARQUÍA DE TÍTULOS (h1, h2) - La identidad visual del mando */
 h1, h2 {
   /* ADN COLOR: Dorado Epoch blindado con !important para evitar herencias de otras capas */
