@@ -345,67 +345,67 @@ if (togglePassword && passwordField) {
 
   
 // =============================================
-// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (CORREGIDO)
+// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (CORREGIDO V4.2)
 // =============================================
 window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
     if(modal) modal.style.display = 'none';
     
-    // 1. Verificación de integridad de sesión
     const aliasSito = sessionStorage.getItem('sito_nombre_aliado');
     const idSito = sessionStorage.getItem('sito_id_aliado');
 
     if (idSito) {
-       // 2. INYECTOR DE IDENTIDAD: Escribimos los datos en las cajas del Dashboard
        const displayAlias = document.getElementById('alias-aliado');
        const displayID = document.getElementById('id-sito-display');
 
        if(displayAlias) displayAlias.innerText = aliasSito || "ALIADO ANONIMO";
        if(displayID) displayID.innerText = idSito;
 
-       // 3. Ejecución de transición al Dashboard
        showScreen(screens.dashboard); 
        
-       // 4. DISPARO QUIRÚRGICO: Sincronizar con la Tabla Madre
-       sincronizarDatosAliado(idSito);
-       
-       // 5. Log de auditoría interna
-       console.log(`SITO: Dashboard despertando para Aliado: ${aliasSito}`);
+       // Disparo con retardo para asegurar estabilidad de la sesión
+       setTimeout(() => {
+           sincronizarDatosAliado(idSito);
+       }, 300);
     }
 };
 
-// NUEVA FUNCIÓN: TRACCIÓN DE DATOS DESDE ALIADOS_ACTIVOS_HOLDING
 async function sincronizarDatosAliado(idInterno) {
     const statusText = document.getElementById('sito-status-db'); 
     const syncText = document.getElementById('sito-last-sync');
 
     if (!statusText) return; 
+    statusText.innerText = "BUSCANDO VÍNCULO...";
 
     try {
         const { data, error } = await window.supabaseClient
           .from('aliados_activos_holding')
-          .select('estado_operativo, ultima_sincro')
-          .eq('id_interno', idInterno) 
-          .single();
+          .select('estado_operativo, ultima_sincro, id_publico_aliado')
+          .eq('id_publico_aliado', idInterno) // <-- Cambio clave: Usamos el ID Público como llave
+          .maybeSingle();
+
+        if (error) throw error;
 
         if (data) {
-            // Inyectamos solo el valor, el título ya está en el HTML
             statusText.innerText = data.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
-            
             if(syncText) {
                 syncText.innerText = `VÍNCULO ACTIVO: ${data.ultima_sincro}`;
             }
+            console.log("SITO: Sincronización exitosa vía ID Público.");
         } else {
             statusText.innerText = "NO VINCULADO";
-            statusText.style.color = "#ff4b4b";
+            statusText.style.color = "#ffb300";
+            if(syncText) syncText.innerText = "VERIFICAR ID EN TABLA MADRE";
         }
     } catch (err) {
-        statusText.innerText = "ERROR RED";
+        console.error("SITO Error:", err);
+        statusText.innerText = "ERROR DE RED";
         statusText.style.color = "#ff4b4b";
     }
 }
 
   
 })();
-        
+
+  
