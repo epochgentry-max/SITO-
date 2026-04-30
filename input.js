@@ -367,7 +367,7 @@ window.cerrarSitoAlert = () => {
     }
 };
 
-async function sincronizarDatosAliado(idInterno) {
+  async function sincronizarDatosAliado(idInterno) {
     const statusText = document.getElementById('sito-status-db'); 
     const syncText = document.getElementById('sito-last-sync');
 
@@ -375,35 +375,30 @@ async function sincronizarDatosAliado(idInterno) {
     statusText.innerText = "ACCEDIENDO AL NÚCLEO...";
 
     try {
-        // Llamada a la función RPC de Supabase
+        // Llamada al túnel seguro RPC
         const { data, error } = await window.supabaseClient
-          .rpc('obtener_perfil_aliado_v5', { id_buscado: idInterno });
+          .rpc('obtener_perfil_aliado_maestro', { id_buscado: idInterno });
 
         if (error) throw error;
 
-        // Si la función devolvió datos, tomamos el perfil
         const perfil = data && data.length > 0 ? data[0] : null;
 
         if (perfil) {
             statusText.innerText = perfil.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
-            
-            if(syncText) {
-                syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
-            }
-            console.log("SITO: Sincronización exitosa. Datos cargados:", perfil);
+            if(syncText) syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
+            console.log("SITO: Sincronización exitosa. Auditoría procesada internamente.");
         } else {
-            statusText.innerText = "NO VINCULADO";
+            statusText.innerText = "ID NO REGISTRADO";
             statusText.style.color = "#ffb300";
-            if(syncText) syncText.innerText = "ID NO HALLADO EN TABLA MADRE";
         }
     } catch (err) {
         console.error("SITO Error Crítico:", err);
         statusText.innerText = "ERROR DE SISTEMA";
         statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "REVISAR CONEXIÓN CON SUPABASE";
+        if(syncText) syncText.innerText = "REVISAR CONEXIÓN MAESTRA";
     }
-}
+  }
   
 
 
