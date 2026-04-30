@@ -332,92 +332,69 @@
 
 
 
-                <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; max-height: 280px; margin: 0;">
+                <div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin: 0;">
     
-    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 15px; border-left: 3px solid #00f2ff; background: rgba(0, 242, 255, 0.05); height: 50px;">
+    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 15px; border-left: 3px solid #00f2ff; background: rgba(0, 242, 255, 0.05); min-height: 50px;">
         <p style="font-size: 9px; margin: 0; color: rgba(255,255,255,0.6);">ESTADO:</p>
         <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 0; color: #00f2ff;">APROBADO</p>
     </div>
 
-    <div id="ficha-aliado" style="flex: 1; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid rgba(0,242,255,0.2); overflow-y: auto; scrollbar-width: thin;">
+    <div id="ficha-aliado" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid rgba(0,242,255,0.2); overflow-y: auto;">
         
         <h3 style="color: #00f2ff; font-size: 11px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(0,242,255,0.2); padding-bottom: 5px; letter-spacing: 1px; position: sticky; top: 0; background: rgba(0,0,0,0.9); z-index: 10;">DATOS DEL ALIADO</h3>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 10px;">
             <div style="grid-column: span 2;">
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Nombre:</p>
-                <span id="nombre_completo" style="color: #00f2ff; font-weight: bold;">...</span>
+                <span id="dat-nombre" class="nombre_completo" style="color: #00f2ff; font-weight: bold;">...</span>
             </div>
             <div>
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">ID (CC/NIT):</p>
-                <span id="cc_nit" style="color: #fff;">...</span>
+                <span id="dat-cedula" class="cc_nit" style="color: #fff;">...</span>
             </div>
             <div>
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Ciudad:</p>
-                <span id="ciudad_negocio" style="color: #fff;">...</span>
+                <span id="dat-ciudad" class="ciudad_negocio" style="color: #fff;">...</span>
             </div>
 
             <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Teléfono Móvil:</p>
-                <span id="telefono_movil" style="color: #fff;">...</span>
+                <span id="dat-tel" class="telefono_movil" style="color: #fff;">...</span>
             </div>
             <div style="grid-column: span 2;">
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Email:</p>
-                <span id="email" style="color: #fff;">...</span>
+                <span id="dat-email" class="email" style="color: #fff;">...</span>
             </div>
 
             <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">
                 <p style="margin: 0; color: #d4af37;">Nombre Comercial:</p>
-                <span id="nombre_comercial" style="color: #d4af37; font-weight: bold;">...</span>
+                <span id="dat-negocio" class="nombre_comercial" style="color: #d4af37; font-weight: bold;">...</span>
             </div>
             <div>
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Rubro:</p>
-                <span id="rubro_negocio">...</span>
+                <span id="dat-rubro" class="rubro_negocio">...</span>
             </div>
             <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">ID Público:</p>
-                <span id="id_publico_aliado">...</span>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Ingresos:</p>
+                <span id="dat-ingresos" class="ingresos_mensuales" style="color: #00ff88;">...</span>
             </div>
 
             <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Situación Laboral:</p>
-                <span id="situacion_laboral">...</span>
+                <span id="dat-situacion" class="situacion_laboral">...</span>
             </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Ingresos:</p>
-                <span id="ingresos_mensuales" style="color: #00ff88;">...</span>
-            </div>
-            <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Estrato:</p>
-                <span id="estrato_social">...</span>
-            </div>
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">EPS / ARL:</p>
-                <span style="color: #fff;"><span id="eps_aliado">...</span> / <span id="arl_aliado">...</span></span>
-            </div>
-
             <div>
                 <p style="margin: 0; color: rgba(255,255,255,0.5);">Hijos:</p>
-                <span id="numero_hijos">...</span>
+                <span id="dat-hijos" class="numero_hijos">...</span>
             </div>
             <div>
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Estado Civil:</p>
-                <span id="estado_civil">...</span>
-            </div>
-            <div style="grid-column: span 2;">
-                <p style="margin: 0; color: rgba(255,255,255,0.5);">Nombres Hijos:</p>
-                <span id="nombres_hijos" style="font-size: 9px; font-style: italic;">...</span>
-            </div>
-
-            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; font-size: 9px;">
-                <p style="margin: 0; color: #00f2ff; opacity: 0.8;">REFERENCIAS:</p>
-                <p style="margin: 2px 0;">F1: <span id="ref_fam_nom_1">...</span> (<span id="ref_fam_tel_1">...</span>)</p>
-                <p style="margin: 2px 0;">P1: <span id="ref_per_nom_1">...</span> (<span id="ref_per_tel_1">...</span>)</p>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">EPS:</p>
+                <span id="dat-eps" class="eps_aliado">...</span>
             </div>
         </div>
     </div>
                 </div>
+                
                 
                 
                 
