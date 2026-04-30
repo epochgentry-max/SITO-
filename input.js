@@ -343,15 +343,15 @@ if (togglePassword && passwordField) {
   };
 
 
-// =============================================
-// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (V5.0 - RPC BYPASS)
+  // =============================================
+// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (V5.1 - RPC FULL ACCESS)
 // =============================================
 window.cerrarSitoAlert = () => {
     const modal = document.getElementById('sito-alert');
     if(modal) modal.style.display = 'none';
     
-    const aliasSito = sessionStorage.getItem('sito_nombre_aliado');
     const idSito = sessionStorage.getItem('sito_id_aliado');
+    const aliasSito = sessionStorage.getItem('sito_nombre_aliado');
 
     if (idSito) {
        const displayAlias = document.getElementById('alias-aliado');
@@ -361,8 +361,6 @@ window.cerrarSitoAlert = () => {
        if(displayID) displayID.innerText = idSito;
 
        showScreen(screens.dashboard); 
-       
-       // Sincronización automática vía Túnel RPC (Salta bloqueos de Triggers)
        sincronizarDatosAliado(idSito);
     }
 };
@@ -375,36 +373,34 @@ async function sincronizarDatosAliado(idInterno) {
     statusText.innerText = "SINCRO NÚCLEO...";
 
     try {
-        // Invocamos la función de servidor (Bypass total de triggers y RLS)
+        // Llamada al túnel seguro RPC
         const { data, error } = await window.supabaseClient
           .rpc('obtener_perfil_aliado_v5', { id_buscado: idInterno });
 
-        if (error) throw error;
+        if (error) {
+            console.error("Error RPC Detalle:", error.message);
+            throw error;
+        }
 
-        // La respuesta RPC viene en array, tomamos el primer objeto
         const perfil = data && data.length > 0 ? data[0] : null;
 
         if (perfil) {
             statusText.innerText = perfil.estado_operativo.toUpperCase();
             statusText.style.color = "#00f2ff"; 
-            
-            if(syncText) {
-                syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
-            }
-            
-            console.log("SITO: Sincronización exitosa saltando bloqueos de integridad.");
+            if(syncText) syncText.innerText = `VÍNCULO ACTIVO: ${perfil.ultima_sincro}`;
+            console.log("SITO: Acceso total concedido.");
         } else {
-            statusText.innerText = "NO REGISTRADO";
+            statusText.innerText = "ID NO HALLADO";
             statusText.style.color = "#ffb300";
-            if(syncText) syncText.innerText = "ID NO HALLADO EN NÚCLEO";
         }
     } catch (err) {
-        console.error("SITO Error:", err);
         statusText.innerText = "FALLO DE SISTEMA";
         statusText.style.color = "#ff4b4b";
-        if(syncText) syncText.innerText = "REVISAR CONEXIÓN RPC";
+        if(syncText) syncText.innerText = "REVISAR PERMISOS RPC";
     }
 }
+  
+
 
 
   
