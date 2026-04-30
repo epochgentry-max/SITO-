@@ -782,7 +782,9 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     display: flex;
 
 
-    /* ============================================================
+
+
+  /* ============================================================
    BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
    LOGICA: Control de la interfaz mediante dimensiones absolutas.
    FINALIDAD: Garantizar que la estructura no colapse y mantenga 
@@ -860,7 +862,7 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     
     width: fit-content;
     height: auto;
-    gap: 25px;
+    gap: 15px;
     padding: 110px 40px 40px 40px; /* Margen superior para ID de Aliado */
     background: transparent;
     box-sizing: border-box;
@@ -1110,6 +1112,8 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     font-size: 12px;
     margin: 2px 0 0 0;
     font-weight: bold;
-  }      
+  }
+          
 
 </style>
+  
