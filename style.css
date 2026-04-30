@@ -684,11 +684,105 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 .modulo-dual {
     flex: 1;
     background: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 15px;
+}
+
+/* Estilo de Sub-Módulos */
+.sub-bloque, .sub-bloque-h, .sub-bloque-v {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    font-size: 11px;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    background: rgba(212, 175, 55, 0.03);
+    border-radius: 4px;
+}
+
+/* La Gran Rejilla del Núcleo (Sección 4) */
+.sub-grid-12 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+    gap: 8px;
+    padding: 10px;
+}
+
+/* Animación de Pulso Vital */
+@keyframes pulsoUnion {
+    0% { border-color: rgba(135, 206, 235, 0.5); box-shadow: 0 0 8px rgba(135, 206, 235, 0.2); }
+    100% { border-color: rgba(135, 206, 235, 1); box-shadow: 0 0 18px rgba(135, 206, 235, 0.5); }
+}
+
+/* ESTÉTICA DE ALERTAS SITO */
+.sito-modal-alert {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: rgba(2, 10, 18, 0.85);
+    backdrop-filter: blur(8px);
+    align-items: center; justify-content: center;
+}
+
+.sito-modal-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid #d4af37;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 320px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+#sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
+#sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
+#sito-alert-icon { font-size: 40px; }
 
 
 
+/* --- ESTABILIZACIÓN PANORÁMICA SITO --- */
+.dashboard-view {
+    padding: 0 !important;
+    overflow-x: scroll !important; /* Fuerza el scroll horizontal */
+    overflow-y: auto; /* Permite scroll vertical si el contenido crece */
+    background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
+    -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
+}
 
-  /* ============================================================
+
+.panorama-viewport {
+    display: flex;
+    width: 500vw; /* 5 Estaciones de trabajo */
+    height: 100vh;
+    scroll-snap-type: x mandatory;
+}
+
+/* Ajuste de Secciones para que no se compriman */
+.sito-section {
+    width: 100vw !important;
+    height: 100vh !important;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
+}
+
+/* SECCIÓN 2: EL NÚCLEO */
+.section-2 {
+    flex: 2; /* Más prominente */
+    display: flex;
+
+
+    /* ============================================================
    BLOQUE 10: SISTEMA OPERATIVO SITO V5 (ESTABILIZADO VERCEL)
    LOGICA: Control de la interfaz mediante dimensiones absolutas.
    FINALIDAD: Garantizar que la estructura no colapse y mantenga 
@@ -1016,12 +1110,6 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     font-size: 12px;
     margin: 2px 0 0 0;
     font-weight: bold;
-  }
-          
-
-
-
-
+  }      
 
 </style>
-
