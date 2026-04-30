@@ -557,11 +557,37 @@ async function sincronizarDatosAliado(idInterno) {
     }
 }
 
-// Inicialización automática
+// PROTOCOLO DE PERSISTENCIA SITO V15.6
+// Ejecuta un pulso de sincronización cada 5 segundos para asegurar carga total
 document.addEventListener("DOMContentLoaded", () => {
-    sincronizarDatosAliado(1);
-});
+    const ID_ACTUAL = 1; // ID de sesión
+    
+    // Primer disparo inmediato
+    sincronizarDatosAliado(ID_ACTUAL);
 
+    // Configuración del Pulso de Recarga (5000ms = 5 segundos)
+    const pulsoSincro = setInterval(() => {
+        // Verificamos si aún hay campos sin llenar (que contienen "...")
+        const camposIncompletos = document.querySelectorAll('span[id^="dat-"]');
+        let necesitaRecarga = false;
+
+        for (let span of camposIncompletos) {
+            if (span.innerText === "..." || span.innerText === "") {
+                necesitaRecarga = true;
+                break;
+            }
+        }
+
+        if (necesitaRecarga) {
+            console.log("🔄 SITO: Detectados campos incompletos. Reintentando sincronización...");
+            sincronizarDatosAliado(ID_ACTUAL);
+        } else {
+            console.log("✅ SITO: Todos los datos cargados. Deteniendo pulso de recarga.");
+            clearInterval(pulsoSincro); // Detenemos el ciclo si ya todo está lleno
+        }
+    }, 5000);
+});
+  
 
   
 })();
