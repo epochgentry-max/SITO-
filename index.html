@@ -332,21 +332,219 @@
 
 
 
-              
-// =============================================
-// PROTOCOLO SITO V15.2 - DESPLIEGUE TOTAL + AUDITORÍA EXTENDIDA
-// =============================================
 
+
+<div class="contenedor-aliado-completo" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; max-height: 280px; margin: 0;">
+    
+    <div class="sub-bloque" style="flex: 0 0 auto; display: flex; flex-direction: column; justify-content: center; padding: 8px 15px; border-left: 3px solid #00f2ff; background: rgba(0, 242, 255, 0.05); height: 50px;">
+        <p style="font-size: 9px; margin: 0; color: rgba(255,255,255,0.6);">ESTADO:</p>
+        <p id="sito-status-db" style="font-size: 14px; font-weight: bold; margin: 0; color: #00f2ff;">APROBADO</p>
+    </div>
+
+    <div id="ficha-aliado" style="flex: 1; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 4px; border: 1px solid rgba(0,242,255,0.2); overflow-y: auto; scrollbar-width: thin;">
+        
+        <h3 style="color: #00f2ff; font-size: 11px; margin: 0 0 10px 0; border-bottom: 1px solid rgba(0,242,255,0.2); padding-bottom: 5px; letter-spacing: 1px; position: sticky; top: 0; background: rgba(0,0,0,0.9); z-index: 10;">DATOS DEL ALIADO</h3>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 10px;">
+            
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Nombre:</p>
+                <span id="nombre_completo" style="color: #00f2ff; font-weight: bold;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">ID (CC/NIT):</p>
+                <span id="cc_nit" style="color: #fff;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">ID Público:</p>
+                <span id="id_publico_aliado" style="color: #fff;">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Email:</p>
+                <span id="email" style="color: #fff;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Móvil:</p>
+                <span id="telefono_movil" style="color: #fff;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Dirección:</p>
+                <span id="direccion_residencia">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; margin-top: 4px;">
+                <p style="margin: 0; color: #d4af37;">Nombre Comercial:</p>
+                <span id="nombre_comercial" style="color: #d4af37; font-weight: bold;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Rubro:</p>
+                <span id="rubro_negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Ciudad:</p>
+                <span id="ciudad_negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Barrio:</p>
+                <span id="barrio_negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Dir. Negocio:</p>
+                <span id="direccion_negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Tel. Negocio:</p>
+                <span id="tel_negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Email Negocio:</p>
+                <span id="email_negocio">...</span>
+            </div>
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Web:</p>
+                <span id="web_negocio">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">RUT:</p>
+                <span id="num_rut">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Cámara Comercio:</p>
+                <span id="num_camara_comercio">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Situación Laboral:</p>
+                <span id="situacion_laboral">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Ingresos:</p>
+                <span id="ingresos_mensuales" style="color: #00ff88;">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Estrato:</p>
+                <span id="estrato_social">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Estado Civil:</p>
+                <span id="estado_civil">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Acepto Sarlaft:</p>
+                <span id="acepto_sarlaft">...</span>
+            </div>
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Origen Fondos:</p>
+                <span id="origen_fondos">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Cónyuge:</p>
+                <span id="nombre_conyuge">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Madre:</p>
+                <span id="nombre_madre">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Padre:</p>
+                <span id="nombre_padre">...</span>
+            </div>
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Hermanos:</p>
+                <span id="nombre_hermanos">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);"># Hijos:</p>
+                <span id="numero_hijos">...</span>
+            </div>
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Nombres Hijos:</p>
+                <span id="nombres_hijos" style="font-size: 9px; font-style: italic;">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">EPS / ARL:</p>
+                <span id="eps_aliado">...</span> / <span id="arl_aliado">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Pensión:</p>
+                <span id="fondo_pensiones">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Pasado Judicial:</p>
+                <span id="pasado_judicial">...</span>
+            </div>
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Enfermedad:</p>
+                <span id="enfermedad_diagnosticada">...</span>
+            </div>
+
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Viajes Ext.:</p>
+                <span id="viajes_exterior">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Destinos:</p>
+                <span id="destinos_viaje">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Educación:</p>
+                <span id="nivel_educativo">...</span> - <span id="titulo_obtenido">...</span>
+            </div>
+            <div style="grid-column: span 2;">
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Institución:</p>
+                <span id="institucion_educativa">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Empresa:</p>
+                <span id="empresa_laboral">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Cargo:</p>
+                <span id="cargo_actual">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Tiempo:</p>
+                <span id="tiempo_laborado">...</span>
+            </div>
+            <div>
+                <p style="margin: 0; color: rgba(255,255,255,0.5);">Jefe:</p>
+                <span id="jefe_inmediato">...</span>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+                <p style="margin: 0; color: #00f2ff; opacity: 0.8;">REFERENCIAS FAMILIARES:</p>
+                <p style="margin: 2px 0;">1: <span id="ref_fam_nom_1">...</span> (<span id="ref_fam_tel_1">...</span>)</p>
+                <p style="margin: 2px 0;">2: <span id="ref_fam_nom_2">...</span> (<span id="ref_fam_tel_2">...</span>)</p>
+            </div>
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 4px;">
+                <p style="margin: 0; color: #00f2ff; opacity: 0.8;">REFERENCIAS PERSONALES:</p>
+                <p style="margin: 2px 0;">1: <span id="ref_per_nom_1">...</span> (<span id="ref_per_tel_1">...</span>)</p>
+                <p style="margin: 2px 0;">2: <span id="ref_per_nom_2">...</span> (<span id="ref_per_tel_2">...</span>)</p>
+            </div>
+
+            <div style="grid-column: span 2; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px; font-size: 8px; opacity: 0.5;">
+                <p style="margin: 0;">UUID: <span id="id">...</span> | Registro: <span id="created_at">...</span></p>
+                <p style="margin: 0;">User: <span id="reg_username">...</span> | Pass: <span id="reg_password">...</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/**
+ * PROTOCOLO SITO V15.2 - NÚCLEO DE DESPLIEGUE
+ * AUDITORÍA 1: Conexión RPC
+ * AUDITORÍA 2: Integridad de Mapeo
+ */
 async function sincronizarDatosAliado(idInterno) {
-    console.log("🚨 FUNCION EJECUTADA", idInterno);
-
+    console.log("🚨 INICIANDO PROTOCOLO SITO", idInterno);
     const statusText = document.getElementById('sito-status-db');
-    if (!statusText) {
-        console.error("❌ No existe elemento #sito-status-db");
-        return;
-    }
+    if (!statusText) return;
 
-    // 🔄 Estado inicial REAL
     statusText.innerText = "CONECTANDO...";
     statusText.style.color = "#ffaa00";
 
@@ -354,125 +552,98 @@ async function sincronizarDatosAliado(idInterno) {
         const { data, error } = await window.supabaseClient
             .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
-        // ===== AUDITORÍA 1 =====
-        console.log("📡 DATA CRUDA:", data);
-        console.log("📡 ERROR RPC:", error);
-
         if (error) throw error;
-
         if (!data || data.length === 0) {
-            console.warn("⚠️ SIN DATOS para ID:", idInterno);
             statusText.innerText = "SIN DATOS";
-            statusText.style.color = "#ffcc00";
             return;
         }
 
         const p = data[0];
-
-        // ===== AUDITORÍA 2 =====
-        console.log("🧩 REGISTRO (p):", p);
-
-        if (!p.f_nombre_completo) {
-            console.warn("⚠️ ESTRUCTURA INCOMPLETA:", p);
-            statusText.innerText = "DATOS INCOMPLETOS";
-            statusText.style.color = "#ff8800";
-            return;
-        }
-
-        // ✅ Estado válido
         statusText.innerText = "CONECTADO";
         statusText.style.color = "#00ff88";
 
-        // 🧠 MAPEO COMPLETO (ALINEADO A TU HTML)
+        // MAPEO QUIRÚRGICO (IDs exactos del HTML)
         const ficha = {
-
-            // CORE
-            'dat-nombre': p.f_nombre_completo,
-            'dat-negocio': p.f_nombre_comercial,
-            'dat-cedula': p.f.f_cc_nit,
-            'dat-email': p.f_email,
-            'dat-tel': p.f_telefono_movil,
-            'dat-ciudad': p.f_ciudad_negocio,
-            'dat-rubro': p.f_rubro_negocio,
-            'dat-ingresos': p.f_ingresos_mensuales,
-            'dat-hijos': p.f_numero_hijos,
-            'dat-nombres-hijos': p.f_nombres_hijos,
-            'dat-situacion': p.f_situacion_laboral,
-            'dat-eps': p.f_eps_aliado,
-            'dat-arl': p.f_arl_aliado,
-            'dat-pension': p.f_fondo_pensiones,
-            'dat-cargo': p.f_cargo_actual,
-            'dat-empresa': p.f_empresa_laboral,
-            'dat-judicial': p.f_pasado_judicial,
-            'dat-registro': p.f_created_at,
-
-            // NUEVOS
-            'dat-id-publico': p.f_id_publico_aliado,
-            'dat-estrato': p.f_estrato_social,
-            'dat-direccion': p.f_direccion_residencia,
-            'dat-tel-negocio': p.f_tel_negocio,
-            'dat-email-negocio': p.f_email_negocio,
-            'dat-rut': p.f_num_rut,
-            'dat-camara': p.f_num_camara_comercio,
-            'dat-web': p.f_web_negocio,
-            'dat-sarlaft': p.f_acepto_sarlaft,
-            'dat-origen': p.f_origen_fondos,
-            'dat-enfermedad': p.f_enfermedad_diagnosticada,
-            'dat-viajes': p.f_viajes_exterior,
-            'dat-destinos': p.f_destinos_viaje,
-            'dat-nivel': p.f_nivel_educativo,
-            'dat-institucion': p.f_institucion_educativa,
-            'dat-titulo': p.f_titulo_obtenido,
-            'dat-tiempo': p.f_tiempo_laborado,
-            'dat-jefe': p.f_jefe_inmediato
+            'nombre_completo': p.f_nombre_completo,
+            'cc_nit': p.f_cc_nit,
+            'id_publico_aliado': p.f_id_publico_aliado,
+            'email': p.f_email,
+            'telefono_movil': p.f_telefono_movil,
+            'direccion_residencia': p.f_direccion_residencia,
+            'nombre_comercial': p.f_nombre_comercial,
+            'rubro_negocio': p.f_rubro_negocio,
+            'ciudad_negocio': p.f_ciudad_negocio,
+            'barrio_negocio': p.f_barrio_negocio,
+            'direccion_negocio': p.f_direccion_negocio,
+            'tel_negocio': p.f_tel_negocio,
+            'email_negocio': p.f_email_negocio,
+            'web_negocio': p.f_web_negocio,
+            'num_rut': p.f_num_rut,
+            'num_camara_comercio': p.f_num_camara_comercio,
+            'situacion_laboral': p.f_situacion_laboral,
+            'ingresos_mensuales': p.f_ingresos_mensuales,
+            'estrato_social': p.f_estrato_social,
+            'estado_civil': p.f_estado_civil,
+            'acepto_sarlaft': p.f_acepto_sarlaft,
+            'origen_fondos': p.f_origen_fondos,
+            'nombre_conyuge': p.f_nombre_conyuge,
+            'nombre_madre': p.f_nombre_madre,
+            'nombre_padre': p.f_nombre_padre,
+            'nombre_hermanos': p.f_nombre_hermanos,
+            'numero_hijos': p.f_numero_hijos,
+            'nombres_hijos': p.f_nombres_hijos,
+            'eps_aliado': p.f_eps_aliado,
+            'arl_aliado': p.f_arl_aliado,
+            'fondo_pensiones': p.f_fondo_pensiones,
+            'pasado_judicial': p.f_pasado_judicial,
+            'enfermedad_diagnosticada': p.f_enfermedad_diagnosticada,
+            'viajes_exterior': p.f_viajes_exterior,
+            'destinos_viaje': p.f_destinos_viaje,
+            'nivel_educativo': p.f_nivel_educativo,
+            'titulo_obtenido': p.f_titulo_obtenido,
+            'institucion_educativa': p.f_institucion_educativa,
+            'empresa_laboral': p.f_empresa_laboral,
+            'cargo_actual': p.f_cargo_actual,
+            'tiempo_laborado': p.f_tiempo_laborado,
+            'jefe_inmediato': p.f_jefe_inmediato,
+            'ref_fam_nom_1': p.f_ref_fam_nom_1,
+            'ref_fam_tel_1': p.f_ref_fam_tel_1,
+            'ref_fam_nom_2': p.f_ref_fam_nom_2,
+            'ref_fam_tel_2': p.f_ref_fam_tel_2,
+            'ref_per_nom_1': p.f_ref_per_nom_1,
+            'ref_per_tel_1': p.f_ref_per_tel_1,
+            'ref_per_nom_2': p.f_ref_per_nom_2,
+            'ref_per_tel_2': p.f_ref_per_tel_2,
+            'id': p.f_id,
+            'created_at': p.f_created_at,
+            'reg_username': p.f_reg_username,
+            'reg_password': p.f_reg_password
         };
 
-        // 🔄 INYECCIÓN + AUDITORÍA DETALLADA
+        // Inyección con auditoría de consola
         Object.keys(ficha).forEach(id => {
             const el = document.getElementById(id);
-
-            console.log("MAPEO →", id, "=", ficha[id]);
-
-            if (!el) {
-                console.warn("⚠️ ID NO EXISTE EN HTML:", id);
-                return;
+            if (el) {
+                el.innerText = (ficha[id] !== null && ficha[id] !== undefined && ficha[id] !== "") ? ficha[id] : "No registrado";
+                el.style.opacity = "1";
+            } else {
+                console.warn("SITO AUDIT: ID no encontrado en HTML ->", id);
             }
-
-            if (ficha[id] === null || ficha[id] === undefined) {
-                console.warn("⚠️ DATO VACÍO:", id);
-            }
-
-            el.innerText = ficha[id] || "No registrado";
-            el.style.opacity = "1";
         });
 
-        console.log("✅ SITO: Ficha desplegada correctamente");
-
     } catch (err) {
-        console.error("❌ ERROR REAL:", err);
-
+        console.error("❌ FALLO CRÍTICO SITO:", err);
         statusText.innerText = "ERROR CONEXIÓN";
         statusText.style.color = "#ff4d4d";
     }
 }
 
-// =============================================
-// 🚀 AUTOEJECUCIÓN CONTROLADA
-// =============================================
+// Inicialización
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("📦 DOM CARGADO");
-
-    const ID_TEST = 1; // ⚠️ Ajusta a un ID real
-
-    console.log("🧪 Ejecutando con ID:", ID_TEST);
-
-    sincronizarDatosAliado(ID_TEST);
-});
+    const ID_ACTUAL = 1; // Ajustar dinámicamente según sesión
+    sincronizarDatosAliado(ID_ACTUAL);
+}
                 
-
-
-
-
 
 
                 
