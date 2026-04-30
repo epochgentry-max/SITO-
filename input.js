@@ -367,49 +367,58 @@ window.cerrarSitoAlert = () => {
     }
 };
 
-// =============================================
-// PROTOCOLO SITO V12.5 - DESCONGELAMIENTO
+
+  // =============================================
+// PROTOCOLO SITO V14.0 - DATA INJECTION TOTAL
 // =============================================
 async function sincronizarDatosAliado(idInterno) {
-    const statusText = document.getElementById('sito-status-db'); 
-    if (!statusText) return; 
+    const { data, error } = await window.supabaseClient
+        .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
 
-    statusText.innerText = "SINCRONIZANDO NÚCLEO...";
+    if (error) {
+        console.error("ERROR CRÍTICO:", error.message);
+        return;
+    }
 
-    try {
-        const { data, error } = await window.supabaseClient
-          .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
+    const p = data?.[0];
+    if (p) {
+        // Mapeamos TODAS las columnas a IDs de tu HTML
+        const mapaTotal = {
+            'info-nombre': p.f_nombre_completo,
+            'info-cedula': p.f_cc_nit,
+            'info-email': p.f_email,
+            'info-tel': p.f_telefono_movil,
+            'info-direccion': p.f_direccion_residencia,
+            'info-estado': p.f_estado,
+            'info-negocio': p.f_nombre_comercial,
+            'info-rubro': p.f_rubro_negocio,
+            'info-ciudad': p.f_ciudad_negocio,
+            'info-ingresos': p.f_ingresos_mensuales,
+            'info-hijos': p.f_numero_hijos,
+            'info-web': p.f_web_negocio,
+            'info-cargo': p.f_cargo_actual,
+            'info-empresa': p.f_empresa_laboral,
+            'info-eps': p.f_eps_aliado,
+            'info-arl': p.f_arl_aliado,
+            'info-pension': p.f_fondo_pensiones,
+            'info-created': p.f_created_at
+        };
 
-        if (error) throw error;
+        // Inyección automática: Si el ID existe en el HTML, pone el dato
+        Object.keys(mapaTotal).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerText = mapaTotal[id] || "---";
+        });
 
-        if (data && data.length > 0) {
-            const perfil = data[0];
-            
-            // Pintamos los datos principales
-            statusText.innerText = (perfil.estado_val || "ACTIVO").toUpperCase();
-            
-            // Mapeo masivo (Asegúrate de que estos IDs existan en tu HTML)
-            const mapeo = {
-                'nombre-aliado': perfil.nombre_full,
-                'comercio-aliado': perfil.negocio,
-                'rubro-aliado': perfil.rubro,
-                'ciudad-aliado': perfil.ciudad,
-                'email-aliado': perfil.email_contacto
-            };
-
-            for (const [id, valor] of Object.entries(mapeo)) {
-                const el = document.getElementById(id);
-                if (el) el.innerText = valor || "No definido";
-            }
-
-            console.log("SITO: Datos inyectados. Sistema fluido.");
+        // Actualizamos el letrero principal de estado
+        const statusText = document.getElementById('sito-status-db');
+        if (statusText) {
+            statusText.innerText = p.f_estado.toUpperCase();
+            statusText.style.color = "#00f2ff";
         }
-    } catch (err) {
-        console.error("Fallo de descongelamiento:", err.message);
-        statusText.innerText = "SISTEMA PROTEGIDO";
-        statusText.style.color = "#ff4b4b";
     }
 }
+  
   
 
   
