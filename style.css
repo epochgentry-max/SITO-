@@ -728,60 +728,6 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
     background: rgba(2, 10, 18, 0.85);
     backdrop-filter: blur(8px);
     align-items: center; justify-content: center;
-}
-
-.sito-modal-content {
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid #d4af37;
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 320px;
-    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-}
-
-#sito-alert-title { color: #d4af37; margin: 10px 0; letter-spacing: 2px; }
-#sito-alert-msg { color: #fff; font-size: 14px; opacity: 0.9; }
-#sito-alert-icon { font-size: 40px; }
-
-
-
-/* --- ESTABILIZACIÓN PANORÁMICA SITO --- */
-.dashboard-view {
-    padding: 0 !important;
-    overflow-x: scroll !important; /* Fuerza el scroll horizontal */
-    overflow-y: auto; /* Permite scroll vertical si el contenido crece */
-    background: rgba(0,0,0,0.8); /* Oscurecemos para resaltar el neón */
-    -webkit-overflow-scrolling: touch; /* Suavidad en iPhone/Android */
-}
-
-
-.panorama-viewport {
-    display: flex;
-    width: 500vw; /* 5 Estaciones de trabajo */
-    height: 100vh;
-    scroll-snap-type: x mandatory;
-}
-
-/* Ajuste de Secciones para que no se compriman */
-.sito-section {
-    width: 100vw !important;
-    height: 100vh !important;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    box-sizing: border-box;
-    border: 1px solid rgba(135, 206, 235, 0.4) !important; /* Neón Azul Sky */
-}
-
-/* SECCIÓN 2: EL NÚCLEO */
-.section-2 {
-    flex: 2; /* Más prominente */
-    display: flex;
-
-
 
 
   /* ============================================================
