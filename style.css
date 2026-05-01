@@ -1019,18 +1019,94 @@ a { color: #1976D2; text-decoration: none; display: block; margin-top: 10px; }
 .sub-2-2 { flex: 1; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 .sub-2-3 { flex: 3; background: rgba(255,255,255,0.02); padding: 15px; overflow-y: auto; }
 
-/* NUBE IA ☁️: Burbuja flotante para mensajes de SITO */
-.thought-bubble {
-    position: absolute;
-    top: -40px;
-    background: white;
-    color: #020a12;
-    padding: 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+
+
+
+
+
+
+
+
+
+  
+
+
+/* ============================================================
+   NÚCLEO IA SITO V1.0 - IDENTIDAD Y MOVIMIENTO
+   ============================================================ */
+
+/* Contenedor Principal del Avatar e IA */
+#bloque-ia-interactiva {
+    background: rgba(135, 206, 235, 0.05) !important; /* Azul Sky sutil */
+    border: 1px solid rgba(135, 206, 235, 0.3) !important;
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
 }
+
+/* Escenario del Avatar: Animación de Flotado */
+@keyframes flotarSito {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+#sito-render {
+    animation: flotarSito 4s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(135, 206, 235, 0.5));
+    transition: all 0.5s ease;
+}
+
+/* Aura de Energía Pulsante detras del robot */
+@keyframes auraVida {
+    0% { transform: scale(1); opacity: 0.3; }
+    100% { transform: scale(1.5); opacity: 0.6; }
+}
+
+#sito-aura {
+    background: radial-gradient(circle, rgba(135, 206, 235, 0.8) 0%, transparent 70%);
+    animation: auraVida 2s infinite alternate;
+}
+
+/* Burbuja de Comunicación (Rediseñada para el nuevo bloque) */
+#bloque-ia-interactiva .thought-bubble {
+    position: relative !important; /* Liberamos del absolute anterior */
+    top: 0 !important;
+    background: rgba(2, 10, 18, 0.9) !important;
+    border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Borde Dorado Aliado */
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(135, 206, 235, 0.1);
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Indicador de "Escribiendo..." */
+#sito-status-tag {
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    animation: parpadeoStatus 1.5s infinite;
+}
+
+@keyframes parpadeoStatus {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; color: #d4af37; }
+}
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
 
 /* SECCIÓN 4 (12 BOTONES): Comandos operativos en grilla 3x4 */
 .command-grid-12 {
