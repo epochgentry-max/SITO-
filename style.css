@@ -358,24 +358,6 @@ select {
 }
 
 
-/* ============================================================
-   BLOQUE 12:  DE BLINDAJE DE NAVEGACIÓN (EVITA SUPERPOSICIÓN)
-   ============================================================ */
-.screen {
-  display: none !important; /* Oculto por defecto absoluto */
-}
-
-.screen.active {
-  display: flex !important; /* Solo la activa se muestra */
-}
-
-#dashboard-aliado.active, #carousel-container.active {
-  display: block !important; /* Excepciones de estructura */
-}
-
-
-
-
 </style>
 
    
