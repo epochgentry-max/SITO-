@@ -1,3 +1,4 @@
+
 (function() {
   /* =============================================
      SITO OPERATING SYSTEM - JS CORE (V4.0)
@@ -32,19 +33,13 @@
     paso2: document.getElementById('formulario-paso2'),
     paso3: document.getElementById('formulario-paso3'),
     paso4: document.getElementById('formulario-paso4'),
-        confirm: document.getElementById('formulario-confirmacion'),
-    carousel: document.getElementById('carousel-container'),
-    dashboard: document.getElementById('dashboard-aliado') // Coordenada de la Nueva Interfaz
+    confirm: document.getElementById('formulario-confirmacion'),
+    carousel: document.getElementById('carousel-container')
   };
 
-    const showScreen = (s) => {
-    // 1. Apagado de todas las señales de pantalla activas
+  const showScreen = (s) => {
     Object.values(screens).forEach(el => { if(el) el.style.display = 'none'; });
-    
-    // 2. Activación quirúrgica: El Dashboard requiere 'block' para mantener el panorama
-    if(s) {
-      s.style.display = (s.id === 'dashboard-aliado') ? 'block' : 'flex';
-    }
+    if(s) s.style.display = 'flex';
   };
 
     // 1. CONTROL DE VIDEO (YOUTUBE API - PROTOCOLO SEGURO)
@@ -81,30 +76,6 @@
 
   bind('btn-crear-cuenta', () => showScreen(screens.video));
   bind('btn-iniciar-sesion', () => showScreen(screens.login));
-
-// =============================================
-// PROTOCOLO DE VISIÓN SITO: CONTROL DEL OJO
-// =============================================
-const togglePassword = document.querySelector('#togglePassword');
-const passwordField = document.querySelector('#login_password');
-
-if (togglePassword && passwordField) {
-    togglePassword.addEventListener('click', function () {
-        // 1. Detectar estado actual y alternar
-        const isPassword = passwordField.getAttribute('type') === 'password';
-        const type = isPassword ? 'text' : 'password';
-        
-        // 2. Aplicar cambio al hardware (input)
-        passwordField.setAttribute('type', type);
-        
-        // 3. Actualizar el Icono (Feedback Visual)
-        this.textContent = isPassword ? '🔒' : '👁️';
-        
-        // 4. Efecto de foco para no perder la línea de escritura
-        passwordField.focus();
-    });
-}
-  
   
   // 2.1 LÓGICA DE LOGIN - PROTOCOLO DE ACCESO AUTORIZADO
   const fLogin = document.getElementById('form-login');
@@ -117,54 +88,53 @@ if (togglePassword && passwordField) {
 
       console.log("SITO: Solicitando acceso al Núcleo...");
 
-
-
-
-      try {
+                 try {
         const { data, error } = await window.supabaseClient
           .from('acceso_aliados')
-          .select('id_interno, estado_acceso, reg_username') // <-- Selección actualizada
+          .select('id_interno, estado_acceso')
           .eq('reg_username', user)
           .eq('reg_password', pass)
           .single();
 
         if (error || !data) {
-          mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas por el sistema de seguridad.', '🚫');
+          alert('❌ Acceso Denegado: Credenciales no reconocidas.');
           return;
         }
 
         if (data.estado_acceso !== 'activo') {
-          mostrarSitoAlert('⚠️ Cuenta en Auditoría: Su acceso ha sido restringido temporalmente.', '⚖️');
+          alert('⚠️ Cuenta en Auditoría: Acceso restringido.');
           return;
         }
 
-        // GUARDADO DE SESIÓN Y BIENVENIDA ÉLITE
         sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        sessionStorage.setItem('sito_nombre_aliado', data.reg_username); // Guardamos el nombre
-        
-        console.log("SITO: Sesión activa para:", data.reg_username);
-        
-        // Alerta con Nombre e ID integrados
-        const mensajeBienvenida = `Acceso Concedido. Bienvenido, Aliado ${data.reg_username} [${data.id_interno}]`;
-        mostrarSitoAlert(mensajeBienvenida, '✅');
-        
+        document.getElementById('alias-aliado').textContent = user;
+        document.getElementById('id-sito-display').textContent = data.id_interno;
+
+        console.log("SITO: Acceso concedido. Iniciando Dashboard...");
+        showScreen(document.getElementById('dashboard-aliado'));
+
       } catch (err) {
-        mostrarSitoAlert('Fallo crítico de comunicación con el Núcleo SITO.', '☢️');
-        console.error(err);
+        console.error("Fallo crítico:", err);
+        alert('Fallo de comunicación con el Núcleo SITO.');
       }
+    }; // Cierra fLogin.onsubmit
+  } // Cierra if(fLogin)
+
+  /* --- COORDENADA A: INTERACCIÓN DEL OJO (FUERA DEL LOGIN) --- */
+  const togglePassword = document.getElementById('toggle-password-icon');
+  const passwordInput = document.getElementById('login_password');
+
+  if(togglePassword && passwordInput) {
+    togglePassword.onclick = () => {
+      const isPass = passwordInput.type === 'password';
+      passwordInput.type = isPass ? 'text' : 'password';
+      
+      togglePassword.innerHTML = isPass 
+        ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 9.9A3 3 0 0 0 12 15a3 3 0 0 0 2.1-.9M1 1s22 22 22 22"></path></svg>`
+        : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
     };
   }
 
-
-
-
-
-
-
-
-      
-      
-  
   bind('back-to-start', () => showScreen(screens.inicio));
   bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
 
@@ -329,187 +299,6 @@ if (togglePassword && passwordField) {
     };
   }
 
-  // --- SISTEMA DE COMUNICACIÓN TÁCTICA SITO ---
-  window.mostrarSitoAlert = (mensaje, icono = '✅') => {
-    const modal = document.getElementById('sito-alert');
-    const msg = document.getElementById('sito-alert-msg');
-    const ico = document.getElementById('sito-alert-icon');
-    
-    if(modal && msg && ico) {
-      msg.innerText = mensaje;
-      ico.innerText = icono;
-      modal.style.display = 'flex';
-    }
-  };
-
-
-// =============================================
-// PROTOCOLO DE CONEXIÓN DE IDENTIDAD (V5.2 - RPC BYPASS)
-// =============================================
-window.cerrarSitoAlert = () => {
-    const modal = document.getElementById('sito-alert');
-    if(modal) modal.style.display = 'none';
-    
-    const idSito = sessionStorage.getItem('sito_id_aliado');
-    const aliasSito = sessionStorage.getItem('sito_nombre_aliado');
-
-    if (idSito) {
-       const displayAlias = document.getElementById('alias-aliado');
-       const displayID = document.getElementById('id-sito-display');
-
-       if(displayAlias) displayAlias.innerText = aliasSito || "ALIADO ANONIMO";
-       if(displayID) displayID.innerText = idSito;
-
-       showScreen(screens.dashboard); 
-       
-       // Sincronización vía túnel RPC (Integridad Total)
-       sincronizarDatosAliado(idSito);
-    }
-};
-
-
-// =============================================
-// PROTOCOLO SITO V15.7 - NÚCLEO CONSOLIDADO (RPC)
-// =============================================
-async function sincronizarDatosAliado(idInterno) {
-    if (!idInterno) return;
-    console.log("🚨 AUDITORÍA SITO INICIADA - ID:", idInterno);
-    
-    const statusText = document.getElementById('sito-status-db');
-    if (statusText) {
-        statusText.innerText = "CONECTANDO...";
-        statusText.style.color = "#ffaa00";
-    }
-
-    try {
-        const { data, error } = await window.supabaseClient
-            .rpc('acceso_nucleo_espejo', { id_solicitado: idInterno });
-
-        if (error) throw error;
-        
-        if (!data || data.length === 0) {
-            console.warn("SITO: Sin datos para el ID:", idInterno);
-            if (statusText) statusText.innerText = "SIN DATOS";
-            return;
-        }
-
-        const p = data[0];
-        console.log("📡 DATA RECIBIDA (ESPEJO):", p);
-
-        if (statusText) {
-            statusText.innerText = (p.f_estado || "ACTIVO").toUpperCase();
-            statusText.style.color = "#00ff88";
-        }
-
-        // MAPEO TOTAL UNIFICADO (V15.0 + V15.5)
-        const ficha = {
-            'dat-nombre': p.f_nombre_completo,
-            'dat-cedula': p.f_cc_nit,
-            'dat-id-publico': p.f_id_publico_aliado,
-            'dat-email': p.f_email,
-            'dat-tel': p.f_telefono_movil,
-            'dat-direccion': p.f_direccion_residencia,
-            'dat-negocio': p.f_nombre_comercial,
-            'dat-rubro': p.f_rubro_negocio,
-            'dat-ciudad': p.f_ciudad_negocio,
-            'dat-barrio': p.f_barrio_negocio,
-            'dat-dir-negocio': p.f_direccion_negocio,
-            'dat-tel-negocio': p.f_tel_negocio,
-            'dat-email-negocio': p.f_email_negocio,
-            'dat-web': p.f_web_negocio,
-            'dat-rut': p.f_num_rut,
-            'dat-camara': p.f_num_camara_comercio,
-            'dat-situacion': p.f_situacion_laboral,
-            'dat-ingresos': p.f_ingresos_mensuales,
-            'dat-estrato': p.f_estrato_social,
-            'dat-civil': p.f_estado_civil,
-            'dat-sarlaft': p.f_acepto_sarlaft,
-            'dat-fondos': p.f_origen_fondos,
-            'dat-conyuge': p.f_nombre_conyuge,
-            'dat-madre': p.f_nombre_madre,
-            'dat-padre': p.f_nombre_padre,
-            'dat-hermanos': p.f_nombre_hermanos,
-            'dat-hijos': p.f_numero_hijos,
-            'dat-nombres-hijos': p.f_nombres_hijos,
-            'dat-eps': p.f_eps_aliado,
-            'dat-arl': p.f_arl_aliado,
-            'dat-pension': p.f_fondo_pensiones,
-            'dat-judicial': p.f_pasado_judicial,
-            'dat-enfermedad': p.f_enfermedad_diagnosticada,
-            'dat-viajes': p.f_viajes_exterior,
-            'dat-destinos': p.f_destinos_viaje,
-            'dat-educacion': p.f_nivel_educativo,
-            'dat-titulo': p.f_titulo_obtenido,
-            'dat-institucion': p.f_institucion_educativa,
-            'dat-empresa': p.f_empresa_laboral,
-            'dat-cargo': p.f_cargo_actual,
-            'dat-tiempo': p.f_tiempo_laborado,
-            'dat-jefe': p.f_jefe_inmediato,
-            'dat-ref-fam-nom-1': p.f_ref_fam_nom_1,
-            'dat-ref-fam-tel-1': p.f_ref_fam_tel_1,
-            'dat-ref-fam-nom-2': p.f_ref_fam_nom_2,
-            'dat-ref-fam-tel-2': p.f_ref_fam_tel_2,
-            'dat-ref-per-nom-1': p.f_ref_per_nom_1,
-            'dat-ref-per-tel-1': p.f_ref_per_tel_1,
-            'dat-ref-per-nom-2': p.f_ref_per_nom_2,
-            'dat-ref-per-tel-2': p.f_ref_per_tel_2,
-            'dat-uuid': p.f_id,
-            'dat-registro': p.f_created_at,
-            'dat-user': p.f_reg_username,
-            'dat-pass': p.f_reg_password
-        };
-
-        Object.keys(ficha).forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.innerText = ficha[id] || "No registrado";
-                el.style.opacity = "1";
-            }
-        });
-
-        console.log("✅ SITO: Despliegue de ficha técnica completo.");
-
-    } catch (err) {
-        console.error("❌ FALLO CRÍTICO ENLACE:", err);
-        if (statusText) {
-            statusText.innerText = "ERROR ENLACE";
-            statusText.style.color = "#ff4d4d";
-        }
-    }
-}
-
-// PROTOCOLO DE PERSISTENCIA SITO V15.7 (DINÁMICO)
-document.addEventListener("DOMContentLoaded", () => {
-    const pulsoSincro = setInterval(() => {
-        // Obtenemos el ID real de la sesión activa
-        const ID_ACTUAL = sessionStorage.getItem('sito_id_aliado');
-        
-        if (!ID_ACTUAL) return; // Si no hay login, no hace nada
-
-        const camposIncompletos = document.querySelectorAll('span[id^="dat-"]');
-        let necesitaRecarga = false;
-
-        for (let span of camposIncompletos) {
-            if (span.innerText === "..." || span.innerText === "") {
-                necesitaRecarga = true;
-                break;
-            }
-        }
-
-        if (necesitaRecarga) {
-            console.log("🔄 SITO: Sincronizando datos del aliado:", ID_ACTUAL);
-            sincronizarDatosAliado(ID_ACTUAL);
-        } else {
-            console.log("✅ SITO: Integridad de datos verificada.");
-            clearInterval(pulsoSincro); 
-        }
-    }, 3000);
-});
-      
-
-  
 })();
+     
 
-         
-
-                         
