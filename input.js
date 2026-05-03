@@ -298,5 +298,35 @@
     };
   }
 
+  /* =============================================
+     BLOQUE: REPARACIÓN DE INTERACCIÓN CHECKBOX
+     ============================================= */
+  const checkSarlaft = document.getElementById('acepto_sarlaft');
+  const labelSarlaft = document.querySelector('label[for="acepto_sarlaft"]');
+
+  if (checkSarlaft) {
+    // Aseguramos que sea clickable y visible para el puntero
+    checkSarlaft.style.pointerEvents = 'auto';
+    checkSarlaft.style.cursor = 'pointer';
+
+    // Refuerzo de activación por clic directo
+    checkSarlaft.onclick = (e) => {
+      // Detenemos la propagación para evitar que otros scripts interfieran
+      e.stopPropagation();
+      console.log("SITO: Protocolo aceptado =", checkSarlaft.checked);
+    };
+  }
+
+  if (labelSarlaft) {
+    labelSarlaft.style.cursor = 'pointer';
+    labelSarlaft.onclick = () => {
+      if(checkSarlaft) {
+        checkSarlaft.checked = !checkSarlaft.checked;
+        checkSarlaft.dispatchEvent(new Event('change'));
+      }
+    };
+  }
+  
+  
 })();
      
