@@ -1,6 +1,6 @@
 (function() {
   /* =============================================
-     SITO OPERATING SYSTEM - JS CORE (V5.2)
+     SITO OPERATING SYSTEM - JS CORE (V6.2)
      Protocolo: Integridad Total & Soberanía Digital
      Estado: Auditado, Consolidado y Blindado
      ============================================= */
@@ -9,7 +9,7 @@
   const SUPABASE_KEY = "sb_publishable_ifHWyzybfNkfiXJDWTo57Q_5DtsnRdu";
   let supabaseClient = null;
 
-  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN)
+  // 1. NÚCLEO DE DATOS (SINCRONIZACIÓN TÁCTICA)
   const initSitoCore = () => {
     const loadSupabase = () => {
       return new Promise((resolve, reject) => {
@@ -31,29 +31,25 @@
   };
   initSitoCore();
 
-  // 2. GESTIÓN DE PANTALLAS (PROTOCOLO DE NAVEGACIÓN)
-  const screens = {
-    inicio: document.getElementById('inicio-sito'),
-    video: document.getElementById('video-induccion'),
-    login: document.getElementById('login-usuario-sito'),
-    paso1: document.getElementById('formulario-paso1'),
-    paso2: document.getElementById('formulario-paso2'),
-    paso3: document.getElementById('formulario-paso3'),
-    paso4: document.getElementById('formulario-paso4'),
-    confirm: document.getElementById('formulario-confirmacion'),
-    carousel: document.getElementById('carousel-container'),
-    dashboard: document.getElementById('dashboard-aliado')
-  };
-
-  const showScreen = (s) => {
-    Object.values(screens).forEach(el => { if(el) el.style.display = 'none'; });
-    if(s) {
-      s.style.display = (s.id === 'dashboard-aliado' || s.id === 'carousel-container') ? 'block' : 'flex';
+  // 2. GESTIÓN DE PANTALLAS (NAVEGACIÓN BLINDADA)
+  window.navegar = (id) => {
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(s => s.classList.remove('active'));
+    
+    const target = document.getElementById(id);
+    if(target) {
+      target.classList.add('active');
+      // Ajuste de visualización para contenedores especiales
+      if(id === 'dashboard-aliado' || id === 'carousel-container') {
+          target.style.display = 'block';
+      } else {
+          target.style.display = 'flex';
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  // 3. CONTROL DE VIDEO (PROTOCOLO HD)
+  // 3. CONTROL DE VIDEO (PROTOCOLO OFICIAL YOUTUBE)
   if (!window.YT) {
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api"; 
@@ -64,7 +60,11 @@
   window.onYouTubeIframeAPIReady = function() {
     new YT.Player('player', {
       height: '100%', width: '100%', videoId: 'Fs7pOoT6sTc',
-      playerVars: { 'rel': 0, 'modestbranding': 1, 'quality': 'hd720' },
+      playerVars: { 
+        'rel': 0, 
+        'modestbranding': 1, 
+        'origin': window.location.origin 
+      },
       events: {
         'onStateChange': (e) => {
           if (e.data == YT.PlayerState.ENDED) {
@@ -76,19 +76,24 @@
     });
   };
 
-  // 4. PROTOCOLO DE VISIÓN (REINTEGRADO)
-  const togglePass = document.querySelector('#togglePassword');
+  // 4. PROTOCOLO DE VISIÓN (TOGGLE PASSWORD)
+  const togglePass = document.querySelector('#toggle-password-icon');
   const passField = document.querySelector('#login_password');
   if (togglePass && passField) {
     togglePass.onclick = function() {
       const isPass = passField.type === 'password';
       passField.type = isPass ? 'text' : 'password';
-      this.textContent = isPass ? '🔒' : '👁️';
+      // Mantenemos la lógica de iconos o texto según el diseño original
+      this.innerHTML = isPass ? `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF9800" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+      ` : `
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2196F3" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      `;
       passField.focus();
     };
   }
 
-  // 5. LOGIN Y ACCESO - TABLA: acceso_aliados (REINTEGRADO)
+  // 5. LOGIN Y ACCESO - TABLA: acceso_aliados
   const fLogin = document.getElementById('form-login');
   if(fLogin) {
     fLogin.onsubmit = async (e) => {
@@ -153,9 +158,9 @@
     };
   }
 
-  // 7. ENVÍO Y PERSISTENCIA
+  // 7. ENVÍO Y PERSISTENCIA (SITIO SOBERANO)
   let formData = {};
-  const setupForm = (id, next) => {
+  const setupForm = (id, nextId) => {
     const f = document.getElementById(id);
     if(f) f.onsubmit = e => {
       e.preventDefault();
@@ -165,13 +170,13 @@
         document.querySelectorAll('.hijo-item').forEach(h => hijos.push(h.value));
         formData['nombres_hijos'] = hijos;
       }
-      showScreen(next);
+      navegar(nextId);
     };
   };
 
-  setupForm('datos-basicos', screens.paso2);
-  setupForm('datos-contacto', screens.paso3);
-  setupForm('datos-familia', screens.paso4);
+  setupForm('datos-basicos', 'formulario-paso2');
+  setupForm('datos-contacto', 'formulario-paso3');
+  setupForm('datos-familia', 'formulario-paso4');
 
   const fFinal = document.getElementById('datos-finales');
   const checkSarlaft = document.getElementById('acepto_sarlaft');
@@ -186,7 +191,7 @@
       new FormData(fFinal).forEach((v, k) => { formData[k] = v; });
       formData['acepto_sarlaft'] = true;
 
-      showScreen(screens.carousel);
+      navegar('carousel-container');
       startCarousel();
 
       if(supabaseClient) {
@@ -196,7 +201,7 @@
     };
   }
 
-  // 8. MOTOR DE AUDITORÍA VISUAL (CARRUSEL ACTUALIZADO)
+  // 8. MOTOR DE AUDITORÍA VISUAL (CARRUSEL INMORTAL)
   function startCarousel() {
     let idx = 0;
     const totalFrames = 6;
@@ -216,22 +221,24 @@
         setTimeout(() => {
           if (window.sitoUploadError) {
             alert("⚠️ Error en Auditoría: " + window.sitoUploadError);
-            showScreen(screens.paso4);
+            navegar('formulario-paso4');
           } else {
-            showScreen(screens.confirm);
+            navegar('formulario-confirmacion');
           }
         }, 1200);
       }
     }, 2800);
   }
 
-  // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD (REINTEGRADO)
+  // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
   window.mostrarSitoAlert = (m, i) => {
     const mod = document.getElementById('sito-alert');
     if(mod) {
       document.getElementById('sito-alert-msg').innerText = m;
       document.getElementById('sito-alert-icon').innerText = i;
       mod.style.display = 'flex';
+    } else {
+      alert(m); // Fallback si el modal no existe en el DOM
     }
   };
 
@@ -244,7 +251,7 @@
       const idEl = document.getElementById('id-sito-display');
       if(aliasEl) aliasEl.innerText = sessionStorage.getItem('sito_nombre_aliado');
       if(idEl) idEl.innerText = id;
-      showScreen(screens.dashboard);
+      navegar('dashboard-aliado');
       sincronizarDatosAliado(id);
     }
   };
@@ -268,20 +275,25 @@
     } catch (e) { console.error("Error RPC:", e); }
   }
 
-  // BINDINGS DE CONTROL FINAL
-  document.getElementById('btn-crear-cuenta').onclick = () => showScreen(screens.video);
-  document.getElementById('btn-iniciar-sesion').onclick = () => showScreen(screens.login);
-  document.getElementById('btn-continuar-postulacion').onclick = () => showScreen(screens.paso1);
-  document.getElementById('back-to-start').onclick = () => showScreen(screens.inicio);
+  // 10. BINDINGS DE CONTROL FINAL (PROTOCOLOS DE ENTRADA)
+  const safeClick = (id, target) => {
+      const el = document.getElementById(id);
+      if(el) el.onclick = () => navegar(target);
+  };
 
+  safeClick('btn-crear-cuenta', 'video-induccion');
+  safeClick('btn-iniciar-sesion', 'login-usuario-sito');
+  safeClick('btn-continuar-postulacion', 'formulario-paso1');
+  
   document.querySelectorAll('.btn-back').forEach(b => {
-    b.onclick = () => showScreen(screens[b.dataset.target] || screens.inicio);
+    b.onclick = () => {
+        const t = b.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        navegar(t || 'inicio-sito');
+    };
   });
   
   const btnFin = document.getElementById('btn-finalizar');
   if(btnFin) btnFin.onclick = () => location.reload();
 
 })();
-
-
-      
+  
