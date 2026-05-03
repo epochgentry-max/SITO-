@@ -1,27 +1,58 @@
 <style>
+
+/* ============================================================
+   BLOQUE 0: RESET DE INFRAESTRUCTURA (CRÍTICO PARA VERCEL)
+   Logica: Elimina inconsistencias entre navegadores y servidores.
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Crucial para que el padding no ensanche las screens */
+  -webkit-tap-highlight-color: transparent; /* Limpia el parpadeo en móviles */
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita el scroll lateral que mata la experiencia en Vercel */
+}
+
 /* ============================================================
    BLOQUE 1: CONFIGURACIÓN DEL LIENZO PRINCIPAL (BODY)
    Logica: Define el comportamiento del fondo y el centrado 
    absoluto de la interfaz sobre el personaje base.
    ============================================================ */
 
+/* ============================================================
+   BLOQUE 1: CONFIGURACIÓN DEL LIENZO PRINCIPAL (OPTIMIZADO VERCEL)
+   ============================================================ */
+
 body {
-  margin: 0; /* Elimina el espacio exterior predeterminado del navegador */
-  padding: 0; /* Elimina el espacio interior predeterminado del navegador */
-  width: 100vw; /* Fuerza al cuerpo a medir el 100% del ancho de la pantalla */
-  height: 100vh; /* Fuerza al cuerpo a medir el 100% del alto de la pantalla */
-  background: 
-    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)), /* Capa de tinte oscuro para legibilidad */
-    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg'); /* Imagen del personaje/fondo principal */
-  background-size: cover; /* Ajusta la imagen para cubrir toda la pantalla sin deformarse */
-  background-position: center; /* Centra la imagen de fondo en cualquier resolución */
-  background-attachment: fixed; /* Mantiene el fondo quieto mientras el contenido fluye (efecto OS) */
-  display: flex; /* Activa el modelo de caja flexible para alinear elementos */
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center; /* Centra el contenido verticalmente */
-  font-family: 'Segoe UI', sans-serif; /* Define la fuente moderna oficial del sistema */
-  overflow-x: hidden; /* Evita el desplazamiento lateral accidental en móviles */
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100dvh;
+  /* Fondo optimizado: Agregamos color sólido de respaldo por si la imagen tarda */
+  background-color: #020a12; 
+  background-image: 
+    linear-gradient(rgba(2, 10, 18, 0.9), rgba(2, 10, 18, 0.7)),
+    url('https://i.ibb.co/R4jYZ2sp/In-Shot-20260425-165919797.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* El attachment fixed se cambia a scroll en móviles muy pequeños automáticamente */
+  background-attachment: fixed; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
 }
+
+
 
 /* ============================================================
    BLOQUE 2: PANTALLA DE INICIO (BIENVENIDA)
@@ -135,9 +166,11 @@ p {
 .active { display: flex; } /* Clase maestra para mostrar elementos ocultos */
 .logo { width: 250px; max-width: 80%; margin-bottom: 40px; } /* Control de tamaño del logo */
 
+
 /* ============================================================
    BLOQUE 6: CAMPOS DE ENTRADA (INPUTS OSCUROS)
-   Logica: Evita parpadeos blancos y mantiene la estética nocturna.
+   Logica: Evita parpadeos blancos, elimina estilos de SO
+   y mantiene la estética nocturna de alta integridad.
    ============================================================ */
 
 input, select, textarea {
@@ -150,19 +183,32 @@ input, select, textarea {
   color: #FFFFFF !important; /* Texto que se escribe en blanco */
   border: 1px solid rgba(212, 175, 55, 0.4) !important; /* Borde dorado sutil */
   box-sizing: border-box; /* Incluye el borde dentro del ancho total */
-  outline: none; /* Elimina el borde azul feo de los navegadores */
-  transition: all 0.3s ease; /* Transición suave de colores */
+  outline: none; /* Elimina el borde azul estándar de los navegadores */
+  transition: all 0.3s ease; /* Transición suave de colores y sombras */
+  
+  /* Parche de Soberanía para iOS/Vercel */
+  -webkit-appearance: none; /* Elimina sombras y bordes heredados de iOS */
+  appearance: none; /* Estándar de apariencia neutra */
 }
 
 input:focus, select:focus, textarea:focus {
-  background-color: #020a12 !important; /* Fondo negro puro al escribir */
-  border-color: #2196F3 !important; /* El borde cambia a azul neón */
-  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Resplandor azul de enfoque */
+  background-color: #020a12 !important; /* Fondo negro puro al interactuar */
+  border-color: #2196F3 !important; /* El borde cambia a azul neón operativo */
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.6) !important; /* Resplandor de frecuencia activa */
 }
 
 ::placeholder {
   color: rgba(255, 255, 255, 0.4); /* Texto guía en gris claro para no distraer */
 }
+
+/* Ajuste específico para selectores (flecha dorada) */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23d4af37' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 30px;
+}
+
 
 /* ============================================================
    BLOQUE 7: NAVEGACIÓN SUPERIOR
@@ -191,25 +237,27 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* ============================================================
-   BLOQUE 8: MULTIMEDIA Y VIDEO
-   Logica: Optimización para videos de larga duración y alta resolución.
+   BLOQUE 8 (OPTIMIZADO): MULTIMEDIA RESPONSIVA
+   Logica: Proporción 16:9 exacta para evitar desbordamientos.
    ============================================================ */
 
 #video-induccion {
-  max-width: 600px !important; /* Ancho máximo para no pixelar el video */
-  width: 90%; /* Ajuste responsivo */
-  height: auto !important; /* Mantiene la proporción original */
-  min-height: 900px; /* Espacio reservado para el scroll del video */
-  padding-bottom: 40px; /* Margen final */
+  max-width: 600px !important;
+  width: 92%;
+  height: auto !important;
+  padding: 20px;
+  padding-bottom: 40px;
 }
 
 #player {
-  width: 100%; /* El reproductor ocupa todo su contenedor */
-  height: 550px !important; /* Altura fija para visualización cómoda */
-  border-radius: 15px; /* Esquinas de pantalla moderna */
-  border: 1px solid rgba(212, 175, 55, 0.4); /* Borde dorado de "pantalla élite" */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* Sombra que despega el video del fondo */
-  overflow: hidden; /* Corta las esquinas del video para que coincidan con el borde redondeado */
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Mantiene la forma sin forzar pixeles fijos */
+  height: auto !important; 
+  border-radius: 15px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+  background: #000; /* Fondo negro por si el video tarda en cargar */
 }
 
 /* ============================================================
@@ -243,6 +291,5 @@ input:focus, select:focus, textarea:focus {
     }
 }
 
-
 </style>
-
+   
