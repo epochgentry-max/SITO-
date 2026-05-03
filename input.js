@@ -307,4 +307,4 @@
   bind('btn-finalizar', () => location.reload());
 
 })();
-          
+      
