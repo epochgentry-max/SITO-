@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SITO - Epoch Gentry Group</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -13,37 +12,31 @@
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo">
   <h1>Tu negocio en tus manos, siempre bajo control</h1>
   <p>Herramientas sencillas para gestionar ventas, inventario y cobranzas – diseñadas para ti</p>
-  <button id="btn-crear-cuenta" class="btn-primario">Crear mi cuenta gratuita</button>
-  <button id="btn-iniciar-sesion" class="btn-secundario">Ya tengo cuenta – Iniciar sesión</button>
+  <button id="btn-crear-cuenta" class="btn-primario" onclick="navegar('video-induccion')">Crear mi cuenta gratuita</button>
+  <button id="btn-iniciar-sesion" class="btn-secundario" onclick="navegar('login-usuario-sito')">Ya tengo cuenta – Iniciar sesión</button>
 </div>
 
 <div id="video-induccion" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" data-target="inicio-sito">← VOLVER AL INICIO</button>
+    <button class="btn-back" onclick="navegar('inicio-sito')">← VOLVER AL INICIO</button>
   </div>
-
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 150px; margin-bottom: 20px;">
-  
   <h2 style="color: #d4af37;">Inducción de Aliado</h2>
-  
   <p>Para Epoch Gentry Group la seriedad es la base. Vea el video completo para habilitar su postulación.</p>
-  
-  <div id="player-container" style="width: 100%; max-width: 360px; aspect-ratio: 16/9; background: #000; border-radius: 8px; margin-bottom: 20px; border: 1px solid rgba(212, 175, 55, 0.3);">
+  <div id="player-container" style="width: 100%; max-width: 360px; aspect-ratio: 16/9; background: #000; border-radius: 8px; margin-bottom: 20px; border: 1px solid rgba(212, 175, 55, 0.3); overflow: hidden;">
     <div id="player"></div>
   </div>
-  
-  <button id="btn-continuar-postulacion" class="btn-primario" style="display: none;">He visto la inducción y deseo postularme</button>
+  <button id="btn-continuar-postulacion" class="btn-primario" style="display: none;" onclick="navegar('formulario-paso1')">He visto la inducción y deseo postularme</button>
 </div>
 
 <div id="formulario-paso1" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" data-target="video-induccion">←</button>
+    <button class="btn-back" onclick="navegar('video-induccion')">←</button>
     <div>Paso 1 de 4 - Debida Diligencia</div>
   </div>
   <h2>Información del Negocio</h2>
-  <form id="datos-basicos">
-    <input type="text" id="nombre_comercial" name="nombre_comercial" placeholder="Nombre comercial del negocio *" required>
-    
+  <form id="datos-basicos" onsubmit="event.preventDefault(); navegar('formulario-paso2');">
+    <input type="text" id="nombre_comercial" name="nombre_comercial" placeholder="Nombre comercial del negocio *" required autocomplete="off">
     <select id="rubro_negocio" name="rubro_negocio" required>
       <option value="">Actividad Económica Principal *</option>
       <optgroup label="Comercio y Distribución">
@@ -67,7 +60,6 @@
       </optgroup>
       <option value="otro">Otro Sector Económico</option>
     </select>
-
     <div class="seccion-form">
       <p class="titulo-subseccion">Ubicación y Contacto del Negocio</p>
       <input type="text" id="direccion_negocio" name="direccion_negocio" placeholder="Dirección del Establecimiento *" required>
@@ -80,7 +72,6 @@
         <input type="email" id="email_negocio" name="email_negocio" placeholder="Email Corporativo *" required>
       </div>
     </div>
-
     <div class="seccion-form">
       <p class="titulo-subseccion">Formalidad y Alcance Digital</p>
       <div class="fila-doble">
@@ -88,34 +79,31 @@
         <input type="text" id="num_camara_comercio" name="num_camara_comercio" placeholder="Matrícula Mercantil (Opcional)">
       </div>
       <input type="url" id="web_negocio" name="web_negocio" placeholder="Página Web o Red Social (Opcional)">
-      
       <div style="margin-top: 10px;">
         <input type="number" id="ingresos_mensuales" name="ingresos_mensuales" placeholder="Ingresos mensuales aproximados (COP) *" required>
         <textarea id="origen_fondos" name="origen_fondos" placeholder="Describa brevemente el origen de sus recursos (Mín. 20 caract.) *" required minlength="20"></textarea>
       </div>
     </div>
-
     <select id="situacion_laboral" name="situacion_laboral" required>
       <option value="">Situación Laboral del Propietario *</option>
       <option value="independiente">Independiente (Dueño total)</option>
       <option value="socio">Socio Capitalista</option>
       <option value="empleado">Empleado / Intraemprendedor</option>
     </select>
-
     <button type="submit" class="btn-primario">Validar y Continuar</button>
   </form>
 </div>
 
 <div id="formulario-paso2" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" data-target="paso1">←</button>
+    <button class="btn-back" onclick="navegar('formulario-paso1')">←</button>
     <div>Paso 2 de 4 - Perfil Personal</div>
   </div>
   <h2>Datos de Contacto e Identidad</h2>
-  <form id="datos-contacto">
-    <input type="text" id="nombre_completo" name="nombre_completo" placeholder="Nombre completo *" required>
+  <form id="datos-contacto" onsubmit="event.preventDefault(); navegar('formulario-paso3');">
+    <input type="text" id="nombre_completo" name="nombre_completo" placeholder="Nombre completo *" required autocomplete="name">
     <input type="text" id="cc_nit" name="cc_nit" placeholder="CC o NIT *" required>
-    <input type="email" id="email" name="email" placeholder="Correo Electrónico *" required>
+    <input type="email" id="email" name="email" placeholder="Correo Electrónico *" required autocomplete="email">
     <input type="tel" id="telefono_movil" name="telefono_movil" placeholder="Celular (10 dígitos) *" required pattern="[0-9]{10}">
     <input type="text" id="direccion_residencia" name="direccion_residencia" placeholder="Dirección de Residencia *" required>
     <select id="estrato_social" name="estrato_social" required>
@@ -129,12 +117,12 @@
 
 <div id="formulario-paso3" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" data-target="paso2">←</button>
+    <button class="btn-back" onclick="navegar('formulario-paso2')">←</button>
     <div>Paso 3 de 4 - Entorno Social</div>
   </div>
   <h2>Círculo Familiar y Salud</h2>
-  <form id="datos-familia">
-    <select id="estado_civil" name="estado_civil" required onchange="toggleConyuge(this.value)">
+  <form id="datos-familia" onsubmit="event.preventDefault(); navegar('formulario-paso4');">
+    <select id="estado_civil" name="estado_civil" required onchange="if(typeof toggleConyuge === 'function'){ toggleConyuge(this.value); } else { document.getElementById('campo-conyuge').style.display = (this.value === 'casado' || this.value === 'union_libre' ? 'block' : 'none'); }">
       <option value="">Estado Civil *</option>
       <option value="soltero">Soltero/a</option>
       <option value="casado">Casado/a</option>
@@ -144,41 +132,35 @@
     <div id="campo-conyuge" style="display:none;">
       <input type="text" id="nombre_conyuge" name="nombre_conyuge" placeholder="Nombre completo del Cónyuge *">
     </div>
-    
     <input type="number" id="numero_hijos" name="numero_hijos" placeholder="Número de hijos *" min="0" required>
     <div id="contenedor-hijos"></div> 
-
-    <div style="margin-top:10px; border-top:1px solid #BBDEFB; padding-top:10px;">
-      <p style="font-size:12px; color:#1976D2; font-weight:bold;">Datos de Ascendencia y Hermanos:</p>
+    <div style="margin-top:10px; border-top:1px solid rgba(33, 150, 243, 0.3); padding-top:10px;">
+      <p style="font-size:12px; color:#2196F3; font-weight:bold;">Datos de Ascendencia y Hermanos:</p>
       <input type="text" id="nombre_madre" name="nombre_madre" placeholder="Nombre completo de la Madre *" required>
       <input type="text" id="nombre_padre" name="nombre_padre" placeholder="Nombre completo del Padre *" required>
-      <textarea id="nombre_hermanos" name="nombre_hermanos" placeholder="Nombres y teléfonos de hermanos (Si no tiene, escriba N/A) *" required style="width:100%; border-radius:5px; border:1px solid #BBDEFB; padding:10px; margin-bottom:10px;"></textarea>
+      <textarea id="nombre_hermanos" name="nombre_hermanos" placeholder="Nombres y teléfonos de hermanos (Si no tiene, escriba N/A) *" required style="width:100%; border-radius:5px; padding:10px; margin-bottom:10px;"></textarea>
     </div>
-
     <input type="text" id="eps_aliado" name="eps_aliado" placeholder="EPS Actual *" required>
     <input type="text" id="arl_aliado" name="arl_aliado" placeholder="ARL Actual *" required>
     <input type="text" id="fondo_pensiones" name="fondo_pensiones" placeholder="Fondo de Pensiones *" required>
     <input type="text" id="enfermedad_diagnosticada" name="enfermedad_diagnosticada" placeholder="¿Tiene alguna enfermedad diagnosticada? (Si no, Ninguna) *" required>
-    
-    <select id="viajes_exterior" name="viajes_exterior" required>
+    <select id="viajes_exterior" name="viajes_exterior" required onchange="document.getElementById('destinos_viaje').style.display = (this.value === 'si' ? 'block' : 'none')">
       <option value="">¿Ha viajado fuera del país? *</option>
       <option value="no">No</option>
       <option value="si">Sí</option>
     </select>
     <input type="text" id="destinos_viaje" name="destinos_viaje" placeholder="¿A qué países?" style="display:none;">
-    
     <button type="submit" class="btn-primario">Siguiente</button>
   </form>
 </div>
 
 <div id="formulario-paso4" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" data-target="paso3">←</button>
+    <button class="btn-back" onclick="navegar('formulario-paso3')">←</button>
     <div>Paso 4 de 4 - Historial y Credenciales</div>
   </div>
   <h2>Perfil Profesional y Seguridad</h2>
-  <form id="datos-finales">
-    
+  <form id="datos-finales" onsubmit="event.preventDefault(); ejecutarAuditoria();">
     <div class="seccion-form">
       <p class="titulo-subseccion">Referencias Familiares</p>
       <div class="fila-doble">
@@ -190,7 +172,6 @@
         <input type="tel" id="ref_fam_tel_2" name="ref_fam_tel_2" placeholder="Teléfono 2 *" required pattern="[0-9]{10}">
       </div>
     </div>
-
     <div class="seccion-form">
       <p class="titulo-subseccion">Referencias Personales</p>
       <div class="fila-doble">
@@ -202,7 +183,6 @@
         <input type="tel" id="ref_per_tel_2" name="ref_per_tel_2" placeholder="Teléfono 2 *" required pattern="[0-9]{10}">
       </div>
     </div>
-
     <div class="seccion-form">
       <p class="titulo-subseccion">Formación Académica</p>
       <select id="nivel_educativo" name="nivel_educativo" required>
@@ -216,7 +196,6 @@
       <input type="text" id="institucion_educativa" name="institucion_educativa" placeholder="Nombre de la Institución/Universidad *" required>
       <input type="text" id="titulo_obtenido" name="titulo_obtenido" placeholder="Título obtenido *" required>
     </div>
-
     <div class="seccion-form">
       <p class="titulo-subseccion">Experiencia Laboral</p>
       <input type="text" id="cargo_actual" name="cargo_actual" placeholder="Cargo actual o último desempeñado *" required>
@@ -226,32 +205,28 @@
         <input type="text" id="jefe_inmediato" name="jefe_inmediato" placeholder="Nombre Jefe Inmediato *" required>
       </div>
     </div>
-    
     <select id="pasado_judicial" name="pasado_judicial" required>
       <option value="">¿Tiene pasado judicial limpio? *</option>
       <option value="si">Sí</option>
       <option value="no">No</option>
     </select>
-
-    <div style="background: #FFF3E0; border-left: 5px solid #FF9800; padding: 12px; border-radius: 4px; margin: 15px 0; text-align: justify; font-size: 11px; line-height: 1.4;">
-      <strong style="color: #E65100; display: block; margin-bottom: 5px;">⚠️ NOTA DE SEGURIDAD PATRIMONIAL:</strong>
-      Para <strong>Epoch Gentry Group Holding S.A.S.</strong>, la seguridad y protección del patrimonio de cada uno de sus aliados es una prioridad. En cumplimiento estricto de la normativa colombiana y la lucha contra el lavado de activos (SARLAFT), usted autoriza el estudio y verificación de la información suministrada.
-      <label style="display: flex; align-items: flex-start; margin-top: 10px; cursor: pointer; font-weight: bold; color: #E65100; gap: 8px;">
+    <div style="background: rgba(255, 152, 0, 0.1); border-left: 5px solid #FF9800; padding: 12px; border-radius: 4px; margin: 15px 0; text-align: justify; font-size: 11px; line-height: 1.4;">
+      <strong style="color: #FF9800; display: block; margin-bottom: 5px;">⚠️ NOTA DE SEGURIDAD PATRIMONIAL:</strong>
+      Usted autoriza el estudio y verificación de la información suministrada en cumplimiento estricto del SARLAFT.
+      <label style="display: flex; align-items: flex-start; margin-top: 10px; cursor: pointer; font-weight: bold; color: #FF9800; gap: 8px;">
         <input type="checkbox" id="acepto_sarlaft" name="acepto_sarlaft" required style="width: 18px; height: 18px; cursor: pointer;">
         Confirmo que he leído y acepto los términos de seguridad y verificación patrimonial. *
       </label>
     </div>
-
-    <div style="background: #E3F2FD; padding: 15px; border-radius: 8px; margin-top: 10px;">
-      <strong style="color: #0D47A1;">🔐 Credenciales SITO:</strong>
-      <input type="text" id="reg_username" name="reg_username" placeholder="Usuario deseado *" required>
-      
-      <input type="password" id="reg_password" name="reg_password" placeholder="Contraseña segura *" required>
+    <div style="background: rgba(33, 150, 243, 0.1); padding: 15px; border-radius: 8px; margin-top: 10px;">
+      <strong style="color: #2196F3;">🔐 Credenciales SITO:</strong>
+      <input type="text" id="reg_username" name="reg_username" placeholder="Usuario deseado *" required autocomplete="username">
+      <input type="password" id="reg_password" name="reg_password" placeholder="Contraseña segura *" required autocomplete="new-password">
     </div>
-    
     <button type="submit" class="btn-primario">Enviar a Auditoría</button>
   </form>
 </div>
+
 <div id="carousel-container" class="screen">
   <div id="carousel">
     <img src="https://i.ibb.co/LXsKzHfP/In-Shot-20260218-075725889.jpg" alt="">
@@ -264,7 +239,7 @@
   <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 80%; text-align: center; z-index: 10;">
     <p style="color: white; font-size: 14px; margin-bottom: 8px; font-weight: bold; text-shadow: 1px 1px 2px #000;">Auditando Expediente Digital...</p>
     <div style="width: 100%; background: rgba(255,255,255,0.3); height: 8px; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.5);">
-      <div id="loading-bar" style="width: 0%; height: 100%; background: #2196F3;"></div>
+      <div id="loading-bar" style="width: 0%; height: 100%; background: #2196F3; transition: width 3.5s linear;"></div>
     </div>
   </div>
 </div>
@@ -272,315 +247,52 @@
 <div id="formulario-confirmacion" class="screen">
   <div class="barra-superior"><div>Confirmación Final</div></div>
   <h2>Proceso Recibido</h2>
-  <div style="background: #E8F5E9; padding: 15px; border-radius: 8px; border-left: 5px solid #4CAF50;">
-    <p><strong>✅ En Revisión:</strong> Su expediente completo ha sido enviado. El Comité analizará su situación económica, laboral y social.</p>
+  <div style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 8px; border-left: 5px solid #4CAF50;">
+    <p style="color: white;"><strong>✅ En Revisión:</strong> Su expediente completo ha sido enviado. El Comité analizará su situación económica, laboral y social.</p>
   </div>
-  <button id="btn-finalizar" class="btn-primario">Finalizar y Salir</button>
+  <button id="btn-finalizar" class="btn-primario" onclick="location.reload()">Finalizar y Salir</button>
 </div>
 
 <div id="login-usuario-sito" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" data-target="inicio-sito">←</button>
+    <button class="btn-back" onclick="navegar('inicio-sito')">←</button>
     <div>Acceso Aliado SITO</div>
   </div>
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 120px; margin-top: 20px;"> 
   <h2>Iniciar Sesión</h2>
-  <form id="form-login">
-    <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;">
-    
-        <div style="position: relative; width: 100%; margin-bottom: 20px;">
-      <input type="password" id="login_password" name="password" placeholder="Contraseña *" required style="width: 100%; padding-right: 45px; margin-bottom: 0;">
-      <span id="toggle-password-icon" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #2196F3; opacity: 0.8; display: flex; align-items: center; height: 100%;">
+  <form id="form-login" onsubmit="event.preventDefault(); alert('Iniciando sesión...');">
+    <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;" autocomplete="username">
+    <div style="position: relative; width: 100%; margin-bottom: 20px;">
+      <input type="password" id="login_password" name="password" placeholder="Contraseña *" required style="width: 100%; padding-right: 45px;" autocomplete="current-password">
+      <span id="toggle-password-icon" style="position: absolute; right: 15px; top: 25px; transform: translateY(-50%); cursor: pointer; color: #2196F3; opacity: 0.8;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
           <circle cx="12" cy="12" r="3"></circle>
         </svg>
       </span>
     </div>
-
-    <button type="submit" class="btn-primario">Entrar al Sistema</button>
-  </form>
-  <p style="margin-top: 20px; font-size: 12px; color: #666;">¿Olvidó sus credenciales? Contacte a su analista de cuenta.</p>
-  </div>
-  
-
-
-<section id="Mando-Control-SITO">
-  <div id="dashboard-aliado" class="sito-viewport" style="display: none;">
-    
-    <div id="header-datos-sito" style="position: absolute; top: 20px; left: 20px; z-index: 999; pointer-events: none;">
-        <h2 id="alias-aliado" style="text-transform: uppercase; color: #d4af37; margin: 0; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);">---</h2>
-        <div style="background: rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 8px; border: 1px solid rgba(212, 175, 55, 0.4); margin-top: 10px; backdrop-filter: blur(5px);">
-          <p style="margin: 0; font-size: 10px; color: #d4af37; letter-spacing: 1px;">ID DE ALIADO AUTORIZADO:</p>
-          <span id="id-sito-display" style="font-size: 18px; font-weight: bold; color: #FFFFFF; font-family: monospace;">---</span>
-        </div>
-    </div>
-
-    <div id="plano-mando-sito" class="sito-plano-deslizable" style="overflow: auto; width: 100%; height: 100vh;">
-        <div id="master-grid-container">
-            
-            <section id="sec-superior" class="sito-block">
-                <div class="sub-bloque">S2.1</div>
-                <div class="sub-bloque">S2.2</div>
-                <div class="sub-bloque">S2.3</div>
-            </section>
-
-            <section id="sec-inter-sup" class="sito-block">
-                <div class="sub-bloque-h">S3.1</div>
-                <div class="sub-bloque-h">S3.2</div>
-            </section>
-
-            <section id="sec-nucleo" class="sito-block">
-                <div class="sub-grid-12">
-                    <div>1</div><div>2</div><div>3</div><div>4</div>
-                    <div>5</div><div>6</div><div>7</div><div>8</div>
-                    <div>9</div><div>10</div><div>11</div><div>12</div>
-                </div>
-            </section>
-
-            <section id="sec-pre-footer" class="sito-block">
-                <div class="sub-bloque">S5.1</div>
-                <div class="sub-bloque">S5.2</div>
-                <div class="sub-bloque">S5.3</div>
-                <div class="sub-bloque">S5.4</div>
-                <div class="sub-bloque">S5.5</div>
-            </section>
-
-            <aside id="barra-lateral-derecha">
-                <div class="sub-bloque-v">S1.1</div>
-                <div class="sub-bloque-v">S1.2</div>
-                <div class="sub-bloque-v">S1.3</div>
-            </aside>
-            
-        </div>
-    </div>
-  </div>
-</section>
-
-<script src="input.js"></script>
-</body>
-                                </html>
-                                
-  
-  
-  
-
-
-      <option value="socio">Socio Capitalista</option>
-      <option value="empleado">Empleado / Intraemprendedor</option>
-    </select>
-
-    <button type="submit" class="btn-primario">Validar y Continuar</button>
-  </form>
-</div>
-
-<div id="formulario-paso2" class="screen">
-  <div class="barra-superior">
-    <button class="btn-back" data-target="paso1">←</button>
-    <div>Paso 2 de 4 - Perfil Personal</div>
-  </div>
-  <h2>Datos de Contacto e Identidad</h2>
-  <form id="datos-contacto">
-    <input type="text" id="nombre_completo" name="nombre_completo" placeholder="Nombre completo *" required>
-    <input type="text" id="cc_nit" name="cc_nit" placeholder="CC o NIT *" required>
-    <input type="email" id="email" name="email" placeholder="Correo Electrónico *" required>
-    <input type="tel" id="telefono_movil" name="telefono_movil" placeholder="Celular (10 dígitos) *" required pattern="[0-9]{10}">
-    <input type="text" id="direccion_residencia" name="direccion_residencia" placeholder="Dirección de Residencia *" required>
-    <select id="estrato_social" name="estrato_social" required>
-      <option value="">Estrato Socioeconómico *</option>
-      <option value="1">1</option><option value="2">2</option><option value="3">3</option>
-      <option value="4">4</option><option value="5">5</option><option value="6">6</option>
-    </select>
-    <button type="submit" class="btn-primario">Siguiente</button>
-  </form>
-</div>
-
-<div id="formulario-paso3" class="screen">
-  <div class="barra-superior">
-    <button class="btn-back" data-target="paso2">←</button>
-    <div>Paso 3 de 4 - Entorno Social</div>
-  </div>
-  <h2>Círculo Familiar y Salud</h2>
-  <form id="datos-familia">
-    <select id="estado_civil" name="estado_civil" required onchange="toggleConyuge(this.value)">
-      <option value="">Estado Civil *</option>
-      <option value="soltero">Soltero/a</option>
-      <option value="casado">Casado/a</option>
-      <option value="union_libre">Unión Libre</option>
-      <option value="separado">Separado/a</option>
-    </select>
-    <div id="campo-conyuge" style="display:none;">
-      <input type="text" id="nombre_conyuge" name="nombre_conyuge" placeholder="Nombre completo del Cónyuge *">
-    </div>
-    
-    <input type="number" id="numero_hijos" name="numero_hijos" placeholder="Número de hijos *" min="0" required>
-    <div id="contenedor-hijos"></div> 
-
-    <div style="margin-top:10px; border-top:1px solid #BBDEFB; padding-top:10px;">
-      <p style="font-size:12px; color:#1976D2; font-weight:bold;">Datos de Ascendencia y Hermanos:</p>
-      <input type="text" id="nombre_madre" name="nombre_madre" placeholder="Nombre completo de la Madre *" required>
-      <input type="text" id="nombre_padre" name="nombre_padre" placeholder="Nombre completo del Padre *" required>
-      <textarea id="nombre_hermanos" name="nombre_hermanos" placeholder="Nombres y teléfonos de hermanos (Si no tiene, escriba N/A) *" required style="width:100%; border-radius:5px; border:1px solid #BBDEFB; padding:10px; margin-bottom:10px;"></textarea>
-    </div>
-
-    <input type="text" id="eps_aliado" name="eps_aliado" placeholder="EPS Actual *" required>
-    <input type="text" id="arl_aliado" name="arl_aliado" placeholder="ARL Actual *" required>
-    <input type="text" id="fondo_pensiones" name="fondo_pensiones" placeholder="Fondo de Pensiones *" required>
-    <input type="text" id="enfermedad_diagnosticada" name="enfermedad_diagnosticada" placeholder="¿Tiene alguna enfermedad diagnosticada? (Si no, Ninguna) *" required>
-    
-    <select id="viajes_exterior" name="viajes_exterior" required>
-      <option value="">¿Ha viajado fuera del país? *</option>
-      <option value="no">No</option>
-      <option value="si">Sí</option>
-    </select>
-    <input type="text" id="destinos_viaje" name="destinos_viaje" placeholder="¿A qué países?" style="display:none;">
-    
-    <button type="submit" class="btn-primario">Siguiente</button>
-  </form>
-</div>
-
-<div id="formulario-paso4" class="screen">
-  <div class="barra-superior">
-    <button class="btn-back" data-target="paso3">←</button>
-    <div>Paso 4 de 4 - Historial y Credenciales</div>
-  </div>
-  <h2>Perfil Profesional y Seguridad</h2>
-  <form id="datos-finales">
-    
-    <div class="seccion-form">
-      <p class="titulo-subseccion">Referencias Familiares</p>
-      <div class="fila-doble">
-        <input type="text" id="ref_fam_nom_1" name="ref_fam_nom_1" placeholder="Nombre Familiar 1 *" required>
-        <input type="tel" id="ref_fam_tel_1" name="ref_fam_tel_1" placeholder="Teléfono 1 *" required pattern="[0-9]{10}">
-      </div>
-      <div class="fila-doble">
-        <input type="text" id="ref_fam_nom_2" name="ref_fam_nom_2" placeholder="Nombre Familiar 2 *" required>
-        <input type="tel" id="ref_fam_tel_2" name="ref_fam_tel_2" placeholder="Teléfono 2 *" required pattern="[0-9]{10}">
-      </div>
-    </div>
-
-    <div class="seccion-form">
-      <p class="titulo-subseccion">Referencias Personales</p>
-      <div class="fila-doble">
-        <input type="text" id="ref_per_nom_1" name="ref_per_nom_1" placeholder="Nombre Personal 1 *" required>
-        <input type="tel" id="ref_per_tel_1" name="ref_per_tel_1" placeholder="Teléfono 1 *" required pattern="[0-9]{10}">
-      </div>
-      <div class="fila-doble">
-        <input type="text" id="ref_per_nom_2" name="ref_per_nom_2" placeholder="Nombre Personal 2 *" required>
-        <input type="tel" id="ref_per_tel_2" name="ref_per_tel_2" placeholder="Teléfono 2 *" required pattern="[0-9]{10}">
-      </div>
-    </div>
-
-    <div class="seccion-form">
-      <p class="titulo-subseccion">Formación Académica</p>
-      <select id="nivel_educativo" name="nivel_educativo" required>
-        <option value="">Máximo Grado Educativo *</option>
-        <option value="primaria">Primaria</option>
-        <option value="bachiller">Bachiller</option>
-        <option value="tecnico">Técnico/Tecnólogo</option>
-        <option value="profesional">Profesional</option>
-        <option value="posgrado">Especialización/Maestría</option>
-      </select>
-      <input type="text" id="institucion_educativa" name="institucion_educativa" placeholder="Nombre de la Institución/Universidad *" required>
-      <input type="text" id="titulo_obtenido" name="titulo_obtenido" placeholder="Título obtenido *" required>
-    </div>
-
-    <div class="seccion-form">
-      <p class="titulo-subseccion">Experiencia Laboral</p>
-      <input type="text" id="cargo_actual" name="cargo_actual" placeholder="Cargo actual o último desempeñado *" required>
-      <input type="text" id="empresa_laboral" name="empresa_laboral" placeholder="Nombre de la empresa *" required>
-      <div class="fila-doble">
-        <input type="text" id="tiempo_laborado" name="tiempo_laborado" placeholder="Tiempo laborado *" required>
-        <input type="text" id="jefe_inmediato" name="jefe_inmediato" placeholder="Nombre Jefe Inmediato *" required>
-      </div>
-    </div>
-    
-    <select id="pasado_judicial" name="pasado_judicial" required>
-      <option value="">¿Tiene pasado judicial limpio? *</option>
-      <option value="si">Sí</option>
-      <option value="no">No</option>
-    </select>
-
-    <div style="background: #FFF3E0; border-left: 5px solid #FF9800; padding: 12px; border-radius: 4px; margin: 15px 0; text-align: justify; font-size: 11px; line-height: 1.4;">
-      <strong style="color: #E65100; display: block; margin-bottom: 5px;">⚠️ NOTA DE SEGURIDAD PATRIMONIAL:</strong>
-      Para <strong>Epoch Gentry Group Holding S.A.S.</strong>, la seguridad y protección del patrimonio de cada uno de sus aliados es una prioridad. En cumplimiento estricto de la normativa colombiana y la lucha contra el lavado de activos (SARLAFT), usted autoriza el estudio y verificación de la información suministrada.
-      <label style="display: flex; align-items: flex-start; margin-top: 10px; cursor: pointer; font-weight: bold; color: #E65100; gap: 8px;">
-        <input type="checkbox" id="acepto_sarlaft" name="acepto_sarlaft" required style="width: 18px; height: 18px; cursor: pointer;">
-        Confirmo que he leído y acepto los términos de seguridad y verificación patrimonial. *
-      </label>
-    </div>
-
-    <div style="background: #E3F2FD; padding: 15px; border-radius: 8px; margin-top: 10px;">
-      <strong style="color: #0D47A1;">🔐 Credenciales SITO:</strong>
-      <input type="text" id="reg_username" name="reg_username" placeholder="Usuario deseado *" required>
-      <input type="password" id="reg_password" name="reg_password" placeholder="Contraseña segura *" required>
-    </div>
-    
-    <button type="submit" class="btn-primario">Enviar a Auditoría</button>
-  </form>
-</div>
-
-<div id="formulario-confirmacion" class="screen">
-  <div class="barra-superior"><div>Confirmación Final</div></div>
-  <h2>Proceso Recibido</h2>
-  <div style="background: #E8F5E9; padding: 15px; border-radius: 8px; border-left: 5px solid #4CAF50;">
-    <p><strong>✅ En Revisión:</strong> Su expediente completo ha sido enviado. El Comité analizará su situación económica, laboral y social.</p>
-  </div>
-  <button id="btn-finalizar" class="btn-primario">Finalizar y Salir</button>
-</div>
-
-<div id="login-usuario-sito" class="screen">
-  <div class="barra-superior">
-    <button class="btn-back" data-target="inicio-sito">←</button>
-    <div>Acceso Aliado SITO</div>
-  </div>
-  <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 120px; margin-top: 20px;"> <h2>Iniciar Sesión</h2>
-  <form id="form-login">
-    <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;">
-    <div class="password-wrapper" style="margin-bottom: 25px;">
-  <input type="password" id="login_password" name="login_password" placeholder="Contraseña *" required>
-  <span id="togglePassword" class="toggle-password">👁️</span>
-    </div>
-      
     <button type="submit" class="btn-primario">Entrar al Sistema</button>
   </form>
   <p style="margin-top: 20px; font-size: 12px; color: #666;">¿Olvidó sus credenciales? Contacte a su analista de cuenta.</p>
 </div>
 
-    <div id="sito-alert" class="sito-modal-alert">
-    <div class="sito-modal-content">
-        <div id="sito-alert-icon">✅</div>
-        <h3 id="sito-alert-title">SISTEMA SITO</h3>
-        <p id="sito-alert-msg"></p>
-        <button onclick="cerrarSitoAlert()" class="btn-primario" style="width: 100%; margin-top: 20px;">ENTRAR AL SISTEMA</button>
-    </div>
-    </div>
-    
+<script>
+  function navegar(targetId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(targetId);
+    if(target) target.classList.add('active');
+    window.scrollTo(0,0);
+  }
 
-<div id="carousel-container">
-  <div id="carousel">
-    <img src="https://i.ibb.co/LXsKzHfP/In-Shot-20260218-075725889.jpg" alt="">
-    <img src="https://i.ibb.co/MxvRMPCD/In-Shot-20260218-075823511.jpg" alt="">
-    <img src="https://i.ibb.co/C342n6Jt/In-Shot-20260217-224656136.jpg" alt="">
-    <img src="https://i.ibb.co/zTkCc9dX/In-Shot-20260217-224254828.jpg" alt="">
-    <img src="https://i.ibb.co/FLg3xGvd/In-Shot-20260217-224918705.jpg" alt="">
-    <img src="https://i.ibb.co/BKVtt96K/In-Shot-20260217-225340768.jpg" alt="">
-  </div>
-  <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 80%; text-align: center; z-index: 10;">
-    <p style="color: white; font-size: 14px; margin-bottom: 8px; font-weight: bold; text-shadow: 1px 1px 2px #000;">Auditando Expediente Digital...</p>
-    <div style="width: 100%; background: rgba(255,255,255,0.3); height: 8px; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.5);">
-      <div id="loading-bar" style="width: 0%; height: 100%; background: #2196F3;"></div>
-    </div>
-  </div>
-</div>
+  function ejecutarAuditoria() {
+    navegar('carousel-container');
+    const bar = document.getElementById('loading-bar');
+    setTimeout(() => { bar.style.width = '100%'; }, 100);
+    setTimeout(() => { navegar('formulario-confirmacion'); }, 3800);
+  }
+</script>
 
-
-
-    
-</section>
-
-    
 <script src="input.js"></script>
 </body>
-                                                                                          </html>
-                                                                                          
+        </html>
+        
