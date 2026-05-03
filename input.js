@@ -1,14 +1,15 @@
 (function() {
   /* =============================================
-     SITO OPERATING SYSTEM - JS CORE (V5.0)
-     Protocolo: Integridad Total, RPC y Sincronía
+     SITO OPERATING SYSTEM - JS CORE (V5.2)
+     Protocolo: Integridad Total & Soberanía Digital
+     Estado: Auditado, Consolidado y Blindado
      ============================================= */
 
   const SUPABASE_URL = "https://jhpdlnpvlrbolukuteox.supabase.co";
   const SUPABASE_KEY = "sb_publishable_ifHWyzybfNkfiXJDWTo57Q_5DtsnRdu";
   let supabaseClient = null;
 
-  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN Y ESPERA DE CARGA)
+  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN)
   const initSitoCore = () => {
     const loadSupabase = () => {
       return new Promise((resolve, reject) => {
@@ -24,13 +25,13 @@
 
     loadSupabase().then(() => {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      window.supabaseClient = supabaseClient; // Compatibilidad con funciones RPC
+      window.supabaseClient = supabaseClient;
       console.log("SITO: Núcleo de datos sincronizado.");
     }).catch(err => console.error("☢️ Fallo en el núcleo:", err));
   };
   initSitoCore();
 
-  // 2. GESTIÓN DE PANTALLAS
+  // 2. GESTIÓN DE PANTALLAS (PROTOCOLO DE NAVEGACIÓN)
   const screens = {
     inicio: document.getElementById('inicio-sito'),
     video: document.getElementById('video-induccion'),
@@ -47,13 +48,12 @@
   const showScreen = (s) => {
     Object.values(screens).forEach(el => { if(el) el.style.display = 'none'; });
     if(s) {
-      // El Dashboard usa 'block' para la rejilla de datos, el resto 'flex' para centrado
-      s.style.display = (s.id === 'dashboard-aliado') ? 'block' : 'flex';
+      s.style.display = (s.id === 'dashboard-aliado' || s.id === 'carousel-container') ? 'block' : 'flex';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  // 3. CONTROL DE VIDEO (PROTOCOLO HTTPS + CALIDAD HD)
+  // 3. CONTROL DE VIDEO (PROTOCOLO HD)
   if (!window.YT) {
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api"; 
@@ -63,9 +63,7 @@
 
   window.onYouTubeIframeAPIReady = function() {
     new YT.Player('player', {
-      height: '100%',
-      width: '100%',
-      videoId: 'Fs7pOoT6sTc',
+      height: '100%', width: '100%', videoId: 'Fs7pOoT6sTc',
       playerVars: { 'rel': 0, 'modestbranding': 1, 'quality': 'hd720' },
       events: {
         'onStateChange': (e) => {
@@ -78,7 +76,7 @@
     });
   };
 
-  // 4. PROTOCOLO DE VISIÓN (EL OJO)
+  // 4. PROTOCOLO DE VISIÓN (REINTEGRADO)
   const togglePass = document.querySelector('#togglePassword');
   const passField = document.querySelector('#login_password');
   if (togglePass && passField) {
@@ -90,23 +88,19 @@
     };
   }
 
-  // 5. LOGIN Y ACCESO (TABLA: acceso_aliados)
+  // 5. LOGIN Y ACCESO - TABLA: acceso_aliados (REINTEGRADO)
   const fLogin = document.getElementById('form-login');
   if(fLogin) {
     fLogin.onsubmit = async (e) => {
       e.preventDefault();
       if(!supabaseClient) return alert("SITO: Sincronizando núcleo...");
-
       const user = document.getElementById('login_username').value;
       const pass = document.getElementById('login_password').value;
-
       try {
         const { data, error } = await supabaseClient
           .from('acceso_aliados')
           .select('id_interno, estado_acceso, reg_username')
-          .eq('reg_username', user)
-          .eq('reg_password', pass)
-          .single();
+          .eq('reg_username', user).eq('reg_password', pass).single();
 
         if (error || !data) {
           mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
@@ -117,13 +111,11 @@
           sessionStorage.setItem('sito_nombre_aliado', data.reg_username);
           mostrarSitoAlert(`Bienvenido, Aliado ${data.reg_username}`, '✅');
         }
-      } catch (err) {
-        mostrarSitoAlert('Fallo crítico de comunicación.', '☢️');
-      }
+      } catch (err) { mostrarSitoAlert('Fallo crítico de comunicación.', '☢️'); }
     };
   }
 
-  // 6. LÓGICA DE FORMULARIO (HIJOS, CONYUGE, VIAJES)
+  // 6. LÓGICA DE FORMULARIOS (HIJOS, CONYUGE, VIAJES)
   const inputHijos = document.getElementById('numero_hijos');
   if(inputHijos) {
     inputHijos.oninput = () => {
@@ -161,7 +153,7 @@
     };
   }
 
-  // 7. ENVÍO Y PERSISTENCIA (TABLA: postulaciones_sito)
+  // 7. ENVÍO Y PERSISTENCIA
   let formData = {};
   const setupForm = (id, next) => {
     const f = document.getElementById(id);
@@ -181,22 +173,18 @@
   setupForm('datos-contacto', screens.paso3);
   setupForm('datos-familia', screens.paso4);
 
-  // INTERVENCIÓN QUIRÚRGICA: VALIDACIÓN SARLAFT INTEGRADA
   const fFinal = document.getElementById('datos-finales');
   const checkSarlaft = document.getElementById('acepto_sarlaft');
 
   if(fFinal) {
     fFinal.onsubmit = async (e) => {
       e.preventDefault();
-      
-      // Verificación de seguridad patrimonial
       if (checkSarlaft && !checkSarlaft.checked) {
-          alert("Debe aceptar el protocolo de seguridad patrimonial para continuar.");
+          alert("⚠️ Acceso Denegado: Debe validar el protocolo de seguridad patrimonial.");
           return;
       }
-
       new FormData(fFinal).forEach((v, k) => { formData[k] = v; });
-      formData['acepto_sarlaft'] = checkSarlaft?.checked || false;
+      formData['acepto_sarlaft'] = true;
 
       showScreen(screens.carousel);
       startCarousel();
@@ -208,31 +196,36 @@
     };
   }
 
-  // 8. CARRUSEL Y NAVEGACIÓN
+  // 8. MOTOR DE AUDITORÍA VISUAL (CARRUSEL ACTUALIZADO)
   function startCarousel() {
     let idx = 0;
+    const totalFrames = 6;
     const bar = document.getElementById('loading-bar');
     const car = document.getElementById('carousel');
+    if(bar) bar.style.width = '0%';
+    if(car) car.style.transform = 'translateX(0%)';
+
     const interval = setInterval(() => {
       idx++;
-      if (idx < 6) {
+      if (idx < totalFrames) {
         if(car) car.style.transform = `translateX(-${idx * 100}%)`;
-        if(bar) bar.style.width = `${(idx / 6) * 100}%`;
+        if(bar) bar.style.width = `${(idx / totalFrames) * 100}%`;
       } else {
         clearInterval(interval);
+        if(bar) bar.style.width = '100%';
         setTimeout(() => {
           if (window.sitoUploadError) {
-            alert("Error: " + window.sitoUploadError);
-            showScreen(screens.inicio);
+            alert("⚠️ Error en Auditoría: " + window.sitoUploadError);
+            showScreen(screens.paso4);
           } else {
             showScreen(screens.confirm);
           }
-        }, 800);
+        }, 1200);
       }
-    }, 3000);
+    }, 2800);
   }
 
-  // 9. COMUNICACIÓN TÁCTICA (ALERTAS Y DASHBOARD)
+  // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD (REINTEGRADO)
   window.mostrarSitoAlert = (m, i) => {
     const mod = document.getElementById('sito-alert');
     if(mod) {
@@ -275,26 +268,20 @@
     } catch (e) { console.error("Error RPC:", e); }
   }
 
-  // BINDINGS DE BOTONES
-  const btnCrear = document.getElementById('btn-crear-cuenta');
-  if(btnCrear) btnCrear.onclick = () => showScreen(screens.video);
-
-  const btnLogin = document.getElementById('btn-iniciar-sesion');
-  if(btnLogin) btnLogin.onclick = () => showScreen(screens.login);
-
-  const btnContPost = document.getElementById('btn-continuar-postulacion');
-  if(btnContPost) btnContPost.onclick = () => showScreen(screens.paso1);
-
-  const btnBackStart = document.getElementById('back-to-start');
-  if(btnBackStart) btnBackStart.onclick = () => showScreen(screens.inicio);
+  // BINDINGS DE CONTROL FINAL
+  document.getElementById('btn-crear-cuenta').onclick = () => showScreen(screens.video);
+  document.getElementById('btn-iniciar-sesion').onclick = () => showScreen(screens.login);
+  document.getElementById('btn-continuar-postulacion').onclick = () => showScreen(screens.paso1);
+  document.getElementById('back-to-start').onclick = () => showScreen(screens.inicio);
 
   document.querySelectorAll('.btn-back').forEach(b => {
     b.onclick = () => showScreen(screens[b.dataset.target] || screens.inicio);
   });
   
   const btnFin = document.getElementById('btn-finalizar');
-  if(btnFin) btnFin.onclick = () => location.reload(); // Limpieza total
+  if(btnFin) btnFin.onclick = () => location.reload();
 
 })();
 
-          
+
+      
