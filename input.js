@@ -1,29 +1,36 @@
 (function() {
   /* =============================================
-     SITO OPERATING SYSTEM - JS CORE (V4.0)
-     Protocolo: Integridad, Navegación y Auditoría
+     SITO OPERATING SYSTEM - JS CORE (V5.0)
+     Protocolo: Integridad Total, RPC y Sincronía
      ============================================= */
 
-  // --- AUTO-INYECCIÓN DE DEPENDENCIAS (INDEPENDENCIA DEL MODELO) ---
-  const initSitoCore = () => {
-    const SUPABASE_URL = "https://jhpdlnpvlrbolukuteox.supabase.co";
-    const SUPABASE_KEY = "sb_publishable_ifHWyzybfNkfiXJDWTo57Q_5DtsnRdu";
+  const SUPABASE_URL = "https://jhpdlnpvlrbolukuteox.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_ifHWyzybfNkfiXJDWTo57Q_5DtsnRdu";
+  let supabaseClient = null;
 
-    if (!window.supabase) {
-      const script = document.createElement('script');
-      script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-      script.async = true;
-      script.onload = () => {
-        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("SITO: Núcleo de datos conectado.");
-      };
-      document.head.appendChild(script);
-    } else {
-      window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    }
+  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN Y ESPERA DE CARGA)
+  const initSitoCore = () => {
+    const loadSupabase = () => {
+      return new Promise((resolve, reject) => {
+        if (window.supabase) return resolve();
+        const script = document.createElement('script');
+        script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+    };
+
+    loadSupabase().then(() => {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      window.supabaseClient = supabaseClient; // Compatibilidad con funciones RPC
+      console.log("SITO: Núcleo de datos sincronizado.");
+    }).catch(err => console.error("☢️ Fallo en el núcleo:", err));
   };
   initSitoCore();
 
+  // 2. GESTIÓN DE PANTALLAS
   const screens = {
     inicio: document.getElementById('inicio-sito'),
     video: document.getElementById('video-induccion'),
@@ -33,29 +40,33 @@
     paso3: document.getElementById('formulario-paso3'),
     paso4: document.getElementById('formulario-paso4'),
     confirm: document.getElementById('formulario-confirmacion'),
-    carousel: document.getElementById('carousel-container')
+    carousel: document.getElementById('carousel-container'),
+    dashboard: document.getElementById('dashboard-aliado')
   };
 
   const showScreen = (s) => {
     Object.values(screens).forEach(el => { if(el) el.style.display = 'none'; });
-    if(s) s.style.display = 'flex';
+    if(s) {
+      // El Dashboard usa 'block' para la rejilla de datos, el resto 'flex' para centrado
+      s.style.display = (s.id === 'dashboard-aliado') ? 'block' : 'flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-    // 1. CONTROL DE VIDEO (YOUTUBE API - PROTOCOLO SEGURO)
+  // 3. CONTROL DE VIDEO (PROTOCOLO HTTPS + CALIDAD HD)
   if (!window.YT) {
-    var tag = document.createElement('script');
-    // ACTUALIZACIÓN QUIRÚRGICA: Protocolo HTTPS para compatibilidad con Vercel
+    const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api"; 
-    var firstScriptTag = document.getElementsByTagName('script')[0];
+    const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   }
-  
 
   window.onYouTubeIframeAPIReady = function() {
     new YT.Player('player', {
-      height: '360',
+      height: '100%',
       width: '100%',
       videoId: 'Fs7pOoT6sTc',
+      playerVars: { 'rel': 0, 'modestbranding': 1, 'quality': 'hd720' },
       events: {
         'onStateChange': (e) => {
           if (e.data == YT.PlayerState.ENDED) {
@@ -67,105 +78,63 @@
     });
   };
 
-  // 2. NAVEGACIÓN Y ASIGNACIÓN DE EVENTOS
-  const bind = (id, action) => { 
-    const el = document.getElementById(id); 
-    if(el) el.onclick = action; 
-  };
+  // 4. PROTOCOLO DE VISIÓN (EL OJO)
+  const togglePass = document.querySelector('#togglePassword');
+  const passField = document.querySelector('#login_password');
+  if (togglePass && passField) {
+    togglePass.onclick = function() {
+      const isPass = passField.type === 'password';
+      passField.type = isPass ? 'text' : 'password';
+      this.textContent = isPass ? '🔒' : '👁️';
+      passField.focus();
+    };
+  }
 
-  bind('btn-crear-cuenta', () => showScreen(screens.video));
-  bind('btn-iniciar-sesion', () => showScreen(screens.login));
-  
-  // 2.1 LÓGICA DE LOGIN - PROTOCOLO DE ACCESO AUTORIZADO
+  // 5. LOGIN Y ACCESO (TABLA: acceso_aliados)
   const fLogin = document.getElementById('form-login');
   if(fLogin) {
     fLogin.onsubmit = async (e) => {
       e.preventDefault();
-      
+      if(!supabaseClient) return alert("SITO: Sincronizando núcleo...");
+
       const user = document.getElementById('login_username').value;
       const pass = document.getElementById('login_password').value;
 
-      console.log("SITO: Solicitando acceso al Núcleo...");
-
-                 try {
-        const { data, error } = await window.supabaseClient
+      try {
+        const { data, error } = await supabaseClient
           .from('acceso_aliados')
-          .select('id_interno, estado_acceso')
+          .select('id_interno, estado_acceso, reg_username')
           .eq('reg_username', user)
           .eq('reg_password', pass)
           .single();
 
         if (error || !data) {
-          alert('❌ Acceso Denegado: Credenciales no reconocidas.');
-          return;
+          mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
+        } else if (data.estado_acceso !== 'activo') {
+          mostrarSitoAlert('⚠️ Cuenta en Auditoría: Acceso restringido.', '⚖️');
+        } else {
+          sessionStorage.setItem('sito_id_aliado', data.id_interno);
+          sessionStorage.setItem('sito_nombre_aliado', data.reg_username);
+          mostrarSitoAlert(`Bienvenido, Aliado ${data.reg_username}`, '✅');
         }
-
-        if (data.estado_acceso !== 'activo') {
-          alert('⚠️ Cuenta en Auditoría: Acceso restringido.');
-          return;
-        }
-
-        sessionStorage.setItem('sito_id_aliado', data.id_interno);
-        document.getElementById('alias-aliado').textContent = user;
-        document.getElementById('id-sito-display').textContent = data.id_interno;
-
-        console.log("SITO: Acceso concedido. Iniciando Dashboard...");
-        showScreen(document.getElementById('dashboard-aliado'));
-
       } catch (err) {
-        console.error("Fallo crítico:", err);
-        alert('Fallo de comunicación con el Núcleo SITO.');
+        mostrarSitoAlert('Fallo crítico de comunicación.', '☢️');
       }
-    }; // Cierra fLogin.onsubmit
-  } // Cierra if(fLogin)
-
-  /* --- COORDENADA A: INTERACCIÓN DEL OJO (FUERA DEL LOGIN) --- */
-  const togglePassword = document.getElementById('toggle-password-icon');
-  const passwordInput = document.getElementById('login_password');
-
-  if(togglePassword && passwordInput) {
-    togglePassword.onclick = () => {
-      const isPass = passwordInput.type === 'password';
-      passwordInput.type = isPass ? 'text' : 'password';
-      
-      togglePassword.innerHTML = isPass 
-        ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 9.9A3 3 0 0 0 12 15a3 3 0 0 0 2.1-.9M1 1s22 22 22 22"></path></svg>`
-        : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
     };
   }
 
-  bind('back-to-start', () => showScreen(screens.inicio));
-  bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
-
-    document.querySelectorAll('.btn-back').forEach(btn => {
-    btn.onclick = () => {
-      const target = btn.dataset.target;
-      let finalTarget = target === 'video' ? 'video' : target;
-      
-      if (screens[finalTarget]) {
-        showScreen(screens[finalTarget]);
-      } else {
-        showScreen(screens.inicio);
-      }
-    };
-  });
-  
-
-  // 3. LÓGICA DINÁMICA (Hijos, Viajes y Cónyuge)
+  // 6. LÓGICA DE FORMULARIO (HIJOS, CONYUGE, VIAJES)
   const inputHijos = document.getElementById('numero_hijos');
   if(inputHijos) {
     inputHijos.oninput = () => {
       const cont = document.getElementById('contenedor-hijos');
       cont.innerHTML = "";
       const cant = parseInt(inputHijos.value);
-
       for(let i=1; i<=cant; i++) {
         const inp = document.createElement('input');
-        inp.type = "text";
-        inp.placeholder = `Nombre completo hijo ${i} *`;
-        inp.className = "hijo-item";
-        inp.required = true;
-        inp.style.cssText = "margin-bottom:10px; width:100%; padding:12px; background:rgba(2,10,18,0.8); border:1px solid rgba(212,175,55,0.4); border-radius:8px; color:white; outline:none;";
+        inp.type = "text"; inp.placeholder = `Nombre hijo ${i} *`;
+        inp.className = "hijo-item"; inp.required = true;
+        inp.style.cssText = "margin-bottom:10px; width:100%; padding:12px; background:rgba(2,10,18,0.8); border:1px solid rgba(212,175,55,0.4); border-radius:8px; color:white;";
         cont.appendChild(inp);
       }
     };
@@ -174,132 +143,133 @@
   window.toggleConyuge = (valor) => {
     const campo = document.getElementById('campo-conyuge');
     const input = document.getElementById('nombre_conyuge');
-    if(valor === 'casado' || valor === 'union_libre') {
-      if(campo) campo.style.display = 'block';
-      if(input) input.required = true;
-    } else {
-      if(campo) campo.style.display = 'none';
-      if(input) {
-        input.required = false;
-        input.value = "";
-      }
+    if(campo && input) {
+      const mostrar = (valor === 'casado' || valor === 'union_libre');
+      campo.style.display = mostrar ? 'block' : 'none';
+      input.required = mostrar;
     }
   };
 
   const selectViajes = document.getElementById('viajes_exterior');
   if(selectViajes) {
     selectViajes.onchange = () => {
-      const campoDestinos = document.getElementById('destinos_viaje');
-      if(campoDestinos) {
-        campoDestinos.style.display = selectViajes.value === 'si' ? 'block' : 'none';
-        campoDestinos.required = selectViajes.value === 'si';
+      const dest = document.getElementById('destinos_viaje');
+      if(dest) {
+        dest.style.display = selectViajes.value === 'si' ? 'block' : 'none';
+        dest.required = selectViajes.value === 'si';
       }
     };
   }
 
-  // --- OBJETO DE RECOLECCIÓN DE DATOS (SITO CORE) ---
+  // 7. ENVÍO Y PERSISTENCIA (TABLA: postulaciones_sito)
   let formData = {};
-
   const setupForm = (id, next) => {
     const f = document.getElementById(id);
-    if(f) f.onsubmit = e => { 
-      e.preventDefault(); 
-      const data = new FormData(f);
-      data.forEach((value, key) => { formData[key] = value; });
-      
+    if(f) f.onsubmit = e => {
+      e.preventDefault();
+      new FormData(f).forEach((v, k) => { formData[k] = v; });
       if(id === 'datos-familia') {
         const hijos = [];
         document.querySelectorAll('.hijo-item').forEach(h => hijos.push(h.value));
         formData['nombres_hijos'] = hijos;
       }
-      showScreen(next); 
+      showScreen(next);
     };
   };
 
   setupForm('datos-basicos', screens.paso2);
   setupForm('datos-contacto', screens.paso3);
   setupForm('datos-familia', screens.paso4);
-  
+
   const fFinal = document.getElementById('datos-finales');
   if(fFinal) fFinal.onsubmit = async (e) => {
     e.preventDefault();
-    const dataFinal = new FormData(fFinal);
-    dataFinal.forEach((value, key) => { formData[key] = value; });
+    new FormData(fFinal).forEach((v, k) => { formData[k] = v; });
     formData['acepto_sarlaft'] = document.getElementById('acepto_sarlaft')?.checked || false;
 
     showScreen(screens.carousel);
     startCarousel();
 
-    if (window.supabaseClient) {
-      try {
-        const { error } = await window.supabaseClient
-          .from('postulaciones_sito')
-          .insert(formData); 
-
-        if (error) {
-          window.sitoUploadError = error.message;
-        } else {
-          window.sitoUploadError = null;
-        }
-      } catch (err) {
-        window.sitoUploadError = "Fallo de conexión al Núcleo.";
-      }
-    } else {
-      window.sitoUploadError = "El Núcleo Supabase no cargó a tiempo.";
-    }
+    const { error } = await supabaseClient.from('postulaciones_sito').insert([formData]);
+    window.sitoUploadError = error ? error.message : null;
   };
 
-  // 5. SISTEMA DE CARRUSEL
+  // 8. CARRUSEL Y NAVEGACIÓN
   function startCarousel() {
-    let index = 0;
-    const totalSlides = 6;
-    const carousel = document.getElementById('carousel');
-    const loadingBar = document.getElementById('loading-bar');
-    
-    if(carousel) carousel.style.transform = `translateX(0%)`;
-    if(loadingBar) loadingBar.style.width = "0%";
-
+    let idx = 0;
+    const bar = document.getElementById('loading-bar');
+    const car = document.getElementById('carousel');
     const interval = setInterval(() => {
-      if (index < totalSlides - 1) {
-        index++;
-        if(carousel) carousel.style.transform = `translateX(-${index * 100}%)`;
-        if(loadingBar) loadingBar.style.width = (index * (100 / totalSlides)) + "%";
+      idx++;
+      if (idx < 6) {
+        if(car) car.style.transform = `translateX(-${idx * 100}%)`;
+        if(bar) bar.style.width = `${(idx / 6) * 100}%`;
       } else {
         clearInterval(interval);
-        if(loadingBar) loadingBar.style.width = "100%";
-        
         setTimeout(() => {
           if (window.sitoUploadError) {
-            alert("SITO: Error al guardar. Razón: " + window.sitoUploadError);
-            showScreen(screens.inicio); 
+            alert("Error: " + window.sitoUploadError);
+            showScreen(screens.inicio);
           } else {
-            showScreen(screens.confirm); 
+            showScreen(screens.confirm);
           }
         }, 800);
       }
-    }, 3000); 
+    }, 3000);
   }
 
-  // 6. FINALIZACIÓN SEGURA
-  const btnFinalizar = document.getElementById('btn-finalizar');
-  if(btnFinalizar) {
-    btnFinalizar.onclick = () => {
-      btnFinalizar.textContent = "Cerrando Sesión Segura...";
-      btnFinalizar.disabled = true;
-      setTimeout(() => {
-        document.querySelectorAll('form').forEach(f => f.reset());
-        const contHijos = document.getElementById('contenedor-hijos');
-        if(contHijos) contHijos.innerHTML = "";
-        formData = {}; 
-        showScreen(screens.inicio);
-        btnFinalizar.textContent = "Finalizar y Salir";
-        btnFinalizar.disabled = false;
-      }, 1500);
-    };
+  // 9. COMUNICACIÓN TÁCTICA (ALERTAS Y DASHBOARD)
+  window.mostrarSitoAlert = (m, i) => {
+    const mod = document.getElementById('sito-alert');
+    if(mod) {
+      document.getElementById('sito-alert-msg').innerText = m;
+      document.getElementById('sito-alert-icon').innerText = i;
+      mod.style.display = 'flex';
+    }
+  };
+
+  window.cerrarSitoAlert = () => {
+    document.getElementById('sito-alert').style.display = 'none';
+    const id = sessionStorage.getItem('sito_id_aliado');
+    if (id) {
+      document.getElementById('alias-aliado').innerText = sessionStorage.getItem('sito_nombre_aliado');
+      document.getElementById('id-sito-display').innerText = id;
+      showScreen(screens.dashboard);
+      sincronizarDatosAliado(id);
+    }
+  };
+
+  async function sincronizarDatosAliado(id) {
+    if(!supabaseClient) return;
+    try {
+      const { data, error } = await supabaseClient.rpc('acceso_nucleo_espejo', { id_solicitado: id });
+      if (data && data[0]) {
+        const p = data[0];
+        const ficha = {
+          'dat-nombre': p.f_nombre_completo, 'dat-cedula': p.f_cc_nit, 'dat-email': p.f_email,
+          'dat-tel': p.f_telefono_movil, 'dat-negocio': p.f_nombre_comercial, 'dat-id-publico': p.f_id_publico_aliado,
+          'dat-situacion': p.f_situacion_laboral, 'dat-sarlaft': p.f_acepto_sarlaft ? "ACEPTADO" : "PENDIENTE"
+          // Se pueden añadir más mapeos aquí
+        };
+        Object.keys(ficha).forEach(key => {
+          const el = document.getElementById(key);
+          if(el) el.innerText = ficha[key] || "---";
+        });
+      }
+    } catch (e) { console.error("Error RPC:", e); }
   }
 
+  // BINDINGS DE BOTONES
+  document.getElementById('btn-crear-cuenta').onclick = () => showScreen(screens.video);
+  document.getElementById('btn-iniciar-sesion').onclick = () => showScreen(screens.login);
+  document.getElementById('btn-continuar-postulacion').onclick = () => showScreen(screens.paso1);
+  document.getElementById('back-to-start').onclick = () => showScreen(screens.inicio);
+  document.querySelectorAll('.btn-back').forEach(b => {
+    b.onclick = () => showScreen(screens[b.dataset.target] || screens.inicio);
+  });
   
-  
-  
+  const btnFin = document.getElementById('btn-finalizar');
+  if(btnFin) btnFin.onclick = () => location.reload(); // Limpieza total
+
 })();
-     
+ 
