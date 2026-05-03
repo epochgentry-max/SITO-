@@ -1,15 +1,15 @@
 (function() {
   /* =============================================
-     SITO OPERATING SYSTEM - JS CORE (V5.2)
+     SITO OPERATING SYSTEM - JS CORE (V5.3)
      Protocolo: Integridad Total & Soberanía Digital
-     Estado: Auditado, Consolidado y Blindado
+     Estado: Auditado, Corregido y Blindado
      ============================================= */
 
   const SUPABASE_URL = "https://jhpdlnpvlrbolukuteox.supabase.co";
   const SUPABASE_KEY = "sb_publishable_ifHWyzybfNkfiXJDWTo57Q_5DtsnRdu";
   let supabaseClient = null;
 
-  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN)
+  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN Y ESPERA DE CARGA)
   const initSitoCore = () => {
     const loadSupabase = () => {
       return new Promise((resolve, reject) => {
@@ -25,13 +25,13 @@
 
     loadSupabase().then(() => {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      window.supabaseClient = supabaseClient;
+      window.supabaseClient = supabaseClient; // Garantiza disponibilidad global
       console.log("SITO: Núcleo de datos sincronizado.");
     }).catch(err => console.error("☢️ Fallo en el núcleo:", err));
   };
   initSitoCore();
 
-  // 2. GESTIÓN DE PANTALLAS (PROTOCOLO DE NAVEGACIÓN)
+  // 2. GESTIÓN DE PANTALLAS
   const screens = {
     inicio: document.getElementById('inicio-sito'),
     video: document.getElementById('video-induccion'),
@@ -76,7 +76,7 @@
     });
   };
 
-  // 4. PROTOCOLO DE VISIÓN (REINTEGRADO)
+  // 4. PROTOCOLO DE VISIÓN (EL OJO)
   const togglePass = document.querySelector('#togglePassword');
   const passField = document.querySelector('#login_password');
   if (togglePass && passField) {
@@ -88,19 +88,29 @@
     };
   }
 
-  // 5. LOGIN Y ACCESO - TABLA: acceso_aliados (REINTEGRADO)
+  // 5. LOGIN Y ACCESO (PROTECCIÓN CONTRA CONGELAMIENTO)
   const fLogin = document.getElementById('form-login');
   if(fLogin) {
     fLogin.onsubmit = async (e) => {
       e.preventDefault();
-      if(!supabaseClient) return alert("SITO: Sincronizando núcleo...");
+      
+      // Verificación de hardware de datos
+      const client = supabaseClient || window.supabaseClient;
+      if(!client) {
+          mostrarSitoAlert('☢️ Sincronizando Núcleo... Reintente en 2 segundos.', '⏳');
+          return;
+      }
+
       const user = document.getElementById('login_username').value;
       const pass = document.getElementById('login_password').value;
+
       try {
-        const { data, error } = await supabaseClient
+        const { data, error } = await client
           .from('acceso_aliados')
           .select('id_interno, estado_acceso, reg_username')
-          .eq('reg_username', user).eq('reg_password', pass).single();
+          .eq('reg_username', user)
+          .eq('reg_password', pass)
+          .single();
 
         if (error || !data) {
           mostrarSitoAlert('❌ Acceso Denegado: Credenciales no reconocidas.', '🚫');
@@ -111,11 +121,13 @@
           sessionStorage.setItem('sito_nombre_aliado', data.reg_username);
           mostrarSitoAlert(`Bienvenido, Aliado ${data.reg_username}`, '✅');
         }
-      } catch (err) { mostrarSitoAlert('Fallo crítico de comunicación.', '☢️'); }
+      } catch (err) { 
+        mostrarSitoAlert('Fallo crítico de comunicación.', '☢️'); 
+      }
     };
   }
 
-  // 6. LÓGICA DE FORMULARIOS (HIJOS, CONYUGE, VIAJES)
+  // 6. LÓGICA DE FORMULARIOS DINÁMICOS
   const inputHijos = document.getElementById('numero_hijos');
   if(inputHijos) {
     inputHijos.oninput = () => {
@@ -153,7 +165,7 @@
     };
   }
 
-  // 7. ENVÍO Y PERSISTENCIA
+  // 7. ENVÍO Y PERSISTENCIA (FORM DATA)
   let formData = {};
   const setupForm = (id, next) => {
     const f = document.getElementById(id);
@@ -174,11 +186,10 @@
   setupForm('datos-familia', screens.paso4);
 
   const fFinal = document.getElementById('datos-finales');
-  const checkSarlaft = document.getElementById('acepto_sarlaft');
-
   if(fFinal) {
     fFinal.onsubmit = async (e) => {
       e.preventDefault();
+      const checkSarlaft = document.getElementById('acepto_sarlaft');
       if (checkSarlaft && !checkSarlaft.checked) {
           alert("⚠️ Acceso Denegado: Debe validar el protocolo de seguridad patrimonial.");
           return;
@@ -189,14 +200,15 @@
       showScreen(screens.carousel);
       startCarousel();
 
-      if(supabaseClient) {
-        const { error } = await supabaseClient.from('postulaciones_sito').insert([formData]);
+      const client = supabaseClient || window.supabaseClient;
+      if(client) {
+        const { error } = await client.from('postulaciones_sito').insert([formData]);
         window.sitoUploadError = error ? error.message : null;
       }
     };
   }
 
-  // 8. MOTOR DE AUDITORÍA VISUAL (CARRUSEL ACTUALIZADO)
+  // 8. MOTOR DE AUDITORÍA VISUAL (CARRUSEL)
   function startCarousel() {
     let idx = 0;
     const totalFrames = 6;
@@ -215,7 +227,7 @@
         if(bar) bar.style.width = '100%';
         setTimeout(() => {
           if (window.sitoUploadError) {
-            alert("⚠️ Error en Auditoría: " + window.sitoUploadError);
+            alert("⚠️ Error: " + window.sitoUploadError);
             showScreen(screens.paso4);
           } else {
             showScreen(screens.confirm);
@@ -225,7 +237,7 @@
     }, 2800);
   }
 
-  // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD (REINTEGRADO)
+  // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
   window.mostrarSitoAlert = (m, i) => {
     const mod = document.getElementById('sito-alert');
     if(mod) {
@@ -250,9 +262,10 @@
   };
 
   async function sincronizarDatosAliado(id) {
-    if(!supabaseClient) return;
+    const client = supabaseClient || window.supabaseClient;
+    if(!client) return;
     try {
-      const { data, error } = await supabaseClient.rpc('acceso_nucleo_espejo', { id_solicitado: id });
+      const { data, error } = await client.rpc('acceso_nucleo_espejo', { id_solicitado: id });
       if (data && data[0]) {
         const p = data[0];
         const ficha = {
@@ -268,20 +281,30 @@
     } catch (e) { console.error("Error RPC:", e); }
   }
 
-  // BINDINGS DE CONTROL FINAL
-  document.getElementById('btn-crear-cuenta').onclick = () => showScreen(screens.video);
-  document.getElementById('btn-iniciar-sesion').onclick = () => showScreen(screens.login);
-  document.getElementById('btn-continuar-postulacion').onclick = () => showScreen(screens.paso1);
-  document.getElementById('back-to-start').onclick = () => showScreen(screens.inicio);
+  // 10. BINDINGS DE CONTROL (INTEGRIDAD V4.0 RECUPERADA)
+  const bind = (id, action) => { 
+    const el = document.getElementById(id); 
+    if(el) el.onclick = action; 
+  };
 
-  document.querySelectorAll('.btn-back').forEach(b => {
-    b.onclick = () => showScreen(screens[b.dataset.target] || screens.inicio);
+  bind('btn-crear-cuenta', () => showScreen(screens.video));
+  bind('btn-iniciar-sesion', () => showScreen(screens.login));
+  bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
+  bind('back-to-start', () => showScreen(screens.inicio));
+
+  // Protocolo Universal para botones "Atrás"
+  document.querySelectorAll('.btn-back').forEach(btn => {
+    btn.onclick = () => {
+      const target = btn.dataset.target;
+      if (screens[target]) {
+        showScreen(screens[target]);
+      } else {
+        showScreen(screens.inicio);
+      }
+    };
   });
   
-  const btnFin = document.getElementById('btn-finalizar');
-  if(btnFin) btnFin.onclick = () => location.reload();
+  bind('btn-finalizar', () => location.reload());
 
 })();
-
-
-    
+          
