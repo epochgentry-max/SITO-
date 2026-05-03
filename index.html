@@ -34,13 +34,14 @@
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo">
   <h1>Tu negocio en tus manos, siempre bajo control</h1>
   <p>Herramientas sencillas para gestionar ventas, inventario y cobranzas – diseñadas para ti</p>
-  <button id="btn-crear-cuenta" class="btn-primario" onclick="navegar('video-induccion')">Crear mi cuenta gratuita</button>
-  <button id="btn-iniciar-sesion" class="btn-secundario" onclick="navegar('login-usuario-sito')">Ya tengo cuenta – Iniciar sesión</button>
+  
+  <button id="btn-crear-cuenta" class="btn-primario" data-target="video-induccion">Crear mi cuenta gratuita</button>
+  <button id="btn-iniciar-sesion" class="btn-secundario" data-target="login-usuario-sito">Ya tengo cuenta – Iniciar sesión</button>
 </div>
 
 <div id="video-induccion" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" onclick="navegar('inicio-sito')">← VOLVER AL INICIO</button>
+    <button class="btn-back" data-target="inicio-sito">←</button>  
   </div>
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 150px; margin-bottom: 20px;">
   <h2 style="color: #d4af37;">Inducción de Aliado</h2>
@@ -53,7 +54,7 @@
 
 <div id="formulario-paso1" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" onclick="navegar('video-induccion')">←</button>
+    <button class="btn-back" data-target="video-induccion">←</button>
     <div>Paso 1 de 4 - Debida Diligencia</div>
   </div>
   <h2>Información del Negocio</h2>
@@ -118,7 +119,7 @@
 
 <div id="formulario-paso2" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" onclick="navegar('formulario-paso1')">←</button>
+    <button class="btn-back" data-target="formulario-paso1">←</button>
     <div>Paso 2 de 4 - Perfil Personal</div>
   </div>
   <h2>Datos de Contacto e Identidad</h2>
@@ -139,7 +140,7 @@
 
 <div id="formulario-paso3" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" onclick="navegar('formulario-paso2')">←</button>
+    <button class="btn-back" data-target="formulario-paso2">←</button>
     <div>Paso 3 de 4 - Entorno Social</div>
   </div>
   <h2>Círculo Familiar y Salud</h2>
@@ -178,11 +179,11 @@
 
 <div id="formulario-paso4" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" onclick="navegar('formulario-paso3')">←</button>
+    <button class="btn-back" data-target="formulario-paso3">←</button>
     <div>Paso 4 de 4 - Historial y Credenciales</div>
   </div>
   <h2>Perfil Profesional y Seguridad</h2>
-  <form id="datos-finales" onsubmit="event.preventDefault(); ejecutarAuditoria();">
+  <form id="datos-finales" onsubmit="event.preventDefault(); if(typeof ejecutarAuditoria === 'function'){ ejecutarAuditoria(); }">
     <div class="seccion-form">
       <p class="titulo-subseccion">Referencias Familiares</p>
       <div class="fila-doble">
@@ -281,45 +282,36 @@
 
 <div id="login-usuario-sito" class="screen">
   <div class="barra-superior">
-    <button class="btn-back" onclick="navegar('inicio-sito')">←</button>
+    <button class="btn-back" data-target="inicio-sito">←</button>
     <div>Acceso Aliado SITO</div>
   </div>
   <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 120px; margin-top: 20px;"> 
   <h2>Iniciar Sesión</h2>
-  <form id="form-login" onsubmit="event.preventDefault(); alert('Iniciando sesión...');">
+  
+  <form id="form-login">
     <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;" autocomplete="username">
+    
     <div style="position: relative; width: 100%; margin-bottom: 20px;">
       <input type="password" id="login_password" name="password" placeholder="Contraseña *" required style="width: 100%; padding-right: 45px;" autocomplete="current-password">
-      <span id="toggle-password-icon" style="position: absolute; right: 15px; top: 25px; transform: translateY(-50%); cursor: pointer; color: #2196F3; opacity: 0.8;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-          <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-      </span>
+      <span id="togglePassword" style="position: absolute; right: 15px; top: 25px; transform: translateY(-50%); cursor: pointer; color: #2196F3; opacity: 0.8; font-size: 20px;">👁️</span>
     </div>
+    
     <button type="submit" class="btn-primario">Entrar al Sistema</button>
   </form>
+  
   <p style="margin-top: 20px; font-size: 12px; color: #666;">¿Olvidó sus credenciales? Contacte a su analista de cuenta.</p>
 </div>
 
-<script>
-  function navegar(targetId) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    const target = document.getElementById(targetId);
-    if(target) target.classList.add('active');
-    window.scrollTo(0,0);
-  }
-
-  function ejecutarAuditoria() {
-    navegar('carousel-container');
-    const bar = document.getElementById('loading-bar');
-    setTimeout(() => { bar.style.width = '100%'; }, 100);
-    setTimeout(() => { navegar('formulario-confirmacion'); }, 3800);
-  }
-</script>
+<div id="sito-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+  <div style="background:#020a12; border:1px solid #d4af37; border-radius:15px; padding:30px; text-align:center; max-width:400px; width:100%; box-shadow:0 0 20px rgba(212,175,55,0.2);">
+    <div id="sito-alert-icon" style="font-size:50px; margin-bottom:15px;">✅</div>
+    <div id="sito-alert-msg" style="color:white; font-size:18px; margin-bottom:25px; font-weight:bold;">Mensaje de Sistema</div>
+    <button onclick="cerrarSitoAlert()" style="background:#d4af37; color:black; border:none; padding:12px 30px; border-radius:8px; font-weight:bold; cursor:pointer; width:100%;">ENTENDIDO</button>
+  </div>
+</div>
 
 <script src="input.js"></script>
-</body>
-</html>
 
-                                                                   
+</body>
+    </html>
+        
