@@ -181,18 +181,32 @@
   setupForm('datos-contacto', screens.paso3);
   setupForm('datos-familia', screens.paso4);
 
+  // INTERVENCIÓN QUIRÚRGICA: VALIDACIÓN SARLAFT INTEGRADA
   const fFinal = document.getElementById('datos-finales');
-  if(fFinal) fFinal.onsubmit = async (e) => {
-    e.preventDefault();
-    new FormData(fFinal).forEach((v, k) => { formData[k] = v; });
-    formData['acepto_sarlaft'] = document.getElementById('acepto_sarlaft')?.checked || false;
+  const checkSarlaft = document.getElementById('acepto_sarlaft');
 
-    showScreen(screens.carousel);
-    startCarousel();
+  if(fFinal) {
+    fFinal.onsubmit = async (e) => {
+      e.preventDefault();
+      
+      // Verificación de seguridad patrimonial
+      if (checkSarlaft && !checkSarlaft.checked) {
+          alert("Debe aceptar el protocolo de seguridad patrimonial para continuar.");
+          return;
+      }
 
-    const { error } = await supabaseClient.from('postulaciones_sito').insert([formData]);
-    window.sitoUploadError = error ? error.message : null;
-  };
+      new FormData(fFinal).forEach((v, k) => { formData[k] = v; });
+      formData['acepto_sarlaft'] = checkSarlaft?.checked || false;
+
+      showScreen(screens.carousel);
+      startCarousel();
+
+      if(supabaseClient) {
+        const { error } = await supabaseClient.from('postulaciones_sito').insert([formData]);
+        window.sitoUploadError = error ? error.message : null;
+      }
+    };
+  }
 
   // 8. CARRUSEL Y NAVEGACIÓN
   function startCarousel() {
@@ -229,11 +243,14 @@
   };
 
   window.cerrarSitoAlert = () => {
-    document.getElementById('sito-alert').style.display = 'none';
+    const mod = document.getElementById('sito-alert');
+    if(mod) mod.style.display = 'none';
     const id = sessionStorage.getItem('sito_id_aliado');
     if (id) {
-      document.getElementById('alias-aliado').innerText = sessionStorage.getItem('sito_nombre_aliado');
-      document.getElementById('id-sito-display').innerText = id;
+      const aliasEl = document.getElementById('alias-aliado');
+      const idEl = document.getElementById('id-sito-display');
+      if(aliasEl) aliasEl.innerText = sessionStorage.getItem('sito_nombre_aliado');
+      if(idEl) idEl.innerText = id;
       showScreen(screens.dashboard);
       sincronizarDatosAliado(id);
     }
@@ -249,7 +266,6 @@
           'dat-nombre': p.f_nombre_completo, 'dat-cedula': p.f_cc_nit, 'dat-email': p.f_email,
           'dat-tel': p.f_telefono_movil, 'dat-negocio': p.f_nombre_comercial, 'dat-id-publico': p.f_id_publico_aliado,
           'dat-situacion': p.f_situacion_laboral, 'dat-sarlaft': p.f_acepto_sarlaft ? "ACEPTADO" : "PENDIENTE"
-          // Se pueden añadir más mapeos aquí
         };
         Object.keys(ficha).forEach(key => {
           const el = document.getElementById(key);
@@ -260,10 +276,18 @@
   }
 
   // BINDINGS DE BOTONES
-  document.getElementById('btn-crear-cuenta').onclick = () => showScreen(screens.video);
-  document.getElementById('btn-iniciar-sesion').onclick = () => showScreen(screens.login);
-  document.getElementById('btn-continuar-postulacion').onclick = () => showScreen(screens.paso1);
-  document.getElementById('back-to-start').onclick = () => showScreen(screens.inicio);
+  const btnCrear = document.getElementById('btn-crear-cuenta');
+  if(btnCrear) btnCrear.onclick = () => showScreen(screens.video);
+
+  const btnLogin = document.getElementById('btn-iniciar-sesion');
+  if(btnLogin) btnLogin.onclick = () => showScreen(screens.login);
+
+  const btnContPost = document.getElementById('btn-continuar-postulacion');
+  if(btnContPost) btnContPost.onclick = () => showScreen(screens.paso1);
+
+  const btnBackStart = document.getElementById('back-to-start');
+  if(btnBackStart) btnBackStart.onclick = () => showScreen(screens.inicio);
+
   document.querySelectorAll('.btn-back').forEach(b => {
     b.onclick = () => showScreen(screens[b.dataset.target] || screens.inicio);
   });
@@ -272,4 +296,5 @@
   if(btnFin) btnFin.onclick = () => location.reload(); // Limpieza total
 
 })();
- 
+
+          
