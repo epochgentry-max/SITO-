@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SITO - Epoch Gentry Group</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+      /* Ajuste quirúrgico para el checkbox personalizado */
+      .checkbox-sarlaft {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        background: rgba(255, 152, 0, 0.2);
+        border: 2px solid #FF9800;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .checkbox-sarlaft:checked::after {
+        content: "🆗";
+        font-size: 16px;
+      }
+    </style>
 </head>
 <body>
 
@@ -205,25 +227,29 @@
         <input type="text" id="jefe_inmediato" name="jefe_inmediato" placeholder="Nombre Jefe Inmediato *" required>
       </div>
     </div>
+
     <select id="pasado_judicial" name="pasado_judicial" required>
       <option value="">¿Tiene pasado judicial limpio? *</option>
       <option value="si">Sí</option>
       <option value="no">No</option>
     </select>
+
     <div style="background: rgba(255, 152, 0, 0.1); border-left: 5px solid #FF9800; padding: 12px; border-radius: 4px; margin: 15px 0; text-align: justify; font-size: 11px; line-height: 1.4;">
       <strong style="color: #FF9800; display: block; margin-bottom: 5px;">⚠️ NOTA DE SEGURIDAD PATRIMONIAL:</strong>
       Usted autoriza el estudio y verificación de la información suministrada en cumplimiento estricto del SARLAFT.
       <label style="display: flex; align-items: flex-start; margin-top: 10px; cursor: pointer; font-weight: bold; color: #FF9800; gap: 8px;">
-        <input type="checkbox" id="acepto_sarlaft" name="acepto_sarlaft" required style="width: 18px; height: 18px; cursor: pointer;">
-        Confirmo que he leído y acepto los términos de seguridad y verificación patrimonial. *
+        <input type="checkbox" id="acepto_sarlaft" name="acepto_sarlaft" required class="checkbox-sarlaft">
+        <span>Confirmo que he leído y acepto los términos de seguridad y verificación patrimonial. *</span>
       </label>
     </div>
+
     <div style="background: rgba(33, 150, 243, 0.1); padding: 15px; border-radius: 8px; margin-top: 10px;">
       <strong style="color: #2196F3;">🔐 Credenciales SITO:</strong>
-      <input type="text" id="reg_username" name="reg_username" placeholder="Usuario deseado *" required autocomplete="username">
-      <input type="password" id="reg_password" name="reg_password" placeholder="Contraseña segura *" required autocomplete="new-password">
+      <input type="text" id="reg_username" name="reg_username" placeholder="Usuario deseado *" required autocomplete="username" style="width: 100%; margin-top: 10px;">
+      <input type="password" id="reg_password" name="reg_password" placeholder="Contraseña segura *" required autocomplete="new-password" style="width: 100%; margin-top: 10px;">
     </div>
-    <button type="submit" class="btn-primario">Enviar a Auditoría</button>
+
+    <button type="submit" class="btn-primario" style="margin-top: 20px;">Enviar a Auditoría</button>
   </form>
 </div>
 
@@ -294,5 +320,6 @@
 
 <script src="input.js"></script>
 </body>
-        </html>
-        
+</html>
+
+                                                                   
