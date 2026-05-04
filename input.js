@@ -255,20 +255,31 @@
     }, 2800);
   }
 
-  /* ============================================================
-     BLOQUE [D]: MOTOR DE ACTIVACIÓN DE PESTAÑA (UI)
+    /* ============================================================
+     BLOQUE [D]: MOTOR DE IDENTIDAD (AUTO-CREACIÓN ÉLITE)
      ============================================================ */
   function activarPestañaIdentidad(nombre, idManual) {
-      const pNombre = document.getElementById('pestaña-user');
-      const pID = document.getElementById('pestaña-id');
-      const pCont = document.getElementById('pestaña-operador-fija');
-      if (pNombre && pID && pCont) {
-          pNombre.innerText = nombre;
-          pID.innerText = idManual;
-          pCont.style.display = 'block';
-          localStorage.setItem('sito_sesion_activa', 'true');
+      let pCont = document.getElementById('pestaña-operator-fija');
+      
+      // Si no existe en el HTML, el sistema la construye en caliente
+      if (!pCont) {
+          pCont = document.createElement('div');
+          pCont.id = 'pestaña-operador-fija';
+          pCont.innerHTML = `
+              <span class="indicador-nombre" id="pestaña-user">${nombre}</span>
+              <span class="indicador-id" id="pestaña-id">${idManual}</span>
+          `;
+          document.body.appendChild(pCont);
+      } else {
+          document.getElementById('pestaña-user').innerText = nombre;
+          document.getElementById('pestaña-id').innerText = idManual;
       }
+
+      // Asegurar visibilidad absoluta
+      pCont.style.display = 'block';
+      localStorage.setItem('sito_sesion_activa', 'true');
   }
+  
 
   // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
   window.mostrarSitoAlert = (m, i) => {
