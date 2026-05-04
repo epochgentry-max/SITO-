@@ -371,7 +371,7 @@ select {
 
 #dashboard-aliado {
     width: 100vw !important;
-    height: 100vh !important;
+    height: 100dvh !important;
     max-width: none !important;
     padding: 0 !important;
     border-radius: 0 !important;
@@ -381,7 +381,7 @@ select {
 
 .edificio-container {
     display: grid;
-    width: 100vw; height: 100vh;
+    width: 100vw; height: 100dvh;
     grid-template-rows: var(--altura-cabecera) var(--altura-historial) 1fr var(--altura-footer);
     grid-template-areas: "cabecera" "historial" "nucleo" "footer";
 }
