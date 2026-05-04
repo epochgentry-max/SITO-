@@ -539,7 +539,7 @@ select {
 .cuarto-footer {
     /* Aplicamos el mismo borde y animación a TODO */
     border: 1px solid rgba(33, 150, 243, 0.3) !important;
-    animation: pulsoUnificado 3s infinite ease-in-out !important; /* 3s para un ritmo más vivo */
+    animation: pulsoUnificado 6s infinite ease-in-out !important; /* 3s para un ritmo más vivo */
 }
 
 /* 3. Refuerzo Específico para la zona superior */
