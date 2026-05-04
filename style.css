@@ -400,7 +400,32 @@ select {
 .terminal-input-area input { flex: 1; background: transparent; border: none; color: white; padding: 0 8px; font-size: 0.6rem; outline: none; }
 .terminal-send { width: 35px; background: #00e5ff; border: none; color: black; font-weight: bold; font-size: 0.6rem; cursor: pointer; }
 
-#zona-historial { grid-area: historial; background-color: #F5F5F5; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; border-bottom: 1px solid #ccc; color: #333; }
+/* ============================================================
+   REVESTIMIENTO: VIGA DE CRISTAL CENTRAL (BALANCE)
+   Logica: Convierte el gris sólido en cristal esmerilado.
+   ============================================================ */
+#zona-historial { 
+    grid-area: historial; 
+    /* Efecto Vidrio Blanco Nublado */
+    background: rgba(255, 255, 255, 0.1) !important; 
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    
+    /* Estética y Tipografía */
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-weight: bold; 
+    font-size: 0.85rem; 
+    letter-spacing: 1px;
+    color: #ffffff !important; 
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    
+    /* Separadores de Integridad */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+
 
 #zona-nucleo { grid-area: nucleo; display: grid; grid-template-columns: 1fr 180px; background: var(--viga); overflow: hidden; }
 
