@@ -345,215 +345,330 @@ select {
    Logica: Cero flexibilidad. Control total por píxel.
    ============================================================ */
 
+
+/* ============================================================
+   FUNCIÓN: DEFINICIÓN DE ADN ESTRUCTURAL (VARIABLES RAÍZ)
+   Lógica: Centralización de dimensiones y paleta de identidad élite.
+   ============================================================ */
 :root {
-    /* Identidad de Élite: Azul Metal y Cristal */
-    --azul-elite-metal: #1a2a3a; 
-    --vidrio-nublado: rgba(255, 255, 255, 0.07); 
-    --borde-oro-tenue: rgba(212, 175, 55, 0.3);
+    /* --- Identidad Visual --- */
+    --azul-elite-metal: #1a2a3a;              /* Color base para superficies metálicas */
+    --vidrio-nublado: rgba(255, 255, 255, 0.07); /* Efecto de transparencia para módulos */
+    --borde-oro-tenue: rgba(212, 175, 55, 0.3); /* Acento de jerarquía para Epoch Gentry */
     
-    /* Medidas quirúrgicas inamovibles */
-    --ancho-total: 100vw;
-    --alto-total: 100dvh;
-    --h-cabecera: 260px;
-    --h-viga: 45px;
-    --h-footer: 70px;
+    /* --- Medidas de Arquitectura Expandida --- */
+    --ancho-total: 100vw;                     /* Ocupación total del ancho de ventana */
+    --alto-total: 100dvh;                     /* Ocupación dinámica del alto del dispositivo */
+    --h-cabecera: 320px;                      /* [ACTUALIZADO] Expansión para autoridad visual superior */
+    --h-viga: 45px;                           /* Grosor inamovible de la viga divisoria */
+    --h-footer: 70px;                         /* Base sólida para navegación inferior */
     
-    --viga-color: #020617;
-    --azul-sito: #050a14;
-    --neon-vida: rgba(33, 150, 243, 0.5);
-    --latido-velocidad: 4s;
+    /* --- Estados Operativos --- */
+    --viga-color: #020617;                    /* Oscuridad profunda para blindaje de fondo */
+    --azul-sito: #050a14;                     /* Tono específico del núcleo operativo */
+    --neon-vida: rgba(33, 150, 243, 0.5);      /* Base para el pulso de sincronía */
+    --latido-velocidad: 4s;                   /* Cadencia del ciclo vital del sistema */
 }
 
+/* ============================================================
+   FUNCIÓN: CONTENEDOR RAÍZ (BLINDAJE DE INTERFAZ)
+   Lógica: Bloqueo de scroll y posicionamiento absoluto sobre el DOM.
+   ============================================================ */
 #dashboard-aliado {
-    width: var(--ancho-total) !important;
-    height: var(--alto-total) !important;
-    max-width: none !important;
-    padding: 0 !important;
-    margin: 0 !important; 
-    border-radius: 0 !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    overflow: hidden; /* Blindaje de movimiento raíz */
-    background: var(--viga-color);
-    z-index: 1000;
-    display: none; 
+    width: var(--ancho-total) !important;      /* Fuerza el ancho al total de la pantalla */
+    height: var(--alto-total) !important;     /* Fuerza el alto al total de la pantalla */
+    max-width: none !important;               /* Anula restricciones de layouts externos */
+    padding: 0 !important;                    /* Elimina márgenes internos */
+    margin: 0 !important;                     /* Elimina márgenes externos */
+    border-radius: 0 !important;              /* Bordes rectos para máxima seriedad */
+    position: fixed;                          /* Se ancla sobre cualquier otro elemento */
+    top: 0;                                   /* Posición superior cero */
+    left: 0;                                  /* Posición izquierda cero */
+    overflow: hidden;                         /* Blindaje de movimiento: prohibe scroll raíz */
+    background: var(--viga-color);            /* Color de fondo sistémico */
+    z-index: 1000;                            /* Prioridad de renderizado superior */
+    display: none;                            /* Estado inicial desactivado */
 }
 
+/* --- Activación por Comando --- */
 #dashboard-aliado.active {
-    display: block; 
+    display: block;                           /* Se visibiliza solo bajo orden directa */
 }
 
+/* ============================================================
+   FUNCIÓN: INFRAESTRUCTURA VERTICAL (EL EDIFICIO)
+   Lógica: Comportamiento de bloque sólido para contención de módulos.
+   ============================================================ */
 .edificio-container {
-    display: block; /* Estructura sólida no flexible */
-    width: 100%;
-    height: 100%;
+    display: block;                           /* Estructura secuencial sólida */
+    width: 100%;                              /* Cobertura total del ancho */
+    height: 100%;                             /* Cobertura total del alto */
 }
 
+/* ============================================================
+   FUNCIÓN: ZONA SUPERIOR (NÚCLEO DE IDENTIDAD)
+   Lógica: Espacio de visualización para el operador y la IA.
+   ============================================================ */
 #zona-superior {
-    height: var(--h-cabecera);
-    width: 100%;
-    background-color: var(--azul-sito);
-    display: grid;
-    grid-template-columns: 2fr 1.5fr;
-    color: white; 
-    border-bottom: 2px solid var(--viga-color);
+    height: var(--h-cabecera);                /* Altura definida en el ADN (:root) */
+    width: 100%;                              /* Ancho completo del sistema */
+    background-color: var(--azul-sito);       /* Color del núcleo */
+    display: grid;                            /* Sistema de rejilla para división */
+    grid-template-columns: 2fr 1.5fr;         /* Proporción entre Operador e IA */
+    color: white;                             /* Texto en alto contraste */
+    border-bottom: 2px solid var(--viga-color); /* Límite estructural inferior */
 }
 
-.perfil-bloque { border-right: 1px solid rgba(255,255,255,0.2); padding: 10px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.7rem; color: #fff; }
+/* --- Módulo de Perfil --- */
+.perfil-bloque { 
+    border-right: 1px solid rgba(255,255,255,0.2); /* Divisoria interna */
+    padding: 10px;                            /* Margen de seguridad */
+    display: flex;                            /* Caja flexible */
+    align-items: center;                      /* Centrado vertical */
+    justify-content: center;                  /* Centrado horizontal */
+    text-align: center;                       /* Alineación de texto */
+    font-size: 0.7rem;                        /* Tamaño de fuente técnico */
+    color: #fff;                              /* Color blanco puro */
+}
 
-#zona-avatar-inventario { display: flex; flex-direction: column; background-color: #050a14; position: relative; overflow: hidden; }
+/* --- Contenedor IA/Avatar --- */
+#zona-avatar-inventario { 
+    display: flex;                            /* Flexibilidad interna */
+    flex-direction: column;                   /* Apilamiento vertical */
+    background-color: #050a14;                /* Fondo oscuro para contraste de avatar */
+    position: relative;                       /* Soporte para elementos posicionados */
+    overflow: hidden;                         /* Recorte de desbordamiento */
+}
 
-.pantalla-texto { flex: 1; padding: 8px; font-size: 0.65rem; color: #00e5ff; overflow-y: auto; text-align: left; font-family: 'Courier New', monospace; }
+/* --- Terminal de Texto --- */
+.pantalla-texto { 
+    flex: 1;                                  /* Ocupa todo el espacio disponible */
+    padding: 8px;                             /* Separación de bordes */
+    font-size: 0.65rem;                       /* Lectura técnica reducida */
+    color: #00e5ff;                           /* Color cian de flujo de datos */
+    overflow-y: auto;                         /* Scroll interno si el texto desborda */
+    text-align: left;                         /* Lectura estándar */
+    font-family: 'Courier New', monospace;    /* Tipografía de consola */
+}
 
-.terminal-input-area { height: 30px; display: flex; background: rgba(0,0,0,0.8); border-top: 1px solid rgba(0,229,255,0.2); }
-.terminal-input-area input { flex: 1; background: transparent; border: none; color: white; padding: 0 8px; font-size: 0.6rem; outline: none; }
-.terminal-send { width: 35px; background: #00e5ff; border: none; color: black; font-weight: bold; font-size: 0.6rem; cursor: pointer; }
+/* --- Área de Input Terminal --- */
+.terminal-input-area { 
+    height: 30px;                             /* Altura del campo de entrada */
+    display: flex;                            /* Disposición lineal */
+    background: rgba(0,0,0,0.8);              /* Fondo de entrada terminal */
+    border-top: 1px solid rgba(0,229,255,0.2); /* Límite de campo */
+}
 
+.terminal-input-area input { 
+    flex: 1;                                  /* El input toma el ancho restante */
+    background: transparent;                  /* Fondo nulo */
+    border: none;                             /* Sin bordes estándar */
+    color: white;                             /* Escritura en blanco */
+    padding: 0 8px;                           /* Margen de texto */
+    font-size: 0.6rem;                        /* Tamaño micro-operativo */
+    outline: none;                            /* Elimina resalte de foco */
+}
+
+.terminal-send { 
+    width: 35px;                              /* Botón de envío compacto */
+    background: #00e5ff;                      /* Color activo cian */
+    border: none;                             /* Sin bordes */
+    color: black;                             /* Icono/Texto en contraste negro */
+    font-weight: bold;                        /* Grosor de fuente */
+    font-size: 0.6rem;                        /* Tamaño técnico */
+    cursor: pointer;                          /* Indicador de acción */
+}
+
+/* ============================================================
+   FUNCIÓN: VIGA DE HISTORIAL (CRISTAL DE SEPARACIÓN)
+   Lógica: Punto de inflexión visual con efecto Glassmorphism.
+   ============================================================ */
 #zona-historial { 
-    height: var(--h-viga);
-    width: 100%;
-    /* Blanco Denso con desenfoque */
-    background: rgba(255, 255, 255, 0.65) !important;
-    backdrop-filter: blur(20px) !important;
-    -webkit-backdrop-filter: blur(20px) !important;
-    
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-weight: 900; 
-    font-size: 0.9rem; 
-    color: #020a12 !important;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    
-    border-bottom: 2px solid #d4af37;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    height: var(--h-viga);                    /* Altura paramétrica */
+    width: 100%;                              /* Ancho total */
+    background: rgba(255, 255, 255, 0.65) !important; /* Blanco denso translúcido */
+    backdrop-filter: blur(20px) !important;   /* Desenfoque de fondo para realismo */
+    -webkit-backdrop-filter: blur(20px) !important; /* Soporte para motores Webkit */
+    display: flex;                            /* Caja flexible */
+    align-items: center;                      /* Centrado vertical de título */
+    justify-content: center;                  /* Centrado horizontal de título */
+    font-weight: 900;                         /* Grosor de fuente máximo */
+    font-size: 0.9rem;                        /* Tamaño de lectura rápida */
+    color: #020a12 !important;                /* Texto oscuro sobre fondo claro */
+    text-transform: uppercase;                /* Forzar mayúsculas de autoridad */
+    letter-spacing: 2px;                      /* Espaciado de carácter de élite */
+    border-bottom: 2px solid #d4af37;         /* Línea de oro bajo el cristal */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); /* Sombra de profundidad */
 }
 
+/* ============================================================
+   FUNCIÓN: ZONA NÚCLEO (ESPACIO OPERATIVO)
+   Lógica: Cálculo automático del espacio restante para módulos.
+   ============================================================ */
 #zona-nucleo { 
+    /* El alto se calcula restando la cabecera, la viga y el footer del total */
     height: calc(var(--alto-total) - var(--h-cabecera) - var(--h-viga) - var(--h-footer));
-    width: 100%;
-    display: grid; 
-    grid-template-columns: 1fr 180px; 
-    background: var(--viga-color); 
-    overflow: hidden; 
+    width: 100%;                              /* Ancho total */
+    display: grid;                            /* Rejilla de mando */
+    grid-template-columns: 1fr 140px;         /* [ACTUALIZADO] Columna lateral optimizada */
+    background: var(--viga-color);            /* Fondo sistémico */
+    overflow: hidden;                         /* Bloqueo de desbordamiento externo */
 }
 
+/* --- Rejilla de Cuartos Operativos --- */
 #cuartos-operativos { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    grid-auto-rows: 120px; /* Tamaño fijo por celda */
-    gap: 1px; 
-    padding: 0; 
-    overflow-y: scroll; /* Elevador interno habilitado */
-    height: 100%; 
+    display: grid;                            /* Rejilla interna */
+    grid-template-columns: repeat(3, 1fr);    /* 3 Columnas iguales por fila */
+    grid-auto-rows: 140px;                    /* [ACTUALIZADO] Altura de módulo expandida */
+    gap: 1px;                                 /* Separación mínima entre celdas */
+    padding: 0;                               /* Sin relleno para ajuste por píxel */
+    overflow-y: scroll;                       /* Único punto de scroll: el elevador interno */
+    height: 100%;                             /* Altura total del contenedor núcleo */
 }
 
+/* --- Módulo Individual (La Celda) --- */
 .cuarto-modulo {
-    background: var(--vidrio-nublado) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: rgba(212, 175, 55, 0.6);
-    border: 0.5px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    background: var(--vidrio-nublado) !important; /* Vidrio oscuro */
+    backdrop-filter: blur(12px) !important;   /* Desenfoque de celda */
+    -webkit-backdrop-filter: blur(12px) !important; /* Soporte Webkit */
+    display: flex;                            /* Centrado flexible */
+    align-items: center;                      /* Centrado vertical */
+    justify-content: center;                  /* Centrado horizontal */
+    font-size: 1.5rem;                        /* Tamaño de número operativo */
+    color: rgba(212, 175, 55, 0.6);           /* Color oro con transparencia */
+    border: 0.5px solid rgba(255, 255, 255, 0.1); /* Borde de definición */
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2); /* Profundidad interna */
+    transition: all 0.3s ease;                /* Suavizado de interacción */
 }
 
 .cuarto-modulo:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
-    border: 0.5px solid var(--borde-oro-tenue) !important;
-    cursor: pointer;
+    background: rgba(255, 255, 255, 0.12) !important; /* Iluminación al pasar puntero */
+    border: 0.5px solid var(--borde-oro-tenue) !important; /* Oro sólido al foco */
+    cursor: pointer;                          /* Indicador de interactividad */
 }
 
-#columna-lateral-incrustada { display: grid; grid-template-rows: 1fr 100px; background-color: #f0f0f0; border-left: 2px solid var(--viga-color); }
-.seccion-lateral { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.7rem; color: #555; padding: 5px; border-bottom: 1px solid #ccc; }
-.seccion-lateral.noticias { background-color: #e0e0e0; font-weight: bold; }
-.seccion-lateral.teleprompter { background-color: #d0d0d0; font-family: monospace; }
-
-#zona-footer { 
-    height: var(--h-footer);
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    background-color: #ddd; 
-    display: grid; 
-    grid-template-columns: repeat(4, 1fr); 
+/* --- Columna Lateral Incrustada --- */
+#columna-lateral-incrustada { 
+    display: grid;                            /* Rejilla lateral */
+    grid-template-rows: 1fr 100px;            /* Proporción de secciones */
+    background-color: #f0f0f0;                /* Color neutro para datos secundarios */
+    border-left: 2px solid var(--viga-color); /* Unión con el núcleo */
 }
 
-.cuarto-footer { border: 1px solid #bbb; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666; }
+.seccion-lateral { 
+    display: flex;                            /* Centrado flexible */
+    align-items: center;                      /* Alineación vertical */
+    justify-content: center;                  /* Alineación horizontal */
+    text-align: center;                       /* Texto centrado */
+    font-size: 0.7rem;                        /* Fuente reducida */
+    color: #555;                              /* Color gris oscuro */
+    padding: 5px;                             /* Margen de confort */
+    border-bottom: 1px solid #ccc;            /* Separación interna */
+}
+
+.seccion-lateral.noticias { background-color: #e0e0e0; font-weight: bold; } /* Área de datos */
+.seccion-lateral.teleprompter { background-color: #d0d0d0; font-family: monospace; } /* Área de log */
 
 /* ============================================================
-   BLOQUE [C]: HUD DE IDENTIDAD ÉLITE (EPOCH GENTRY SITO)
+   FUNCIÓN: ZONA FOOTER (BASE DE COMANDO)
+   Lógica: Posicionamiento absoluto en la base del edificio.
+   ============================================================ */
+#zona-footer { 
+    height: var(--h-footer);                  /* Altura definida en ADN */
+    width: 100%;                              /* Ancho total */
+    position: absolute;                       /* Se ancla al fondo del dashboard */
+    bottom: 0;                                /* Posición inferior absoluta */
+    background-color: #ddd;                   /* Fondo sólido neutro */
+    display: grid;                            /* Rejilla de 4 accesos */
+    grid-template-columns: repeat(4, 1fr);    /* División equitativa */
+}
+
+.cuarto-footer { 
+    border: 1px solid #bbb;                   /* Bordes de botón */
+    display: flex;                            /* Centrado flexible */
+    align-items: center;                      /* Vertical */
+    justify-content: center;                  /* Horizontal */
+    font-size: 0.8rem;                        /* Fuente de etiqueta */
+    color: #666;                              /* Color de etiqueta */
+}
+
+/* ============================================================
+   FUNCIÓN: HUD DE IDENTIDAD ÉLITE (BLOQUE C)
+   Lógica: Superposición de identidad externa al edificio principal.
    ============================================================ */
 #pestaña-operador-fija {
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
-    display: none;
-    z-index: 9999 !important;
-    background: rgba(2, 10, 18, 0.85) !important; 
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
-    border: 1px solid rgba(212, 175, 55, 0.5) !important; 
-    border-radius: 8px !important;
-    padding: 8px 12px !important;
-    font-family: 'Courier New', monospace !important;
+    position: fixed !important;               /* Anclaje fijo absoluto */
+    top: 15px !important;                     /* Margen superior */
+    left: 15px !important;                    /* Margen izquierdo */
+    display: none;                            /* Invisible por defecto */
+    z-index: 9999 !important;                 /* Por encima de toda la arquitectura */
+    background: rgba(2, 10, 18, 0.85) !important; /* Vidrio ultra-oscuro */
+    backdrop-filter: blur(10px) !important;   /* Desenfoque HUD */
+    -webkit-backdrop-filter: blur(10px) !important; /* Soporte Webkit */
+    border: 1px solid rgba(212, 175, 55, 0.5) !important; /* Borde Oro Gentry */
+    border-radius: 8px !important;            /* Bordes suavizados para HUD */
+    padding: 8px 12px !important;             /* Relleno de datos */
+    font-family: 'Courier New', monospace !important; /* Fuente técnica */
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2), 
-                inset 0 0 10px rgba(212, 175, 55, 0.1) !important;
+                inset 0 0 10px rgba(212, 175, 55, 0.1) !important; /* Brillo áureo */
 }
 
 .indicador-nombre { 
-    color: #ffffff !important;
-    font-size: 13px !important; 
-    text-transform: uppercase !important; 
-    font-weight: bold !important; 
-    letter-spacing: 1px !important;
-    display: block !important;
-    margin-bottom: 2px !important;
-    text-shadow: 0 0 5px rgba(255,255,255,0.5) !important;
+    color: #ffffff !important;                /* Nombre del Operador en Blanco */
+    font-size: 13px !important;               /* Tamaño de lectura */
+    text-transform: uppercase !important;     /* Mayúsculas imperativas */
+    font-weight: bold !important;             /* Resaltado */
+    letter-spacing: 1px !important;           /* Espaciado de élite */
+    display: block !important;                /* Línea única */
+    margin-bottom: 2px !important;            /* Separación de ID */
+    text-shadow: 0 0 5px rgba(255,255,255,0.5) !important; /* Aura de luz */
 }
 
 .indicador-id { 
-    color: #d4af37 !important;
-    font-size: 10px !important; 
-    font-weight: bold !important;
-    display: block !important;
-    letter-spacing: 0.5px !important;
+    color: #d4af37 !important;                /* ID en Oro Gentry */
+    font-size: 10px !important;               /* Tamaño menor */
+    font-weight: bold !important;             /* Resaltado */
+    display: block !important;                /* Línea única */
+    letter-spacing: 0.5px !important;         /* Espaciado técnico */
 }
 
 /* ============================================================
-   PROTOCOLO SINAPSIS: PULSO UNIFICADO (V6.4)
+   FUNCIÓN: PROTOCOLO SINAPSIS (PULSO UNIFICADO V6.4)
+   Lógica: Sincronización visual de todos los componentes mediante luz.
    ============================================================ */
 
+/* --- Animación de Latido --- */
 @keyframes pulsoUnificado {
     0%, 100% { 
         border-color: rgba(33, 150, 243, 0.2); 
         box-shadow: 0 0 5px rgba(33, 150, 243, 0.1); 
     }
     50% { 
-        border-color: rgba(0, 229, 255, 1);
+        border-color: rgba(0, 229, 255, 1);     /* Cénit del pulso (Cian puro) */
         box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), 
                     inset 0 0 10px rgba(0, 229, 255, 0.2); 
     }
 }
 
+/* --- Aplicación del Protocolo a la Infraestructura --- */
 #zona-superior, 
 #zona-historial, 
 .cuarto-modulo, 
 .seccion-lateral, 
 .cuarto-footer {
-    border: 1px solid rgba(33, 150, 243, 0.3) !important;
-    animation: pulsoUnificado 9s infinite ease-in-out !important;
+    border: 1px solid rgba(33, 150, 243, 0.3) !important; /* Borde base de sincronía */
+    animation: pulsoUnificado 9s infinite ease-in-out !important; /* Ejecución de ciclo vital */
 }
 
 #zona-superior {
-    border-bottom: 2px solid rgba(0, 229, 255, 0.5) !important;
+    border-bottom: 2px solid rgba(0, 229, 255, 0.5) !important; /* Límite superior reforzado */
 }
 
 </style>
+
+
+
+</style>
+
+
    
