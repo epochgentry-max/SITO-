@@ -401,31 +401,31 @@ select {
 .terminal-send { width: 35px; background: #00e5ff; border: none; color: black; font-weight: bold; font-size: 0.6rem; cursor: pointer; }
 
 /* ============================================================
-   REVESTIMIENTO: VIGA DE CRISTAL AHUMADO (OPACIDAD ÉLITE)
-   Logica: Incrementa la densidad del blanco para efecto "esmerilado denso".
+   REVESTIMIENTO: VIGA DE CRISTAL BLANCO DENSO
+   Logica: Máxima densidad de blanco para efecto material sólido.
    ============================================================ */
 #zona-historial { 
     grid-area: historial; 
-    /* Efecto Vidrio Ahumado Blanco (Más Opaco) */
-    background: rgba(255, 255, 255, 0.25) !important; /* Subimos de 0.1 a 0.25 */
-    backdrop-filter: blur(15px) !important; /* Desenfoque más profundo */
-    -webkit-backdrop-filter: blur(15px) !important;
+    /* Blanco Denso con desenfoque */
+    background: rgba(255, 255, 255, 0.65) !important; /* Subimos a 0.65 para que sea "más blanco" */
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
     
-    /* Estética Superior */
+    /* Contraste y Tipografía */
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    font-weight: 800; 
+    font-weight: 900; 
     font-size: 0.9rem; 
-    letter-spacing: 1.5px;
-    color: #020a12 !important; /* Texto oscuro para contraste sobre cristal blanco */
-    text-shadow: none;
+    color: #020a12 !important; /* Texto oscuro para legibilidad total */
+    text-transform: uppercase;
+    letter-spacing: 2px;
     
-    /* Blindaje Visual */
-    border-bottom: 2px solid rgba(212, 175, 55, 0.5); 
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Acabado Élite */
+    border-bottom: 2px solid #d4af37; /* Oro sólido para anclar la viga */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
+
 
 
 #zona-nucleo { grid-area: nucleo; display: grid; grid-template-columns: 1fr 180px; background: var(--viga); overflow: hidden; }
