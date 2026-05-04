@@ -401,29 +401,30 @@ select {
 .terminal-send { width: 35px; background: #00e5ff; border: none; color: black; font-weight: bold; font-size: 0.6rem; cursor: pointer; }
 
 /* ============================================================
-   REVESTIMIENTO: VIGA DE CRISTAL CENTRAL (BALANCE)
-   Logica: Convierte el gris sólido en cristal esmerilado.
+   REVESTIMIENTO: VIGA DE CRISTAL AHUMADO (OPACIDAD ÉLITE)
+   Logica: Incrementa la densidad del blanco para efecto "esmerilado denso".
    ============================================================ */
 #zona-historial { 
     grid-area: historial; 
-    /* Efecto Vidrio Blanco Nublado */
-    background: rgba(255, 255, 255, 0.1) !important; 
-    backdrop-filter: blur(10px) !important;
-    -webkit-backdrop-filter: blur(10px) !important;
+    /* Efecto Vidrio Ahumado Blanco (Más Opaco) */
+    background: rgba(255, 255, 255, 0.25) !important; /* Subimos de 0.1 a 0.25 */
+    backdrop-filter: blur(15px) !important; /* Desenfoque más profundo */
+    -webkit-backdrop-filter: blur(15px) !important;
     
-    /* Estética y Tipografía */
+    /* Estética Superior */
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    font-weight: bold; 
-    font-size: 0.85rem; 
-    letter-spacing: 1px;
-    color: #ffffff !important; 
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    font-weight: 800; 
+    font-size: 0.9rem; 
+    letter-spacing: 1.5px;
+    color: #020a12 !important; /* Texto oscuro para contraste sobre cristal blanco */
+    text-shadow: none;
     
-    /* Separadores de Integridad */
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    /* Blindaje Visual */
+    border-bottom: 2px solid rgba(212, 175, 55, 0.5); 
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 
