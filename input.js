@@ -139,10 +139,12 @@
         } else {
           sessionStorage.setItem('sito_id_aliado', data.id_interno);
           sessionStorage.setItem('sito_nombre_aliado', data.reg_username);
-          mostrarSitoAlert(`Bienvenido Aliado`, '✅');
-        }
+                    // Reemplazo Quirúrgico: Activa captura de identidad y alerta
+          ejecutarIngresoExitoso();
+          mostrarSitoAlert(`Bienvenido Operador`, '✅');
+        } // <--- LLAVE DE CIERRE DEL ELSE AGREGADA
       } catch (err) { 
-        mostrarSitoAlert('Fallo crítico de comunicación.', '☢️'); 
+        mostrarSitoAlert('Fallo crítico de comunicación.', '☢️');
       }
     };
   }
@@ -257,6 +259,45 @@
     }, 2800);
   }
 
+
+  /* ============================================================
+     BLOQUE [D]: MOTOR DE ACTIVACIÓN DE PESTAÑA (UI)
+     ============================================================ */
+  function activarPestañaIdentidad(nombre, idManual = "EGGH-ALI-05") {
+      if (!document.getElementById('pestaña-operador-fija')) {
+          const div = document.createElement('div');
+          div.id = 'pestaña-operador-fija';
+          div.innerHTML = `
+              <span class="indicador-nombre" id="pestaña-user">${nombre}</span>
+              <span class="indicador-id" id="pestaña-id">${idManual}</span>
+          `;
+          document.body.appendChild(div);
+      } else {
+          document.getElementById('pestaña-user').innerText = nombre;
+          document.getElementById('pestaña-id').innerText = idManual;
+      }
+      localStorage.setItem('sito_sesion_activa', 'true');
+      document.getElementById('pestaña-operador-fija').style.display = 'block';
+  }
+
+  /* ============================================================
+     BLOQUE [E]: CAPTURA DINÁMICA DE IDENTIDAD (AUTENTICACIÓN)
+     ============================================================ */
+  function ejecutarIngresoExitoso() {
+      // Sincronía con los IDs de tu formulario de login real
+      const inputNombre = document.getElementById('login_username').value;
+      const inputID = "SITO-ALI-05"; // Puedes dinamizar esto luego
+
+      if (!inputNombre) return;
+
+      localStorage.setItem('operador_nombre', inputNombre.toUpperCase());
+      localStorage.setItem('operador_id', inputID);
+
+      activarPestañaIdentidad(inputNombre.toUpperCase(), inputID);
+      window.navegar('dashboard-aliado');
+  }
+
+
   // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
   window.mostrarSitoAlert = (m, i) => {
     const mod = document.getElementById('sito-alert');
@@ -333,4 +374,5 @@
   bind('btn-finalizar', () => location.reload());
 
 })();
+
         
