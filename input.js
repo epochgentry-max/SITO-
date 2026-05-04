@@ -31,11 +31,11 @@
   };
   initSitoCore();
 
-  /* =============================================
-     PROTOCOLO DE AUDIO ÉLITE (BIENVENIDA)
-     ============================================= */
-  const audioBienvenida = new Audio('https://sito-opera.app/api/assets/welcome_v5.mp3');
-  audioBienvenida.volume = 0.6;
+    // PROTOCOLO DE AUDIO ÉLITE (BIENVENIDA ALIADOS)
+  const audioBienvenida = new Audio('https://res.cloudinary.com/dsbafxk0a/video/upload/v1777874366/inicio_de_secci%C3%B3n_SITO_rlfqkx.mp3');
+  audioBienvenida.volume = 0.7; // Volumen optimizado para dispositivos móviles
+
+
 
   // 2. GESTIÓN DE PANTALLAS (PUENTE GLOBAL)
   const screens = {
@@ -138,20 +138,28 @@
     };
   }
 
-  /* ============================================================
+    /* ============================================================
      BLOQUE [E]: INGRESO ÉLITE CON EXPERIENCIA MULTIMEDIA
      ============================================================ */
-    window.ejecutarIngresoExitoso = () => {
+  window.ejecutarIngresoExitoso = () => {
       const idSupabase = sessionStorage.getItem('sito_id_aliado');
       const nombreSupabase = sessionStorage.getItem('sito_nombre_aliado');
+
       if (!idSupabase || !nombreSupabase) return;
 
-      // Enviamos solo el número, la función activarPestaña se encarga del formato
+      const idOperador = "EGGH-ALI-" + idSupabase;
+
+      // 1. ACTIVACIÓN DE IDENTIDAD (Pestaña de Cristal)
       activarPestañaIdentidad(nombreSupabase.toUpperCase(), idSupabase);
-      
-      audioBienvenida.play().catch(e => console.log("Audio en espera."));
-      const msgElite = `Bienvenido ${nombreSupabase.toUpperCase()}, Operador SITO-ALI-${idSupabase}.`;
+
+      // 2. DISPARO DE AUDIO SITO (Cloudinary)
+      // Se ejecuta tras el clic del aliado, cumpliendo políticas de navegador
+      audioBienvenida.play().catch(e => console.log("SITO: Audio en espera de interacción."));
+
+      // 3. ALERTA DE AUTORIDAD Y TRANSICIÓN
+      const msgElite = `Bienvenido ${nombreSupabase.toUpperCase()}, Nodo Operativo ${idOperador} Activo.`;
       mostrarSitoAlert(msgElite, '👑');
+      
       window.navegar('dashboard-aliado');
   };
 
@@ -347,6 +355,17 @@
   });
   bind('btn-finalizar', () => location.reload());
 
+
+  // Auditoría de persistencia al cargar (F5)
+  const sesionActiva = localStorage.getItem('sito_sesion_activa');
+  const idG = sessionStorage.getItem('sito_id_aliado');
+  const nomG = sessionStorage.getItem('sito_nombre_aliado');
+
+  if (sesionActiva === 'true' && idG && nomG) {
+      activarPestañaIdentidad(nomG, idG);
+  }
+
+
 })();
 
-                   
+        
