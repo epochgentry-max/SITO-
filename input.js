@@ -255,19 +255,38 @@
     }, 2800);
   }
 
-  /* ============================================================
+    /* ============================================================
      BLOQUE [D]: MOTOR DE ACTIVACIÓN DE PESTAÑA (UI)
+     Optimización: Auto-creación y Desinfección de ID Duplicado
      ============================================================ */
-  function activarPestañaIdentidad(nombre, idManual) {
-      const pNombre = document.getElementById('pestaña-user');
-      const pID = document.getElementById('pestaña-id');
-      const pCont = document.getElementById('pestaña-operador-fija');
-      if (pNombre && pID && pCont) {
-          pNombre.innerText = nombre;
-          pID.innerText = idManual;
-          pCont.style.display = 'block';
-          localStorage.setItem('sito_sesion_activa', 'true');
+  function activarPestañaIdentidad(nombre, idRaw) {
+      let pCont = document.getElementById('pestaña-operador-fija');
+      
+      // 1. DESINFECCIÓN: Extraer solo el número para evitar duplicar el prefijo
+      const numeroPuro = idRaw.toString().replace('EGGH-ALI-', '');
+      const idFormateado = `EGGH-ALI-${numeroPuro}`;
+
+      // 2. AUTO-GENERACIÓN: Si no existe en el DOM, el sistema lo construye
+      if (!pCont) {
+          pCont = document.createElement('div');
+          pCont.id = 'pestaña-operador-fija';
+          pCont.innerHTML = `
+              <span class="indicador-nombre" id="pestaña-user">${nombre.toUpperCase()}</span>
+              <span class="indicador-id" id="pestaña-id">${idFormateado}</span>
+          `;
+          document.body.appendChild(pCont);
+      } else {
+          // 3. ACTUALIZACIÓN: Si ya existe, inyectamos los datos limpios
+          const elNombre = document.getElementById('pestaña-user');
+          const elID = document.getElementById('pestaña-id');
+          if(elNombre) elNombre.innerText = nombre.toUpperCase();
+          if(elID) elID.innerText = idFormateado;
       }
+
+      // 4. VISIBILIDAD Y PERSISTENCIA
+      pCont.style.display = 'block';
+      localStorage.setItem('sito_sesion_activa', 'true');
+      console.log(`SITO: Identidad operativa establecida para ${idFormateado}`);
   }
 
   // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
@@ -330,4 +349,4 @@
 
 })();
 
-      
+                   
