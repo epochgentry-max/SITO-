@@ -514,29 +514,40 @@ select {
 }
 
 /* ============================================================
-   PROTOCOLO SINAPSIS: LATIDO DE NEÓN GLOBAL
-   Logica: Inyecta parpadeo orgánico en todas las divisiones.
+   PROTOCOLO SINAPSIS: PULSO UNIFICADO (V6.4)
+   Logica: Sincronía total y máxima intensidad de neón.
    ============================================================ */
 
-@keyframes latidoSistema {
-    0%, 100% { border-color: rgba(33, 150, 243, 0.1); box-shadow: 0 0 5px rgba(33, 150, 243, 0.05); }
-    50% { border-color: var(--neon-vida); box-shadow: 0 0 15px rgba(33, 150, 243, 0.3); }
+/* 1. Definición del Latido de Alta Intensidad */
+@keyframes pulsoUnificado {
+    0%, 100% { 
+        border-color: rgba(33, 150, 243, 0.2); 
+        box-shadow: 0 0 5px rgba(33, 150, 243, 0.1); 
+    }
+    50% { 
+        border-color: rgba(0, 229, 255, 1); /* Cian Eléctrico */
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), 
+                    inset 0 0 10px rgba(0, 229, 255, 0.2); 
+    }
 }
 
-/* Aplicación Quirúrgica a las Divisiones */
+/* 2. Inyección en la Estructura Global (Sincronizada) */
+#zona-superior, 
 #zona-historial, 
 .cuarto-modulo, 
 .seccion-lateral, 
 .cuarto-footer {
-    border: 1px solid rgba(33, 150, 243, 0.2) !important;
-    animation: latidoSistema var(--latido-velocidad) infinite ease-in-out;
+    /* Aplicamos el mismo borde y animación a TODO */
+    border: 1px solid rgba(33, 150, 243, 0.3) !important;
+    animation: pulsoUnificado 3s infinite ease-in-out !important; /* 3s para un ritmo más vivo */
 }
 
-/* Desfase Orgánico: Para que no parpadeen al mismo tiempo */
-#zona-historial { animation-delay: 0s; }
-.cuarto-modulo:nth-child(even) { animation-delay: 1.5s; }
-.cuarto-modulo:nth-child(odd) { animation-delay: 0.5s; }
-.cuarto-footer { animation-delay: 2.5s; }
+/* 3. Refuerzo Específico para la zona superior */
+#zona-superior {
+    border-bottom: 2px solid rgba(0, 229, 255, 0.5) !important;
+}
+
+/* ELIMINAMOS los nth-child anteriores para que no haya desfase */
 
 
 </style>
