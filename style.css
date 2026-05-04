@@ -67,8 +67,8 @@ body {
 }
 
 /* ============================================================
-   BLOQUE 3: CONTENEDORES TIPO CRISTAL (SCREENS)
-   Logica: Autocentrado mecánico (margin: auto) para corregir el shift.
+   BLOQUE 3: CONTENEDORES TIPO CRISTAL (SCREENS) - CENTRADO TOTAL
+   Logica: Margen auto en ambos ejes para centrado absoluto.
    ============================================================ */
 
 .screen {
@@ -84,12 +84,23 @@ body {
   -webkit-backdrop-filter: blur(10px);
   border-radius: 25px;
   border: 1px solid rgba(212, 175, 55, 0.4);
-  /* Blindaje: Margen auto garantiza el centrado horizontal absoluto */
-  margin: 5vh auto; 
+  /* Ajuste de Precisión: auto arriba/abajo garantiza el centro vertical */
+  margin: auto; 
   box-shadow: 0 0 30px rgba(33, 150, 243, 0.2), 
               inset 0 0 15px rgba(33, 150, 243, 0.1), 
               0 20px 40px rgba(0, 0, 0, 0.6);
+  /* Asegura que no se pegue al borde en pantallas muy pequeñas */
+  position: relative;
 }
+
+/* Sincronía del contenedor padre para permitir el centrado vertical del hijo */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 
 /* ============================================================
    BLOQUE 4: TIPOGRAFÍA ÉLITE
