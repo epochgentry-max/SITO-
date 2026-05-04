@@ -101,7 +101,6 @@ body {
   align-items: center;
 }
 
-
 /* ============================================================
    BLOQUE 4: TIPOGRAFÍA ÉLITE
    ============================================================ */
@@ -410,5 +409,24 @@ select {
 #zona-footer { grid-area: footer; background-color: #ddd; display: grid; grid-template-columns: repeat(4, 1fr); }
 .cuarto-footer { border: 1px solid #bbb; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666; }
 
+
+#pestaña-operador-fija {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 9999;
+    background: rgba(2, 10, 18, 0.9);
+    border: 1px solid #d4af37;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    display: none; /* Empieza oculto */
+}
+.indicador-id { color: #d4af37; font-size: 10px; display: block; }
+.indicador-nombre { color: #ffffff; font-size: 12px; text-transform: uppercase; }
+
+
 </style>
 
+
+   
