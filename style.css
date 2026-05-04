@@ -356,7 +356,13 @@ select {
     --altura-cabecera: 35vh;
     --altura-historial: 8vh;
     --altura-footer: 10vh;
-}
+
+   
+    /* ... tus variables anteriores ... */
+    --neon-vida: rgba(33, 150, 243, 0.5); /* Azul Neón Operativo */
+    --latido-velocidad: 4s;
+   }  
+
 
 
 #dashboard-aliado {
@@ -506,6 +512,31 @@ select {
     display: block !important;
     letter-spacing: 0.5px !important;
 }
+
+/* ============================================================
+   PROTOCOLO SINAPSIS: LATIDO DE NEÓN GLOBAL
+   Logica: Inyecta parpadeo orgánico en todas las divisiones.
+   ============================================================ */
+
+@keyframes latidoSistema {
+    0%, 100% { border-color: rgba(33, 150, 243, 0.1); box-shadow: 0 0 5px rgba(33, 150, 243, 0.05); }
+    50% { border-color: var(--neon-vida); box-shadow: 0 0 15px rgba(33, 150, 243, 0.3); }
+}
+
+/* Aplicación Quirúrgica a las Divisiones */
+#zona-historial, 
+.cuarto-modulo, 
+.seccion-lateral, 
+.cuarto-footer {
+    border: 1px solid rgba(33, 150, 243, 0.2) !important;
+    animation: latidoSistema var(--latido-velocidad) infinite ease-in-out;
+}
+
+/* Desfase Orgánico: Para que no parpadeen al mismo tiempo */
+#zona-historial { animation-delay: 0s; }
+.cuarto-modulo:nth-child(even) { animation-delay: 1.5s; }
+.cuarto-modulo:nth-child(odd) { animation-delay: 0.5s; }
+.cuarto-footer { animation-delay: 2.5s; }
 
 
 </style>
