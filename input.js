@@ -9,7 +9,7 @@
   const SUPABASE_KEY = "sb_publishable_ifHWyzybfNkfiXJDWTo57Q_5DtsnRdu";
   let supabaseClient = null;
 
-  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN Y ESPERA DE CARGA)
+  // 1. NÚCLEO DE DATOS (AUTO-INYECCIÓN)
   const initSitoCore = () => {
     const loadSupabase = () => {
       return new Promise((resolve, reject) => {
@@ -25,11 +25,17 @@
 
     loadSupabase().then(() => {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      window.supabaseClient = supabaseClient; // Garantiza disponibilidad global
+      window.supabaseClient = supabaseClient;
       console.log("SITO: Núcleo de datos sincronizado.");
     }).catch(err => console.error("☢️ Fallo en el núcleo:", err));
   };
   initSitoCore();
+
+  /* =============================================
+     PROTOCOLO DE AUDIO ÉLITE (BIENVENIDA)
+     ============================================= */
+  const audioBienvenida = new Audio('https://sito-opera.app/api/assets/welcome_v5.mp3');
+  audioBienvenida.volume = 0.6;
 
   // 2. GESTIÓN DE PANTALLAS (PUENTE GLOBAL)
   const screens = {
@@ -54,10 +60,8 @@
   };
 
   window.navegar = (targetId) => {
-    // Limpieza de IDs para que coincidan con el objeto screens
     const cleanId = targetId.replace('formulario-', '');
     const target = screens[cleanId] || document.getElementById(targetId);
-    
     if(target) {
       Object.values(screens).forEach(el => { if(el) el.style.display = 'none'; });
       target.style.display = (target.id === 'dashboard-aliado' || target.id === 'carousel-container') ? 'block' : 'flex';
@@ -65,11 +69,11 @@
     }
   };
 
-  // 3. PROTOCOLO OFICIAL YOUTUBE API (CONTROL DE VIDEO HD)
+  // 3. PROTOCOLO YOUTUBE API
   const cargarYoutubeAPI = () => {
     if (!window.YT) {
       const tag = document.createElement('script');
-      tag.src = "https://www.youtube.com/iframe_api"; // API OFICIAL SEGURA SSL
+      tag.src = "https://www.youtube.com/iframe_api";
       const firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
@@ -79,13 +83,7 @@
   window.onYouTubeIframeAPIReady = function() {
     new YT.Player('player', {
       height: '100%', width: '100%', videoId: 'Fs7pOoT6sTc',
-      playerVars: { 
-        'rel': 0, 
-        'modestbranding': 1, 
-        'autoplay': 0,
-        'quality': 'hd720',
-        'origin': window.location.origin 
-      },
+      playerVars: { 'rel': 0, 'modestbranding': 1, 'autoplay': 0, 'quality': 'hd720' },
       events: {
         'onStateChange': (e) => {
           if (e.data == YT.PlayerState.ENDED) {
@@ -105,21 +103,16 @@
       const isPass = passField.type === 'password';
       passField.type = isPass ? 'text' : 'password';
       this.textContent = isPass ? '🔒' : '👁️';
-      passField.focus();
     };
   }
 
-  // 5. LOGIN Y ACCESO (AUDITADO - PROTECCIÓN CONTRA CONGELAMIENTO)
+  // 5. LOGIN Y ACCESO (AUDITADO - PROTOCOLO ÉLITE)
   const fLogin = document.getElementById('form-login');
   if(fLogin) {
     fLogin.onsubmit = async (e) => {
       e.preventDefault();
-      
       const client = supabaseClient || window.supabaseClient;
-      if(!client) {
-          mostrarSitoAlert('☢️ Sincronizando Núcleo...', '⏳');
-          return;
-      }
+      if(!client) return;
 
       const user = document.getElementById('login_username').value;
       const pass = document.getElementById('login_password').value;
@@ -139,15 +132,28 @@
         } else {
           sessionStorage.setItem('sito_id_aliado', data.id_interno);
           sessionStorage.setItem('sito_nombre_aliado', data.reg_username);
-                    // Reemplazo Quirúrgico: Activa captura de identidad y alerta
           ejecutarIngresoExitoso();
-          mostrarSitoAlert(`Bienvenido Operador`, '✅');
-        } // <--- LLAVE DE CIERRE DEL ELSE AGREGADA
-      } catch (err) { 
-        mostrarSitoAlert('Fallo crítico de comunicación.', '☢️');
-      }
+        } 
+      } catch (err) { mostrarSitoAlert('Fallo de comunicación.', '☢️'); }
     };
   }
+
+  /* ============================================================
+     BLOQUE [E]: INGRESO ÉLITE CON EXPERIENCIA MULTIMEDIA
+     ============================================================ */
+  window.ejecutarIngresoExitoso = () => {
+      const idSupabase = sessionStorage.getItem('sito_id_aliado');
+      const nombreSupabase = sessionStorage.getItem('sito_nombre_aliado');
+      if (!idSupabase || !nombreSupabase) return;
+
+      const idOperador = "EGGH-ALI-" + idSupabase;
+      activarPestañaIdentidad(nombreSupabase.toUpperCase(), idOperador);
+      audioBienvenida.play().catch(e => console.log("Audio en espera."));
+
+      const msgElite = `Bienvenido ${nombreSupabase.toUpperCase()}, ${idOperador} a su sistema operativo SITO de Epoch Gentry.`;
+      mostrarSitoAlert(msgElite, '👑');
+      window.navegar('dashboard-aliado');
+  };
 
   // 6. LÓGICA DE FORMULARIOS DINÁMICOS
   const inputHijos = document.getElementById('numero_hijos');
@@ -187,7 +193,7 @@
     };
   }
 
-  // 7. ENVÍO Y PERSISTENCIA (FORM DATA)
+  // 7. ENVÍO Y PERSISTENCIA
   let formData = {};
   const setupForm = (id, next) => {
     const f = document.getElementById(id);
@@ -213,12 +219,11 @@
       e.preventDefault();
       const checkSarlaft = document.getElementById('acepto_sarlaft');
       if (checkSarlaft && !checkSarlaft.checked) {
-          alert("⚠️ Acceso Denegado: Debe validar el protocolo de seguridad patrimonial.");
+          alert("⚠️ Acceso Denegado: Protocolo de seguridad requerido.");
           return;
       }
       new FormData(fFinal).forEach((v, k) => { formData[k] = v; });
       formData['acepto_sarlaft'] = true;
-
       showScreen(screens.carousel);
       startCarousel();
 
@@ -232,13 +237,9 @@
 
   // 8. MOTOR DE AUDITORÍA VISUAL (CARRUSEL)
   function startCarousel() {
-    let idx = 0;
-    const totalFrames = 6;
+    let idx = 0; const totalFrames = 6;
     const bar = document.getElementById('loading-bar');
     const car = document.getElementById('carousel');
-    if(bar) bar.style.width = '0%';
-    if(car) car.style.transform = 'translateX(0%)';
-
     const interval = setInterval(() => {
       idx++;
       if (idx < totalFrames) {
@@ -246,57 +247,28 @@
         if(bar) bar.style.width = `${(idx / totalFrames) * 100}%`;
       } else {
         clearInterval(interval);
-        if(bar) bar.style.width = '100%';
         setTimeout(() => {
-          if (window.sitoUploadError) {
-            alert("⚠️ Error: " + window.sitoUploadError);
-            showScreen(screens.paso4);
-          } else {
-            showScreen(screens.confirm);
-          }
+          if (window.sitoUploadError) showScreen(screens.paso4);
+          else showScreen(screens.confirm);
         }, 1200);
       }
     }, 2800);
   }
 
-
   /* ============================================================
      BLOQUE [D]: MOTOR DE ACTIVACIÓN DE PESTAÑA (UI)
      ============================================================ */
-  function activarPestañaIdentidad(nombre, idManual = "EGGH-ALI-05") {
-      if (!document.getElementById('pestaña-operador-fija')) {
-          const div = document.createElement('div');
-          div.id = 'pestaña-operador-fija';
-          div.innerHTML = `
-              <span class="indicador-nombre" id="pestaña-user">${nombre}</span>
-              <span class="indicador-id" id="pestaña-id">${idManual}</span>
-          `;
-          document.body.appendChild(div);
-      } else {
-          document.getElementById('pestaña-user').innerText = nombre;
-          document.getElementById('pestaña-id').innerText = idManual;
+  function activarPestañaIdentidad(nombre, idManual) {
+      const pNombre = document.getElementById('pestaña-user');
+      const pID = document.getElementById('pestaña-id');
+      const pCont = document.getElementById('pestaña-operador-fija');
+      if (pNombre && pID && pCont) {
+          pNombre.innerText = nombre;
+          pID.innerText = idManual;
+          pCont.style.display = 'block';
+          localStorage.setItem('sito_sesion_activa', 'true');
       }
-      localStorage.setItem('sito_sesion_activa', 'true');
-      document.getElementById('pestaña-operador-fija').style.display = 'block';
   }
-
-  /* ============================================================
-     BLOQUE [E]: CAPTURA DINÁMICA DE IDENTIDAD (AUTENTICACIÓN)
-     ============================================================ */
-  function ejecutarIngresoExitoso() {
-      // Sincronía con los IDs de tu formulario de login real
-      const inputNombre = document.getElementById('login_username').value;
-      const inputID = "SITO-ALI-05"; // Puedes dinamizar esto luego
-
-      if (!inputNombre) return;
-
-      localStorage.setItem('operador_nombre', inputNombre.toUpperCase());
-      localStorage.setItem('operador_id', inputID);
-
-      activarPestañaIdentidad(inputNombre.toUpperCase(), inputID);
-      window.navegar('dashboard-aliado');
-  }
-
 
   // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
   window.mostrarSitoAlert = (m, i) => {
@@ -311,23 +283,16 @@
   window.cerrarSitoAlert = () => {
     const mod = document.getElementById('sito-alert');
     if(mod) mod.style.display = 'none';
-    
     const id = sessionStorage.getItem('sito_id_aliado');
     if (id) {
-      // 1. Apagar todas las pantallas de registro/login
       document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
-      
-      // 2. Encender el Edificio Operativo
       const dash = document.getElementById('dashboard-aliado');
       if(dash) {
           dash.style.display = 'block'; 
           const alias = sessionStorage.getItem('sito_nombre_aliado');
           const aliasDisplay = document.getElementById('alias-perfil-display');
-          const termDisplay = document.getElementById('terminal-display');
           if(aliasDisplay) aliasDisplay.innerText = `OPERADOR: ${alias}`;
-          if(termDisplay) termDisplay.innerHTML += `<br>> Conexión establecida. Bienvenido, ${alias}.`;
       }
-      // 3. Traer datos de la base de datos
       sincronizarDatosAliado(id);
     }
   };
@@ -336,7 +301,7 @@
     const client = supabaseClient || window.supabaseClient;
     if(!client) return;
     try {
-      const { data, error } = await client.rpc('acceso_nucleo_espejo', { id_solicitado: id });
+      const { data } = await client.rpc('acceso_nucleo_espejo', { id_solicitado: id });
       if (data && data[0]) {
         const p = data[0];
         const ficha = {
@@ -352,27 +317,16 @@
     } catch (e) { console.error("Error RPC:", e); }
   }
 
-  // 10. BINDINGS DE CONTROL (INTEGRIDAD V5.5 UNIFICADA)
-  const bind = (id, action) => { 
-    const el = document.getElementById(id); 
-    if(el) el.onclick = action; 
-  };
-
+  // 10. BINDINGS DE CONTROL
+  const bind = (id, action) => { const el = document.getElementById(id); if(el) el.onclick = action; };
   bind('btn-crear-cuenta', () => showScreen(screens.video));
   bind('btn-iniciar-sesion', () => showScreen(screens.login));
   bind('btn-continuar-postulacion', () => showScreen(screens.paso1));
   bind('back-to-start', () => showScreen(screens.inicio));
-
-  // Protocolo Universal para botones "Atrás"
   document.querySelectorAll('.btn-back').forEach(btn => {
-    btn.onclick = () => {
-      const target = btn.dataset.target;
-      navegar(target);
-    };
+    btn.onclick = () => navegar(btn.dataset.target);
   });
-  
   bind('btn-finalizar', () => location.reload());
 
 })();
-
-        
+    
