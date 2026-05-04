@@ -309,20 +309,21 @@
     <button onclick="cerrarSitoAlert()" style="background:#d4af37; color:black; border:none; padding:12px 30px; border-radius:8px; font-weight:bold; cursor:pointer; width:100%;">ENTENDIDO</button>
   </div>
 </div>
-
-/* BLOQUE 10 DASHBOARD */
     
 <div id="dashboard-aliado" class="screen">
     <div class="edificio-container">
         <div id="zona-superior">
             <div class="perfil-bloque" id="alias-perfil-display">CARGANDO NÚCLEO...</div>
             
-            <div id="zona-avatar-inventario">
-                <div class="pantalla-texto" id="terminal-display">
+            <div id="zona-avatar-inventario" style="position: relative; background-color: #050a14; overflow: hidden; display: flex; flex-direction: column;">
+                <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; z-index: 1;">
+                    <source src="https://res.cloudinary.com/dsbafxk0a/video/upload/v1777880897/InShot_20260504_024332551_cawxfd.mp4" type="video/mp4">
+                </video>
+                <div class="pantalla-texto" id="terminal-display" style="position: relative; z-index: 2; flex: 1; background: rgba(0,0,0,0.2);">
                     Sincronía activa...<br>
-                    > Esperando comando del Arquitecto.
+                    > Auditoría de realidad iniciada.
                 </div>
-                <div class="terminal-input-area">
+                <div class="terminal-input-area" style="position: relative; z-index: 3;">
                     <input type="text" id="terminal-input" placeholder="Comando...">
                     <button class="terminal-send" onclick="enviarComandoTerminal()">OK</button>
                 </div>
@@ -363,4 +364,5 @@
 
 </body>
     </html>
-        
+
+       
