@@ -341,8 +341,8 @@ select {
 }
 
 /* ============================================================
-   BLOQUE 12: DASHBOARD OPERATIVO (NÚCLEO INTEGRADO)
-   Logica: Independencia absoluta de espacio.
+   BLOQUE 12: DASHBOARD OPERATIVO (ARQUITECTURA FIJA)
+   Logica: Cero flexibilidad. Control total por píxel.
    ============================================================ */
 
 :root {
@@ -351,28 +351,31 @@ select {
     --vidrio-nublado: rgba(255, 255, 255, 0.07); 
     --borde-oro-tenue: rgba(212, 175, 55, 0.3);
     
-    /* Variables de Estructura SITO */
-    --viga: #020617;
-    --altura-cabecera: 35vh;
-    --altura-historial: 8vh;
-    --altura-footer: 10vh;
-
-   
-    /* ... tus variables anteriores ... */
-    --neon-vida: rgba(33, 150, 243, 0.5); /* Azul Neón Operativo */
+    /* Medidas quirúrgicas inamovibles */
+    --ancho-total: 100vw;
+    --alto-total: 100dvh;
+    --h-cabecera: 260px;
+    --h-viga: 45px;
+    --h-footer: 70px;
+    
+    --viga-color: #020617;
+    --azul-sito: #050a14;
+    --neon-vida: rgba(33, 150, 243, 0.5);
     --latido-velocidad: 4s;
-   }  
-
-
+}
 
 #dashboard-aliado {
-    width: 100vw !important;
-    height: 100dvh !important;
+    width: var(--ancho-total) !important;
+    height: var(--alto-total) !important;
     max-width: none !important;
     padding: 0 !important;
     margin: 0 !important; 
     border-radius: 0 !important;
-    background-color: var(--concreto);
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden; /* Blindaje de movimiento raíz */
+    background: var(--viga-color);
     z-index: 1000;
     display: none; 
 }
@@ -382,18 +385,19 @@ select {
 }
 
 .edificio-container {
-    display: grid;
-    width: 100vw; height: 100dvh;
-    grid-template-rows: var(--altura-cabecera) var(--altura-historial) 1fr var(--altura-footer);
-    grid-template-areas: "cabecera" "historial" "nucleo" "footer";
+    display: block; /* Estructura sólida no flexible */
+    width: 100%;
+    height: 100%;
 }
 
 #zona-superior {
-    grid-area: cabecera;
+    height: var(--h-cabecera);
+    width: 100%;
     background-color: var(--azul-sito);
     display: grid;
     grid-template-columns: 2fr 1.5fr;
-    color: white; border-bottom: 2px solid var(--viga);
+    color: white; 
+    border-bottom: 2px solid var(--viga-color);
 }
 
 .perfil-bloque { border-right: 1px solid rgba(255,255,255,0.2); padding: 10px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.7rem; color: #fff; }
@@ -406,46 +410,55 @@ select {
 .terminal-input-area input { flex: 1; background: transparent; border: none; color: white; padding: 0 8px; font-size: 0.6rem; outline: none; }
 .terminal-send { width: 35px; background: #00e5ff; border: none; color: black; font-weight: bold; font-size: 0.6rem; cursor: pointer; }
 
-/* ============================================================
-   REVESTIMIENTO: VIGA DE CRISTAL BLANCO DENSO
-   Logica: Máxima densidad de blanco para efecto material sólido.
-   ============================================================ */
 #zona-historial { 
-    grid-area: historial; 
+    height: var(--h-viga);
+    width: 100%;
     /* Blanco Denso con desenfoque */
-    background: rgba(255, 255, 255, 0.65) !important; /* Subimos a 0.65 para que sea "más blanco" */
+    background: rgba(255, 255, 255, 0.65) !important;
     backdrop-filter: blur(20px) !important;
     -webkit-backdrop-filter: blur(20px) !important;
     
-    /* Contraste y Tipografía */
     display: flex; 
     align-items: center; 
     justify-content: center; 
     font-weight: 900; 
     font-size: 0.9rem; 
-    color: #020a12 !important; /* Texto oscuro para legibilidad total */
+    color: #020a12 !important;
     text-transform: uppercase;
     letter-spacing: 2px;
     
-    /* Acabado Élite */
-    border-bottom: 2px solid #d4af37; /* Oro sólido para anclar la viga */
+    border-bottom: 2px solid #d4af37;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
+#zona-nucleo { 
+    height: calc(var(--alto-total) - var(--h-cabecera) - var(--h-viga) - var(--h-footer));
+    width: 100%;
+    display: grid; 
+    grid-template-columns: 1fr 180px; 
+    background: var(--viga-color); 
+    overflow: hidden; 
+}
 
+#cuartos-operativos { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    grid-auto-rows: 120px; /* Tamaño fijo por celda */
+    gap: 1px; 
+    padding: 0; 
+    overflow-y: scroll; /* Elevador interno habilitado */
+    height: 100%; 
+}
 
-#zona-nucleo { grid-area: nucleo; display: grid; grid-template-columns: 1fr 180px; background: var(--viga); overflow: hidden; }
-
-#cuartos-operativos { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 33.33%; gap: 1px; padding: 0; overflow-y: auto; height: 100%; }
 .cuarto-modulo {
     background: var(--vidrio-nublado) !important;
-    backdrop-filter: blur(12px) !important; /* Vidrio esmerilado */
+    backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    color: rgba(212, 175, 55, 0.6); /* Oro tenue para los números */
+    color: rgba(212, 175, 55, 0.6);
     border: 0.5px solid rgba(255, 255, 255, 0.1);
     box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
@@ -457,45 +470,45 @@ select {
     cursor: pointer;
 }
 
-
-#columna-lateral-incrustada { display: grid; grid-template-rows: 1fr 100px; background-color: #f0f0f0; border-left: 2px solid var(--viga); }
+#columna-lateral-incrustada { display: grid; grid-template-rows: 1fr 100px; background-color: #f0f0f0; border-left: 2px solid var(--viga-color); }
 .seccion-lateral { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.7rem; color: #555; padding: 5px; border-bottom: 1px solid #ccc; }
 .seccion-lateral.noticias { background-color: #e0e0e0; font-weight: bold; }
 .seccion-lateral.teleprompter { background-color: #d0d0d0; font-family: monospace; }
 
-#zona-footer { grid-area: footer; background-color: #ddd; display: grid; grid-template-columns: repeat(4, 1fr); }
-.cuarto-footer { border: 1px solid #bbb; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666; }
+#zona-footer { 
+    height: var(--h-footer);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #ddd; 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+}
 
+.cuarto-footer { border: 1px solid #bbb; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666; }
 
 /* ============================================================
    BLOQUE [C]: HUD DE IDENTIDAD ÉLITE (EPOCH GENTRY SITO)
-   Logica: Diseño de cristal oscuro, oro y neón.
    ============================================================ */
 #pestaña-operador-fija {
     position: fixed !important;
     top: 15px !important;
     left: 15px !important;
-    display: none; /* Se activa SÓLO tras el login exitoso */
+    display: none;
     z-index: 9999 !important;
-    
-    /* Efecto Élite: Cristal Oscuro */
     background: rgba(2, 10, 18, 0.85) !important; 
     backdrop-filter: blur(10px) !important;
     -webkit-backdrop-filter: blur(10px) !important;
-    
-    /* Bordes y Sombra Oro SITO */
     border: 1px solid rgba(212, 175, 55, 0.5) !important; 
     border-radius: 8px !important;
     padding: 8px 12px !important;
-    
-    /* Tipografía y Neón sutil */
     font-family: 'Courier New', monospace !important;
     box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2), 
                 inset 0 0 10px rgba(212, 175, 55, 0.1) !important;
 }
 
 .indicador-nombre { 
-    color: #ffffff !important; /* Blanco puro */
+    color: #ffffff !important;
     font-size: 13px !important; 
     text-transform: uppercase !important; 
     font-weight: bold !important; 
@@ -506,7 +519,7 @@ select {
 }
 
 .indicador-id { 
-    color: #d4af37 !important; /* Oro Epoch Gentry */
+    color: #d4af37 !important;
     font-size: 10px !important; 
     font-weight: bold !important;
     display: block !important;
@@ -515,42 +528,32 @@ select {
 
 /* ============================================================
    PROTOCOLO SINAPSIS: PULSO UNIFICADO (V6.4)
-   Logica: Sincronía total y máxima intensidad de neón.
    ============================================================ */
 
-/* 1. Definición del Latido de Alta Intensidad */
 @keyframes pulsoUnificado {
     0%, 100% { 
         border-color: rgba(33, 150, 243, 0.2); 
         box-shadow: 0 0 5px rgba(33, 150, 243, 0.1); 
     }
     50% { 
-        border-color: rgba(0, 229, 255, 1); /* Cian Eléctrico */
+        border-color: rgba(0, 229, 255, 1);
         box-shadow: 0 0 20px rgba(0, 229, 255, 0.6), 
                     inset 0 0 10px rgba(0, 229, 255, 0.2); 
     }
 }
 
-/* 2. Inyección en la Estructura Global (Sincronizada) */
 #zona-superior, 
 #zona-historial, 
 .cuarto-modulo, 
 .seccion-lateral, 
 .cuarto-footer {
-    /* Aplicamos el mismo borde y animación a TODO */
     border: 1px solid rgba(33, 150, 243, 0.3) !important;
-    animation: pulsoUnificado 9s infinite ease-in-out !important; /* 3s para un ritmo más vivo */
+    animation: pulsoUnificado 9s infinite ease-in-out !important;
 }
 
-/* 3. Refuerzo Específico para la zona superior */
 #zona-superior {
     border-bottom: 2px solid rgba(0, 229, 255, 0.5) !important;
 }
 
-/* ELIMINAMOS los nth-child anteriores para que no haya desfase */
-
-
 </style>
-
-
    
