@@ -344,14 +344,20 @@ select {
    BLOQUE 12: DASHBOARD OPERATIVO (NÚCLEO INTEGRADO)
    Logica: Independencia absoluta de espacio.
    ============================================================ */
+
 :root {
-    --viga: #333;
-    --concreto: #ddd;
-    --azul-sito: #1976D2;
+    /* Identidad de Élite: Azul Metal y Cristal */
+    --azul-elite-metal: #1a2a3a; 
+    --vidrio-nublado: rgba(255, 255, 255, 0.07); 
+    --borde-oro-tenue: rgba(212, 175, 55, 0.3);
+    
+    /* Variables de Estructura SITO */
+    --viga: #020617;
     --altura-cabecera: 35vh;
     --altura-historial: 8vh;
     --altura-footer: 10vh;
 }
+
 
 #dashboard-aliado {
     width: 100vw !important;
@@ -399,7 +405,26 @@ select {
 #zona-nucleo { grid-area: nucleo; display: grid; grid-template-columns: 1fr 180px; background: var(--viga); overflow: hidden; }
 
 #cuartos-operativos { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 33.33%; gap: 1px; padding: 0; overflow-y: auto; height: 100%; }
-.cuarto-modulo { background-color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #ccc; border: 0.5px solid #eee; }
+.cuarto-modulo {
+    background: var(--vidrio-nublado) !important;
+    backdrop-filter: blur(12px) !important; /* Vidrio esmerilado */
+    -webkit-backdrop-filter: blur(12px) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: rgba(212, 175, 55, 0.6); /* Oro tenue para los números */
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.cuarto-modulo:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 0.5px solid var(--borde-oro-tenue) !important;
+    cursor: pointer;
+}
+
 
 #columna-lateral-incrustada { display: grid; grid-template-rows: 1fr 100px; background-color: #f0f0f0; border-left: 2px solid var(--viga); }
 .seccion-lateral { display: flex; align-items: center; justify-content: center; text-align: center; font-size: 0.7rem; color: #555; padding: 5px; border-bottom: 1px solid #ccc; }
