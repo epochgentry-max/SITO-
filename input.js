@@ -141,16 +141,16 @@
   /* ============================================================
      BLOQUE [E]: INGRESO ÉLITE CON EXPERIENCIA MULTIMEDIA
      ============================================================ */
-  window.ejecutarIngresoExitoso = () => {
+    window.ejecutarIngresoExitoso = () => {
       const idSupabase = sessionStorage.getItem('sito_id_aliado');
       const nombreSupabase = sessionStorage.getItem('sito_nombre_aliado');
       if (!idSupabase || !nombreSupabase) return;
 
-      const idOperador = "EGGH-ALI-" + idSupabase;
-      activarPestañaIdentidad(nombreSupabase.toUpperCase(), idOperador);
+      // Enviamos solo el número, la función activarPestaña se encarga del formato
+      activarPestañaIdentidad(nombreSupabase.toUpperCase(), idSupabase);
+      
       audioBienvenida.play().catch(e => console.log("Audio en espera."));
-
-      const msgElite = `Bienvenido ${nombreSupabase.toUpperCase()}, ${idOperador} a su sistema operativo SITO de Epoch Gentry.`;
+      const msgElite = `Bienvenido ${nombreSupabase.toUpperCase()}, Operador SITO-ALI-${idSupabase}.`;
       mostrarSitoAlert(msgElite, '👑');
       window.navegar('dashboard-aliado');
   };
@@ -255,31 +255,20 @@
     }, 2800);
   }
 
-    /* ============================================================
-     BLOQUE [D]: MOTOR DE IDENTIDAD (AUTO-CREACIÓN ÉLITE)
+  /* ============================================================
+     BLOQUE [D]: MOTOR DE ACTIVACIÓN DE PESTAÑA (UI)
      ============================================================ */
   function activarPestañaIdentidad(nombre, idManual) {
-      let pCont = document.getElementById('pestaña-operator-fija');
-      
-      // Si no existe en el HTML, el sistema la construye en caliente
-      if (!pCont) {
-          pCont = document.createElement('div');
-          pCont.id = 'pestaña-operador-fija';
-          pCont.innerHTML = `
-              <span class="indicador-nombre" id="pestaña-user">${nombre}</span>
-              <span class="indicador-id" id="pestaña-id">${idManual}</span>
-          `;
-          document.body.appendChild(pCont);
-      } else {
-          document.getElementById('pestaña-user').innerText = nombre;
-          document.getElementById('pestaña-id').innerText = idManual;
+      const pNombre = document.getElementById('pestaña-user');
+      const pID = document.getElementById('pestaña-id');
+      const pCont = document.getElementById('pestaña-operador-fija');
+      if (pNombre && pID && pCont) {
+          pNombre.innerText = nombre;
+          pID.innerText = idManual;
+          pCont.style.display = 'block';
+          localStorage.setItem('sito_sesion_activa', 'true');
       }
-
-      // Asegurar visibilidad absoluta
-      pCont.style.display = 'block';
-      localStorage.setItem('sito_sesion_activa', 'true');
   }
-  
 
   // 9. COMUNICACIÓN TÁCTICA Y DASHBOARD
   window.mostrarSitoAlert = (m, i) => {
@@ -340,4 +329,5 @@
   bind('btn-finalizar', () => location.reload());
 
 })();
-    
+
+      
