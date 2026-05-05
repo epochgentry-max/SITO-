@@ -358,8 +358,8 @@ select {
     /* --- Medidas de Arquitectura Expandida --- */
     --ancho-total: 100vw;                     /* Ocupación total del ancho de ventana */
     --alto-total: 100dvh;                     /* Ocupación dinámica del alto del dispositivo */
-    --h-cabecera: 320px;                      /* Expansión para autoridad visual superior */
-    --h-viga-contable: 45px;                  /* Altura quirúrgica del Módulo Contable */
+    --h-cabecera: 520px;                      /* Expansión para autoridad visual superior */
+    --h-viga-contable: 205px;                  /* Altura quirúrgica del Módulo Contable */
     --h-footer: 70px;                         /* Base sólida para navegación inferior */
     
     /* --- Estados Operativos --- */
