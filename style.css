@@ -345,7 +345,6 @@ select {
    Logica: Cero flexibilidad. Control total por píxel.
    ============================================================ */
 
-
 /* ============================================================
    FUNCIÓN: DEFINICIÓN DE ADN ESTRUCTURAL (VARIABLES RAÍZ)
    Lógica: Centralización de dimensiones y paleta de identidad élite.
@@ -359,8 +358,8 @@ select {
     /* --- Medidas de Arquitectura Expandida --- */
     --ancho-total: 100vw;                     /* Ocupación total del ancho de ventana */
     --alto-total: 100dvh;                     /* Ocupación dinámica del alto del dispositivo */
-    --h-cabecera: 320px;                      /* [ACTUALIZADO] Expansión para autoridad visual superior */
-    --h-viga: 45px;                           /* Grosor inamovible de la viga divisoria */
+    --h-cabecera: 320px;                      /* Expansión para autoridad visual superior */
+    --h-viga-contable: 45px;                  /* Altura quirúrgica del Módulo Contable */
     --h-footer: 70px;                         /* Base sólida para navegación inferior */
     
     /* --- Estados Operativos --- */
@@ -480,18 +479,18 @@ select {
 }
 
 /* ============================================================
-   FUNCIÓN: VIGA DE HISTORIAL (CRISTAL DE SEPARACIÓN)
-   Lógica: Punto de inflexión visual con efecto Glassmorphism.
+   FUNCIÓN: MÓDULO CONTABLE (CRISTAL DE SEPARACIÓN)
+   Lógica: Punto de inflexión visual con efecto Glassmorphism para finanzas.
    ============================================================ */
 #zona-historial { 
-    height: var(--h-viga);                    /* Altura paramétrica */
+    height: var(--h-viga-contable);           /* Altura paramétrica contable */
     width: 100%;                              /* Ancho total */
     background: rgba(255, 255, 255, 0.65) !important; /* Blanco denso translúcido */
     backdrop-filter: blur(20px) !important;   /* Desenfoque de fondo para realismo */
     -webkit-backdrop-filter: blur(20px) !important; /* Soporte para motores Webkit */
     display: flex;                            /* Caja flexible */
-    align-items: center;                      /* Centrado vertical de título */
-    justify-content: center;                  /* Centrado horizontal de título */
+    align-items: center;                      /* Centrado vertical de datos */
+    justify-content: center;                  /* Centrado horizontal de datos */
     font-weight: 900;                         /* Grosor de fuente máximo */
     font-size: 0.9rem;                        /* Tamaño de lectura rápida */
     color: #020a12 !important;                /* Texto oscuro sobre fondo claro */
@@ -506,11 +505,11 @@ select {
    Lógica: Cálculo automático del espacio restante para módulos.
    ============================================================ */
 #zona-nucleo { 
-    /* El alto se calcula restando la cabecera, la viga y el footer del total */
-    height: calc(var(--alto-total) - var(--h-cabecera) - var(--h-viga) - var(--h-footer));
+    /* El alto se calcula restando la cabecera, la viga contable y el footer del total */
+    height: calc(var(--alto-total) - var(--h-cabecera) - var(--h-viga-contable) - var(--h-footer));
     width: 100%;                              /* Ancho total */
     display: grid;                            /* Rejilla de mando */
-    grid-template-columns: 1fr 140px;         /* [ACTUALIZADO] Columna lateral optimizada */
+    grid-template-columns: 1fr 140px;         /* Columna lateral optimizada */
     background: var(--viga-color);            /* Fondo sistémico */
     overflow: hidden;                         /* Bloqueo de desbordamiento externo */
 }
@@ -519,7 +518,7 @@ select {
 #cuartos-operativos { 
     display: grid;                            /* Rejilla interna */
     grid-template-columns: repeat(3, 1fr);    /* 3 Columnas iguales por fila */
-    grid-auto-rows: 140px;                    /* [ACTUALIZADO] Altura de módulo expandida */
+    grid-auto-rows: 140px;                    /* Altura de módulo expandida */
     gap: 1px;                                 /* Separación mínima entre celdas */
     padding: 0;                               /* Sin relleno para ajuste por píxel */
     overflow-y: scroll;                       /* Único punto de scroll: el elevador interno */
@@ -666,9 +665,3 @@ select {
 
 </style>
 
-
-
-</style>
-
-
-   
