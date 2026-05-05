@@ -26,35 +26,6 @@
         content: "🪙";
         font-size: 16px;
       }
-
-      /* ESTILOS DE LA PANTALLA DE PROYECCIÓN (SANTUARIO) */
-      #pantalla-proyeccion-hijos {
-        flex: 1;
-        margin: 10px;
-        border-radius: 15px;
-        background-image: url('https://i.ibb.co/fcFZrtN/In-Shot-20260427-204839948.jpg');
-        background-size: cover;
-        background-position: center;
-        background-color: rgba(5, 10, 20, 0.8);
-        border: 1px solid rgba(212, 175, 55, 0.3);
-        position: relative;
-        overflow: hidden;
-        box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
-      }
-
-      #pantalla-proyeccion-hijos.activa {
-        background-image: none;
-        background-color: rgba(5, 20, 40, 0.85);
-        backdrop-filter: blur(10px);
-      }
-
-      .mando-botones-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-auto-rows: 140px;
-        gap: 1px;
-        flex-shrink: 0;
-      }
     </style>
 </head>
 <body>
@@ -136,6 +107,12 @@
         <textarea id="origen_fondos" name="origen_fondos" placeholder="Describa brevemente el origen de sus recursos (Mín. 20 caract.) *" required minlength="20"></textarea>
       </div>
     </div>
+    <select id="situacion_laboral" name="situacion_laboral" required>
+      <option value="">Situación Laboral del Propietario *</option>
+      <option value="independiente">Independiente (Dueño total)</option>
+      <option value="socio">Socio Capitalista</option>
+      <option value="empleado">Empleado / Intraemprendedor</option>
+    </select>
     <button type="submit" class="btn-primario">Validar y Continuar</button>
   </form>
 </div>
@@ -168,23 +145,34 @@
   </div>
   <h2>Círculo Familiar y Salud</h2>
   <form id="datos-familia" onsubmit="event.preventDefault(); navegar('formulario-paso4');">
-    <select id="estado_civil" name="estado_civil" required>
+    <select id="estado_civil" name="estado_civil" required onchange="if(typeof toggleConyuge === 'function'){ toggleConyuge(this.value); } else { document.getElementById('campo-conyuge').style.display = (this.value === 'casado' || this.value === 'union_libre' ? 'block' : 'none'); }">
       <option value="">Estado Civil *</option>
       <option value="soltero">Soltero/a</option>
       <option value="casado">Casado/a</option>
       <option value="union_libre">Unión Libre</option>
       <option value="separado">Separado/a</option>
     </select>
+    <div id="campo-conyuge" style="display:none;">
+      <input type="text" id="nombre_conyuge" name="nombre_conyuge" placeholder="Nombre completo del Cónyuge *">
+    </div>
     <input type="number" id="numero_hijos" name="numero_hijos" placeholder="Número de hijos *" min="0" required>
+    <div id="contenedor-hijos"></div> 
     <div style="margin-top:10px; border-top:1px solid rgba(33, 150, 243, 0.3); padding-top:10px;">
+      <p style="font-size:12px; color:#2196F3; font-weight:bold;">Datos de Ascendencia y Hermanos:</p>
       <input type="text" id="nombre_madre" name="nombre_madre" placeholder="Nombre completo de la Madre *" required>
       <input type="text" id="nombre_padre" name="nombre_padre" placeholder="Nombre completo del Padre *" required>
-      <textarea id="nombre_hermanos" name="nombre_hermanos" placeholder="Nombres y teléfonos de hermanos *" required></textarea>
+      <textarea id="nombre_hermanos" name="nombre_hermanos" placeholder="Nombres y teléfonos de hermanos (Si no tiene, escriba N/A) *" required style="width:100%; border-radius:5px; padding:10px; margin-bottom:10px;"></textarea>
     </div>
     <input type="text" id="eps_aliado" name="eps_aliado" placeholder="EPS Actual *" required>
     <input type="text" id="arl_aliado" name="arl_aliado" placeholder="ARL Actual *" required>
     <input type="text" id="fondo_pensiones" name="fondo_pensiones" placeholder="Fondo de Pensiones *" required>
-    <input type="text" id="enfermedad_diagnosticada" name="enfermedad_diagnosticada" placeholder="¿Tiene alguna enfermedad diagnosticada? *" required>
+    <input type="text" id="enfermedad_diagnosticada" name="enfermedad_diagnosticada" placeholder="¿Tiene alguna enfermedad diagnosticada? (Si no, Ninguna) *" required>
+    <select id="viajes_exterior" name="viajes_exterior" required onchange="document.getElementById('destinos_viaje').style.display = (this.value === 'si' ? 'block' : 'none')">
+      <option value="">¿Ha viajado fuera del país? *</option>
+      <option value="no">No</option>
+      <option value="si">Sí</option>
+    </select>
+    <input type="text" id="destinos_viaje" name="destinos_viaje" placeholder="¿A qué países?" style="display:none;">
     <button type="submit" class="btn-primario">Siguiente</button>
   </form>
 </div>
@@ -199,21 +187,67 @@
     <div class="seccion-form">
       <p class="titulo-subseccion">Referencias Familiares</p>
       <div class="fila-doble">
-        <input type="text" id="ref_fam_nom_1" placeholder="Nombre Familiar 1 *" required>
-        <input type="tel" id="ref_fam_tel_1" placeholder="Teléfono 1 *" required pattern="[0-9]{10}">
+        <input type="text" id="ref_fam_nom_1" name="ref_fam_nom_1" placeholder="Nombre Familiar 1 *" required>
+        <input type="tel" id="ref_fam_tel_1" name="ref_fam_tel_1" placeholder="Teléfono 1 *" required pattern="[0-9]{10}">
+      </div>
+      <div class="fila-doble">
+        <input type="text" id="ref_fam_nom_2" name="ref_fam_nom_2" placeholder="Nombre Familiar 2 *" required>
+        <input type="tel" id="ref_fam_tel_2" name="ref_fam_tel_2" placeholder="Teléfono 2 *" required pattern="[0-9]{10}">
       </div>
     </div>
-    
-    <div style="background: rgba(255, 152, 0, 0.1); border-left: 5px solid #FF9800; padding: 12px; border-radius: 4px; margin: 15px 0;">
-      <label style="display: flex; align-items: flex-start; cursor: pointer; color: #FF9800; gap: 8px;">
+    <div class="seccion-form">
+      <p class="titulo-subseccion">Referencias Personales</p>
+      <div class="fila-doble">
+        <input type="text" id="ref_per_nom_1" name="ref_per_nom_1" placeholder="Nombre Personal 1 *" required>
+        <input type="tel" id="ref_per_tel_1" name="ref_per_tel_1" placeholder="Teléfono 1 *" required pattern="[0-9]{10}">
+      </div>
+      <div class="fila-doble">
+        <input type="text" id="ref_per_nom_2" name="ref_per_nom_2" placeholder="Nombre Personal 2 *" required>
+        <input type="tel" id="ref_per_tel_2" name="ref_per_tel_2" placeholder="Teléfono 2 *" required pattern="[0-9]{10}">
+      </div>
+    </div>
+    <div class="seccion-form">
+      <p class="titulo-subseccion">Formación Académica</p>
+      <select id="nivel_educativo" name="nivel_educativo" required>
+        <option value="">Máximo Grado Educativo *</option>
+        <option value="primaria">Primaria</option>
+        <option value="bachiller">Bachiller</option>
+        <option value="tecnico">Técnico/Tecnólogo</option>
+        <option value="profesional">Profesional</option>
+        <option value="posgrado">Especialización/Maestría</option>
+      </select>
+      <input type="text" id="institucion_educativa" name="institucion_educativa" placeholder="Nombre de la Institución/Universidad *" required>
+      <input type="text" id="titulo_obtenido" name="titulo_obtenido" placeholder="Título obtenido *" required>
+    </div>
+    <div class="seccion-form">
+      <p class="titulo-subseccion">Experiencia Laboral</p>
+      <input type="text" id="cargo_actual" name="cargo_actual" placeholder="Cargo actual o último desempeñado *" required>
+      <input type="text" id="empresa_laboral" name="empresa_laboral" placeholder="Nombre de la empresa *" required>
+      <div class="fila-doble">
+        <input type="text" id="tiempo_laborado" name="tiempo_laborado" placeholder="Tiempo laborado *" required>
+        <input type="text" id="jefe_inmediato" name="jefe_inmediato" placeholder="Nombre Jefe Inmediato *" required>
+      </div>
+    </div>
+
+    <select id="pasado_judicial" name="pasado_judicial" required>
+      <option value="">¿Tiene pasado judicial limpio? *</option>
+      <option value="si">Sí</option>
+      <option value="no">No</option>
+    </select>
+
+    <div style="background: rgba(255, 152, 0, 0.1); border-left: 5px solid #FF9800; padding: 12px; border-radius: 4px; margin: 15px 0; text-align: justify; font-size: 11px; line-height: 1.4;">
+      <strong style="color: #FF9800; display: block; margin-bottom: 5px;">⚠️ NOTA DE SEGURIDAD PATRIMONIAL:</strong>
+      Usted autoriza el estudio y verificación de la información suministrada en cumplimiento estricto del SARLAFT.
+      <label style="display: flex; align-items: flex-start; margin-top: 10px; cursor: pointer; font-weight: bold; color: #FF9800; gap: 8px;">
         <input type="checkbox" id="acepto_sarlaft" name="acepto_sarlaft" required class="checkbox-sarlaft">
-        <span>Acepto términos de seguridad y verificación patrimonial (SARLAFT). *</span>
+        <span>Confirmo que he leído y acepto los términos de seguridad y verificación patrimonial. *</span>
       </label>
     </div>
 
-    <div style="background: rgba(33, 150, 243, 0.1); padding: 15px; border-radius: 8px;">
-      <input type="text" id="reg_username" placeholder="Usuario deseado *" required autocomplete="username" style="width: 100%;">
-      <input type="password" id="reg_password" placeholder="Contraseña segura *" required autocomplete="new-password" style="width: 100%; margin-top: 10px;">
+    <div style="background: rgba(33, 150, 243, 0.1); padding: 15px; border-radius: 8px; margin-top: 10px;">
+      <strong style="color: #2196F3;">🔐 Credenciales SITO:</strong>
+      <input type="text" id="reg_username" name="reg_username" placeholder="Usuario deseado *" required autocomplete="username" style="width: 100%; margin-top: 10px;">
+      <input type="password" id="reg_password" name="reg_password" placeholder="Contraseña segura *" required autocomplete="new-password" style="width: 100%; margin-top: 10px;">
     </div>
 
     <button type="submit" class="btn-primario" style="margin-top: 20px;">Enviar a Auditoría</button>
@@ -225,9 +259,13 @@
     <img src="https://i.ibb.co/LXsKzHfP/In-Shot-20260218-075725889.jpg" alt="">
     <img src="https://i.ibb.co/MxvRMPCD/In-Shot-20260218-075823511.jpg" alt="">
     <img src="https://i.ibb.co/C342n6Jt/In-Shot-20260217-224656136.jpg" alt="">
+    <img src="https://i.ibb.co/zTkCc9dX/In-Shot-20260217-224254828.jpg" alt="">
+    <img src="https://i.ibb.co/FLg3xGvd/In-Shot-20260217-224918705.jpg" alt="">
+    <img src="https://i.ibb.co/BKVtt96K/In-Shot-20260217-225340768.jpg" alt="">
   </div>
   <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 80%; text-align: center; z-index: 10;">
-    <div style="width: 100%; background: rgba(255,255,255,0.3); height: 8px; border-radius: 4px; overflow: hidden;">
+    <p style="color: white; font-size: 14px; margin-bottom: 8px; font-weight: bold; text-shadow: 1px 1px 2px #000;">Auditando Expediente Digital...</p>
+    <div style="width: 100%; background: rgba(255,255,255,0.3); height: 8px; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.5);">
       <div id="loading-bar" style="width: 0%; height: 100%; background: #2196F3; transition: width 3.5s linear;"></div>
     </div>
   </div>
@@ -236,9 +274,42 @@
 <div id="formulario-confirmacion" class="screen">
   <div class="barra-superior"><div>Confirmación Final</div></div>
   <h2>Proceso Recibido</h2>
+  <div style="background: rgba(76, 175, 80, 0.1); padding: 15px; border-radius: 8px; border-left: 5px solid #4CAF50;">
+    <p style="color: white;"><strong>✅ En Revisión:</strong> Su expediente completo ha sido enviado. El Comité analizará su situación económica, laboral y social.</p>
+  </div>
   <button id="btn-finalizar" class="btn-primario" onclick="location.reload()">Finalizar y Salir</button>
 </div>
 
+<div id="login-usuario-sito" class="screen">
+  <div class="barra-superior">
+    <button class="btn-back" data-target="inicio-sito">←</button>
+    <div>Acceso Aliado SITO</div>
+  </div>
+  <img src="https://i.ibb.co/67qRSyP0/In-Shot-20260221-084759067.jpg" alt="Logo SITO" class="logo" style="width: 120px; margin-top: 20px;"> 
+  <h2>Iniciar Sesión</h2>
+  
+  <form id="form-login">
+    <input type="text" id="login_username" name="login_username" placeholder="Usuario de Aliado *" required style="width: 100%; margin-bottom: 15px;" autocomplete="username">
+    
+    <div style="position: relative; width: 100%; margin-bottom: 20px;">
+      <input type="password" id="login_password" name="password" placeholder="Contraseña *" required style="width: 100%; padding-right: 45px;" autocomplete="current-password">
+      <span id="togglePassword" style="position: absolute; right: 15px; top: 25px; transform: translateY(-50%); cursor: pointer; color: #2196F3; opacity: 0.8; font-size: 20px;">👁️</span>
+    </div>
+    
+    <button type="submit" class="btn-primario">Entrar al Sistema</button>
+  </form>
+  
+  <p style="margin-top: 20px; font-size: 12px; color: #666;">¿Olvidó sus credenciales? Contacte a su analista de cuenta.</p>
+</div>
+
+<div id="sito-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+  <div style="background:#020a12; border:1px solid #d4af37; border-radius:15px; padding:30px; text-align:center; max-width:400px; width:100%; box-shadow:0 0 20px rgba(212,175,55,0.2);">
+    <div id="sito-alert-icon" style="font-size:50px; margin-bottom:15px;">✅</div>
+    <div id="sito-alert-msg" style="color:white; font-size:18px; margin-bottom:25px; font-weight:bold;">Mensaje de Sistema</div>
+    <button onclick="cerrarSitoAlert()" style="background:#d4af37; color:black; border:none; padding:12px 30px; border-radius:8px; font-weight:bold; cursor:pointer; width:100%;">ENTENDIDO</button>
+  </div>
+</div>
+    
 <div id="login-usuario-sito" class="screen">
   <div class="barra-superior">
     <button class="btn-back" data-target="inicio-sito">←</button>
@@ -257,7 +328,7 @@
         <div id="zona-superior">
             <div class="perfil-bloque" id="alias-perfil-display">HANNER<br>OPERADOR ORIGINARIO</div>
             
-            <div id="zona-avatar-inventario" style="position: relative; background-color: #050a14; overflow: hidden; display: flex; flex-direction: column;">
+<div id="zona-avatar-inventario" style="position: relative; background-color: #050a14; overflow: hidden; display: flex; flex-direction: column;">
                 <video autoplay muted loop playsinline style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; z-index: 1;">
                     <source src="https://res.cloudinary.com/dsbafxk0a/video/upload/v1777880897/InShot_20260504_024332551_cawxfd.mp4" type="video/mp4">
                 </video>
@@ -337,4 +408,5 @@ function despertarTutorial() {
 
 </body>
 </html>
+
 
